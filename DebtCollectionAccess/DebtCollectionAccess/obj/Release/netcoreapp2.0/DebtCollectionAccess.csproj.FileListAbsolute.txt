@@ -1,0 +1,11 @@
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\bin\Release\netcoreapp2.0\DebtCollectionAccess.deps.json
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\bin\Release\netcoreapp2.0\DebtCollectionAccess.runtimeconfig.json
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\bin\Release\netcoreapp2.0\DebtCollectionAccess.runtimeconfig.dev.json
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\bin\Release\netcoreapp2.0\DebtCollectionAccess.dll
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\bin\Release\netcoreapp2.0\DebtCollectionAccess.pdb
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\obj\Release\netcoreapp2.0\DebtCollectionAccess.csprojAssemblyReference.cache
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\obj\Release\netcoreapp2.0\DebtCollectionAccess.csproj.CoreCompileInputs.cache
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\obj\Release\netcoreapp2.0\DebtCollectionAccess.AssemblyInfoInputs.cache
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\obj\Release\netcoreapp2.0\DebtCollectionAccess.AssemblyInfo.cs
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\obj\Release\netcoreapp2.0\DebtCollectionAccess.dll
+D:\Shyam\DebtCollectionProject\DebtCollectionAccess\DebtCollectionAccess\obj\Release\netcoreapp2.0\DebtCollectionAccess.pdb

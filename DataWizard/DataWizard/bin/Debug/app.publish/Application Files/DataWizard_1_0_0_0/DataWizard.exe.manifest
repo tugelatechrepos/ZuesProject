@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="DataWizard.exe" version="1.0.0.0" publicKeyToken="3cd37f9dbce5556f" language="en-IN" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="datamanagement_vDa_icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="DataWizard" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="DataWizard.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DataWizard.exe" size="80864">
+      <assemblyIdentity name="DataWizard" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>MhQTgydobP5ahxR0vgWY9tIDzb0OABDl6tiM6WIyl+U=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetroFramework.dll" size="353280">
+      <assemblyIdentity name="MetroFramework" version="1.4.0.0" publicKeyToken="5F91A84759BF584A" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>wsEtMbSETineMVlPyWMqNypVNjHeCgoEyK+RZo43z0k=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetroFramework.Design.dll" size="16896">
+      <assemblyIdentity name="MetroFramework.Design" version="1.4.0.0" publicKeyToken="5F91A84759BF584A" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>CkqWCC4ldn5GlwM2SbFsdqZS4SB1eizsq4CSrQ1xa2U=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetroFramework.Fonts.dll" size="672256">
+      <assemblyIdentity name="MetroFramework.Fonts" version="1.4.0.0" publicKeyToken="5F91A84759BF584A" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>yEOGmqylE1wtRylphfNcccqK9EMSiNBNSBxORsyT7iY=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="675240">
+      <assemblyIdentity name="Newtonsoft.Json" version="12.0.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>tmdJuB4UifzY11SyrTnr4NtoE0TjkqP0nckjVkO9vQY=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="datamanagement_vDa_icon.ico" size="32351">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>lSpFEGmCUNVtviqOZy3bqO2DSRDr7Q3lmyc54erVOYk=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="DataWizard.exe.config" size="1205">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>0aBXgww74wTE0vNGYCdNcdhmnkUERA9IjAkMOvH4xg0=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="DataWizardTool.ico" size="19998">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>RQuLK9RKpxL3KVcw1Avk6W6g3HvmnkPmRgBTUB6GVHM=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=NAIRCO\spramanik" issuerKeyHash="5ecaeb4c1dd813613de92be92fb20388f25a3a61" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>IsXd0uUKdJzWEojmI9B9ZS6N66kR0p/DpG0NVQ7rlng=</DigestValue></Reference></SignedInfo><SignatureValue>fMDNH4O3hbO0nqitnvMpFmxHWCsSrQAhEN9m3zD0kJqlgFzZemiD/sNH7h4bfBVZ//P6VNM2eWUoQAFtg2f91ontoh141LrlOFLvmwS366X8MIQ6VGT9Z9KBcSfbK53DSy/7x1rx4C5oatQ/EkSM9HQpouUrHZBybqhse2jhxyg=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>vQtL2uvMLHX9oH4H2/HC/4+e6ePXAf2fs9CGPPxwpvL3hiQ0nD8EwSfiAphSWDClIHztkt4+DucWwXzEszuNxVzWDkfPNZTE7SPkOaiIQX/Gj9/zyT4w2Mn1mC6v0r/S4i8WMD254wG+tWPfjqQyEaOHv3sMn2kXGQLVrdvLLAM=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="7896eb0e550d6da4c39fd211a9eb8d2e657dd023e68812d69c740ae5d2ddc522" Description="" Url=""><as:assemblyIdentity name="DataWizard.exe" version="1.0.0.0" publicKeyToken="3cd37f9dbce5556f" language="en-IN" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=NAIRCO\spramanik</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>SvaB1SUzAkyT5krL0rJM2u7T+mP9a94zQDLdzZPa27c=</DigestValue></Reference></SignedInfo><SignatureValue>rEy+mlaOmOcsxEvS0An/XOxhZlHsKRRCMpBo6Y4bfo/91ruJq4np6eDcsK91rw6ba+/Fe06T2R743j44Ydb+vLARKZSLiKgiuaMk3nBqFp8/5lU7Ktm8OK+WBaBu2Bk1CB1i+O/WCi2tepBX5Q90V57KkF1Kk/zSYjtJoq+D35s=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>vQtL2uvMLHX9oH4H2/HC/4+e6ePXAf2fs9CGPPxwpvL3hiQ0nD8EwSfiAphSWDClIHztkt4+DucWwXzEszuNxVzWDkfPNZTE7SPkOaiIQX/Gj9/zyT4w2Mn1mC6v0r/S4i8WMD254wG+tWPfjqQyEaOHv3sMn2kXGQLVrdvLLAM=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB2TCCAUKgAwIBAgIQQpwQJzMLaKpFhodlZfjtLTANBgkqhkiG9w0BAQsFADArMSkwJwYDVQQDHiAATgBBAEkAUgBDAE8AXABzAHAAcgBhAG0AYQBuAGkAazAeFw0xOTAyMTgwNzI5MDFaFw0yMDAyMTgxMzI5MDFaMCsxKTAnBgNVBAMeIABOAEEASQBSAEMATwBcAHMAcAByAGEAbQBhAG4AaQBrMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC9C0va68wsdf2gfgfb8cL/j57p49cB/Z+z0IY8/HCm8veGJDScPwTBJ+ICmFJYMKUgfO2S3j4O5xbBfMSzO43FXNYOR881lMTtI+Q5qIhBf8aP3/PJPjDYyfWYLq/Sv9LiLxYwPbnjAb61Y9+OpDIRo4e/ewyfaRcZAtWt28ssAwIDAQABMA0GCSqGSIb3DQEBCwUAA4GBAKmEy6ei4ZJQR9ZpH1fKtAtBWv/ulUeHXt5Xz/LL7quISP7noSQ8P4Vd4zrLrDeMoBW8YiKwLASpsxJNSLRS0GaqPLiCVjj6fyoJPGZev6D19v9Njwlx1zTrYeuJKyrjzaTdHDUf1jeFTVESm+Trmz+a8azOZhH9cWfSSLNIWN/x</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

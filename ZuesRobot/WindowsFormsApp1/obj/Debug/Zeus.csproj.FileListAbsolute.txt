@@ -1,0 +1,9 @@
+D:\Shyam\DebtCollectionProject\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+D:\Shyam\DebtCollectionProject\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+D:\Shyam\DebtCollectionProject\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Zeus.csproj.GenerateResource.cache
+D:\Shyam\DebtCollectionProject\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Zeus.csproj.CoreCompileInputs.cache
+D:\Shyam\DebtCollectionProject\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Zeus.exe.config
+D:\Shyam\DebtCollectionProject\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Zeus.exe
+D:\Shyam\DebtCollectionProject\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Zeus.pdb
+D:\Shyam\DebtCollectionProject\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Zeus.exe
+D:\Shyam\DebtCollectionProject\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Zeus.pdb

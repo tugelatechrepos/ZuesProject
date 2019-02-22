@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8E41618D-9958-4D7F-8D3F-86007285C335}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DebtCollection</RootNamespace>
+    <AssemblyName>DebtCollection</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>D:\Shyam\DebtCollectionSetUp\Collect.IO\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>Collect.IO</ProductName>
+    <PublisherName>Tugelatech Limited</PublisherName>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>debt_collection_1_5Vw_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>4963F674848B0F75B6D6520F3F8EDD6CD43AEAF4</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>DebtCollection_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="DebtCollectionAccess">
+      <HintPath>..\..\Output\netcoreapp2.0\DebtCollectionAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialSkin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialSkin.0.2.1\lib\MaterialSkin.dll</HintPath>
+    </Reference>
+    <Reference Include="MefContrib, Version=1.2.2.0, Culture=neutral, PublicKeyToken=61319b4ffd6fe6d3, processorArchitecture=MSIL">
+      <HintPath>..\packages\MefContrib.1.2.2.1\lib\net40-Client\MefContrib.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework">
+      <HintPath>..\..\SAPGUI\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.900.148\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationConstants\Constants.cs" />
+    <Compile Include="DaoHelper.cs" />
+    <Compile Include="DataTableHelpers\AccountBalancesDataTableHelper.cs" />
+    <Compile Include="DataTableHelpers\ExpenseLineItemsDataTableHelper.cs" />
+    <Compile Include="DataTableHelpers\InvoiceDataTableHelper.cs" />
+    <Compile Include="DataTableHelpers\InvoiceLineItemsDataTableHelper.cs" />
+    <Compile Include="DataTableHelpers\PaymentHistoryDataTableHelper.cs" />
+    <Compile Include="DataTableHelpers\PeriodDataTableHelper.cs" />
+    <Compile Include="DataTableHelpers\PeriodDetailDataTableHelper.cs" />
+    <Compile Include="Invoice.cs" />
+    <Compile Include="PaymentHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaymentHistoryForm.Designer.cs">
+      <DependentUpon>PaymentHistoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceDocument.cs" />
+    <Compile Include="InvoiceDocument.Designer.cs">
+      <DependentUpon>InvoiceDocument.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InvoicePreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InvoicePreview.Designer.cs">
+      <DependentUpon>InvoicePreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PeriodSetUp.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceHelpers\AccountBalanceHelper.cs" />
+    <Compile Include="ServiceHelpers\CommissionHelper.cs" />
+    <Compile Include="ServiceHelpers\TypeTableListHelper.cs" />
+    <Compile Include="ServiceHelpers\InvoiceHelper.cs" />
+    <Compile Include="ServiceHelpers\PaymentHistoryHelper.cs" />
+    <Compile Include="ServiceHelpers\PeriodHelper.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="ViewModel\AccountBalance.cs" />
+    <Compile Include="ViewModel\Commission.cs" />
+    <Compile Include="ViewModel\GenerateInvoiceResponse.cs" />
+    <Compile Include="ViewModel\GetAccountBalanceListRequest.cs" />
+    <Compile Include="ViewModel\GetAccountBalanceListResponse.cs" />
+    <Compile Include="ViewModel\GetAccountIdListRequest.cs" />
+    <Compile Include="ViewModel\GetAccountIdListResponse.cs" />
+    <Compile Include="ViewModel\GetAccountListBySearchTerm.cs" />
+    <Compile Include="ViewModel\GetCommissionRequest.cs" />
+    <Compile Include="ViewModel\GetCommissionResponse.cs" />
+    <Compile Include="ViewModel\GetInvoiceListRequest.cs" />
+    <Compile Include="ViewModel\GetInvoiceListResponse.cs" />
+    <Compile Include="ViewModel\GetPaymentHistoryListRequest.cs" />
+    <Compile Include="ViewModel\GetPaymentHistoryListResponse.cs" />
+    <Compile Include="ViewModel\GetPeriodListRequest.cs" />
+    <Compile Include="ViewModel\GetTypeTableListRequest.cs" />
+    <Compile Include="ViewModel\GetTypeTableListResponse.cs" />
+    <Compile Include="ViewModel\Invoice.cs" />
+    <Compile Include="ViewModel\InvoiceDataForGrid.cs" />
+    <Compile Include="ViewModel\InvoiceDataPreview.cs" />
+    <Compile Include="ViewModel\InvoiceDataPreviewRequest.cs" />
+    <Compile Include="ViewModel\PaymentHistory.cs" />
+    <Compile Include="ViewModel\Period.cs" />
+    <Compile Include="ViewModel\PeriodDetail.cs" />
+    <Compile Include="ViewModel\PersistInvoiceRequest.cs" />
+    <Compile Include="ViewModel\PersistInvoiceResponse.cs" />
+    <Compile Include="ViewModel\PersistPaymentHistoryListRequest.cs" />
+    <Compile Include="ViewModel\PersistPaymentHistoryListResponse.cs" />
+    <Compile Include="ViewModel\ServiceType.cs" />
+    <EmbeddedResource Include="PaymentHistoryForm.resx">
+      <DependentUpon>PaymentHistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InvoiceDocument.resx">
+      <DependentUpon>InvoiceDocument.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InvoicePreview.resx">
+      <DependentUpon>InvoicePreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="InvoicePreview.rdlc" />
+    <EmbeddedResource Include="PaymentHistoryReport.rdlc" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DebtCollection_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\DebtCollection.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\DebtCollection.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\DebtCollection.ViewModel.Expense.datasource" />
+    <None Include="Properties\DataSources\DebtCollection.ViewModel.InvoiceDataPreview.datasource" />
+    <None Include="Properties\DataSources\DebtCollection.ViewModel.PaymentHistory.datasource" />
+    <None Include="Properties\DataSources\Invoice.datasource" />
+    <None Include="Properties\DataSources\InvoicePreview.datasource" />
+    <None Include="Properties\DataSources\MainForm.datasource" />
+    <None Include="Properties\DataSources\PaymentHistory.datasource" />
+    <None Include="Properties\DataSources\Program.datasource" />
+    <None Include="Properties\DataSources\SqlServerTypes.Utilities.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\loader.gif" />
+    <Content Include="debtCollectionIcon.ico" />
+    <Content Include="debt_collection_1_5Vw_icon.ico" />
+    <Content Include="image2_ixh_icon.ico" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DebtCollection.Core\DebtCollection.Core.csproj">
+      <Project>{3d3cd0d7-3c0d-4782-b74c-e3dee0611d44}</Project>
+      <Name>DebtCollection.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

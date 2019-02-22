@@ -1,0 +1,8 @@
+D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\bin\Debug\DebtCollection.Core.dll
+D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\bin\Debug\DebtCollection.Core.pdb
+D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\bin\Debug\Autofac.dll
+D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\bin\Debug\Autofac.xml
+D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.csproj.CoreCompileInputs.cache
+D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.csproj.CopyComplete
+D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.dll
+D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.pdb
