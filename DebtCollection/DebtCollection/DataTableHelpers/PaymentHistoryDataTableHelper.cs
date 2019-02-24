@@ -10,7 +10,7 @@ namespace DebtCollection.DataTableHelpers
 {
     public class PaymentHistoryDataTableHelper
     {
-        public static DataTable GetDataTable(ICollection<PaymentHistory> PaymentHistoryList, bool ForReport = false)
+        public static DataTable GetDataTable(ICollection<AccountBalanceManager.Contracts.PaymentHistory> PaymentHistoryList, bool ForReport = false)
         {
             var dataTable = new DataTable();
 
@@ -49,7 +49,7 @@ namespace DebtCollection.DataTableHelpers
             return dataTable;
         }
 
-        private static DataTable getDataTableForReport(ICollection<PaymentHistory> PaymentHistoryList)
+        private static DataTable getDataTableForReport(ICollection<AccountBalanceManager.Contracts.PaymentHistory> PaymentHistoryList)
         {
             var dataTable = new DataTable();
             dataTable.Columns.Add("AccountId");

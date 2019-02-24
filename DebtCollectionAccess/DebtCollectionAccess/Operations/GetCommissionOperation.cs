@@ -1,43 +1,33 @@
-﻿using DebtCollectionAccess.Dao;
+﻿using DebtCollectionAccess.Contracts;
+using DebtCollectionAccess.Dao;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Text;
 
 namespace DebtCollectionAccess.Operations
 {
     public interface IGetCommissionOperation
     {
-        GetCommissionResponse GetCommission(GetCommisionRequest Request);
+        GetCommissionResponse GetCommission(GetCommissionRequest Request);
     }
 
-    public class GetCommisionRequest
-    {
-        public decimal Yield { get; set; }
-    }
-
-    public class GetCommissionResponse
-    {
-        public Commission Commission { get; set; }
-    }
-
-    [Export(typeof(IGetCommissionOperation))]
     public class GetCommissionOperation : IGetCommissionOperation
     {
         #region Declarations
 
-        private GetCommisionRequest _Request;
+        private GetCommissionRequest _Request;
         private GetCommissionResponse _Response;
 
-        [Import]
+        
         public ICommissionDao CommissionDao { get; set; }
 
         #endregion Declarations
 
-        public GetCommissionResponse GetCommission(GetCommisionRequest Request)
+        public GetCommissionResponse GetCommission(GetCommissionRequest Request)
         {
             _Request = Request;
-            _Response = new GetCommissionResponse();
+            _Response = new GetCommissionResponse { ValidationResults = new ValidationResults() };
 
             assignResponse();
 
@@ -46,7 +36,7 @@ namespace DebtCollectionAccess.Operations
 
         private void assignResponse()
         {
-            _Response.Commission = CommissionDao.GetCommission(Convert.ToDouble(_Request.Yield));
+             _Response.Commission = CommissionDao.GetCommission(_Request.Yield , _Response.ValidationResults);           
         }
     }
 }

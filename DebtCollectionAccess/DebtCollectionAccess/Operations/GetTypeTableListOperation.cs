@@ -1,8 +1,8 @@
 ﻿using DebtCollectionAccess.Contracts;
 using DebtCollectionAccess.Dao;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Text;
 
 namespace DebtCollectionAccess.Operations
@@ -12,18 +12,14 @@ namespace DebtCollectionAccess.Operations
         GetTypeTableListResponse GetTypeTableList(GetTypeTableListRequest Request);
     }
 
-    [Export(typeof(IGetTypeTableListOperation))]
     public class GetTypeTableListOperation : IGetTypeTableListOperation
     {
         #region Declarations
 
         private GetTypeTableListRequest _Request;
         private GetTypeTableListResponse _Response;
-
-        [Import]
-        public IServiceTypeDao ServiceTypeDao { get; set; }
-
-        [Import]
+        
+        public IServiceTypeDao ServiceTypeDao { get; set; }        
         public IUserDao UserDao { get; set; }
 
         #endregion Declarations
@@ -31,7 +27,7 @@ namespace DebtCollectionAccess.Operations
         public GetTypeTableListResponse GetTypeTableList(GetTypeTableListRequest Request)
         {
             _Request = Request;
-            _Response = new GetTypeTableListResponse();
+            _Response = new GetTypeTableListResponse { ValidationResults = new ValidationResults() };
 
             assignServiceTypeList();
             assignUserList();
@@ -43,14 +39,15 @@ namespace DebtCollectionAccess.Operations
         {
             if (!_Request.IncludeServiceTypeList) return;
 
-            _Response.ServiceTypeList =  ServiceTypeDao.GetServiceTypeList();
+           _Response.ServiceTypeList = ServiceTypeDao.GetServiceTypeList(_Response.ValidationResults);          
         }
 
         private void assignUserList()
         {
             if (!_Request.IncludeUserList) return;
 
-            _Response.UserList = UserDao.GetUserList();
+            _Response.UserList = UserDao.GetUserList(_Response.ValidationResults);
+         
         }
     }
 }

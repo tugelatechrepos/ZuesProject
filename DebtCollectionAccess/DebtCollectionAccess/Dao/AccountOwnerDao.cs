@@ -1,27 +1,16 @@
-﻿using System;
+﻿using DebtCollectionAccess.Contracts;
+using ProjectCoreLibrary;
+using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
-using System.Text;
 
 namespace DebtCollectionAccess.Dao
 {
     public interface IAccountOwnerDao
     {
-        ICollection<AccountOwner> GetAccountOwnerList(GetAccountOwnerListRequest Request);
+        ICollection<AccountOwner> GetAccountOwnerList(GetAccountOwnerListRequest Request, ValidationResults validationResults = null);
     }
 
-    public class GetAccountOwnerListRequest
-    {
-        public ICollection<int> AccountIdList { get; set; }
-    }
-
-    public class GetAccountOwnerListResponse
-    {
-        public ICollection<AccountOwner> AccountOwnerList { get; set; }
-    }
-
-    [Export(typeof(IAccountOwnerDao))]
     public class AccountOwnerDao : IAccountOwnerDao
     {
         #region Declarations
@@ -30,16 +19,29 @@ namespace DebtCollectionAccess.Dao
 
         #endregion Declarations
 
-        public ICollection<AccountOwner> GetAccountOwnerList(GetAccountOwnerListRequest Request)
+        public ICollection<AccountOwner> GetAccountOwnerList(GetAccountOwnerListRequest Request, ValidationResults validationResults = null)
         {
             ICollection<AccountOwner> resultList = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                var query = _DbContext.AccountOwner.AsQueryable();
-                query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
-                resultList = query.ToList();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    var query = _DbContext.AccountOwner.AsQueryable();
+                    query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
+                    resultList = query.ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+
             return resultList;
         }
     }

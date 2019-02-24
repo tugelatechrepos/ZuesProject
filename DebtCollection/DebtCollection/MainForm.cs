@@ -20,14 +20,14 @@ namespace DebtCollection
     {
         #region Declarations
 
-        private ICollection<Period> _PeriodList;
+        private ICollection<DebtCollectionAccess.Period> _PeriodList;
         private List<ViewModel.AccountBalance> _AccountBalanceList;
         private List<int> _AccountIdList;
-        private Period _CurrentPeriod;
-        private Period _PreviousPeriod;
-        private ICollection<ViewModel.Invoice> _InvoiceList;
-        private ICollection<InvoiceDetail> _InvoiceDetailList;
-        private ICollection<PeriodDetail> _PeriodReadinessDetailList;
+        private DebtCollectionAccess.Period _CurrentPeriod;
+        private DebtCollectionAccess.Period _PreviousPeriod;
+        private ICollection<DebtCollectionAccess.Invoice> _InvoiceList;
+        private ICollection<AccountBalanceManager.Contracts.InvoiceDetail> _InvoiceDetailList;
+        private ICollection<AccountBalanceManager.Contracts.PeriodDetail> _PeriodReadinessDetailList;
 
         public IPeriodHelper Periodhelper { get; set; }
         public IInvoiceHelper InvoiceHelper { get; set; }
@@ -157,7 +157,7 @@ namespace DebtCollection
 
         private void periodLoadBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var response = Periodhelper.GetPeriodList(new GetPeriodListRequest());
+            var response = Periodhelper.GetPeriodList(new DebtCollectionAccess.Contracts.GetPeriodListRequest());
             _PeriodList = response.PeriodList;
 
             assignPeriodReadinessDetail();
@@ -165,11 +165,11 @@ namespace DebtCollection
 
         private void SavePeriod_Click(object sender, EventArgs e)
         {
-            var periodList = new List<Period>();
+            var periodList = new List<DebtCollectionAccess.Period>();
 
             foreach (DataGridViewRow periodRow in dgvPeriod.Rows)
             {
-                var period = new Period
+                var period = new DebtCollectionAccess.Period
                 {
                     Id = periodRow.Cells[0].Value == null ? 0 : Convert.ToInt32(periodRow.Cells[0].Value),
                     FromDate = DateTime.ParseExact(Convert.ToString(periodRow.Cells[2].Value), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None),
@@ -180,7 +180,7 @@ namespace DebtCollection
                 periodList.Add(period);
             }
 
-            var response = Periodhelper.PeristPeriodList(new ServiceHelpers.PersistPeriodListRequest { PeriodList = periodList });        
+            var response = Periodhelper.PeristPeriodList(new DebtCollectionAccess.Contracts.PersistPeriodListRequest { PeriodList = periodList });        
 
             MessageBox.Show("Saved successfully", "Save Period", MessageBoxButtons.OK);
 
@@ -285,7 +285,7 @@ namespace DebtCollection
             var fromDate = dtpActualFromDate.Value;
             var toDate = dtpActualToDate.Value;
 
-            var paymentHistoryListResponse = PaymentHistoryHelper.GetPaymentHistoryList(new ViewModel.GetPaymentHistoryListRequest
+            var paymentHistoryListResponse = PaymentHistoryHelper.GetPaymentHistoryList(new DebtCollectionAccess.Contracts.GetPaymentHistoryListRequest
             {
                 AccountIdList = (AccountIdValue.HasValue && AccountIdValue != 0) ? new List<int> { AccountIdValue.Value } : null,
                 FromDate = fromDate,
@@ -324,7 +324,7 @@ namespace DebtCollection
 
         private void accountIdListbgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var response = PaymentHistoryHelper.GetAccountIdList(new GetAccountIdListRequest());
+            var response = PaymentHistoryHelper.GetAccountIdList(new DebtCollectionAccess.Contracts.GetAccountIdListRequest());
             _AccountIdList = response.AccountIdList.ToList();
         }
 
@@ -360,7 +360,7 @@ namespace DebtCollection
             var selectedRow = dgvInvoiceList.Rows[e.RowIndex];
             var invoiceId = Convert.ToInt32(selectedRow.Cells[0].Value);
 
-            var response = InvoiceHelper.GetInvoiceList(new GetInvoiceListRequest { InvoiceIdList = new List<int> { invoiceId } });
+            var response = InvoiceHelper.GetInvoiceList(new DebtCollectionAccess.Contracts.GetInvoiceListRequest { InvoiceIdList = new List<int> { invoiceId } });
 
             var invoiceDetail = response.InvoiceDetailList.FirstOrDefault();          
 
@@ -397,7 +397,7 @@ namespace DebtCollection
         {
             if (_CurrentPeriod == null) return;
 
-            var response = InvoiceHelper.GetInvoiceList(new GetInvoiceListRequest
+            var response = InvoiceHelper.GetInvoiceList(new DebtCollectionAccess.Contracts.GetInvoiceListRequest
             {
                 FromDate = _CurrentPeriod.FromDate,
                 ToDate = _CurrentPeriod.ToDate,
@@ -454,7 +454,7 @@ namespace DebtCollection
             int periodId = 0;
             if (!Int32.TryParse(Convert.ToString(cmbSelectAbPeriod.SelectedValue), out periodId)) return;
 
-            var response = AccountBalanceHelper.GetAccountBalanceList(new GetAccountBalanceListRequest
+            var response = AccountBalanceHelper.GetAccountBalanceList(new DebtCollectionAccess.Contracts.GetAccountBalanceListRequest
             {
                 PeriodIdList = new List<int> { periodId }
             });
@@ -473,7 +473,8 @@ namespace DebtCollection
         {
             if (_PeriodList == null || !_PeriodList.Any()) return;
 
-            var response = Periodhelper.GetPeriodDetail(new GetPeriodDetailListProcessorRequest());
+            var response = Periodhelper.GetPeriodDetail(new AccountBalanceManager.Contracts.GetPeriodDetailListRequest());
+
            _PeriodReadinessDetailList = response.PeriodDetailList;            
         }
 
@@ -489,7 +490,7 @@ namespace DebtCollection
 
             var period = _PeriodList.FirstOrDefault(x => x.Id == periodId);
 
-            var response = PaymentHistoryHelper.GetPaymentHistoryList(new GetPaymentHistoryListRequest
+            var response = PaymentHistoryHelper.GetPaymentHistoryList(new DebtCollectionAccess.Contracts.GetPaymentHistoryListRequest
             {
                 AccountIdList = new List<int> { accountId },
                 FromDate = period.FromDate,

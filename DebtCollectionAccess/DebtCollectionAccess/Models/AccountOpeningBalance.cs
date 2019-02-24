@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int AccountId { get; set; }
-        public double OpeningBalance { get; set; }
+        public decimal OpeningBalance { get; set; }
         public int PeriodId { get; set; }
 
         public virtual Period Period { get; set; }

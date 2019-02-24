@@ -1,8 +1,8 @@
 ﻿using DebtCollectionAccess.Contracts;
 using DebtCollectionAccess.Dao;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Text;
 
 namespace DebtCollectionAccess.Operations
@@ -12,7 +12,6 @@ namespace DebtCollectionAccess.Operations
         GetPeriodListResponse GetPeriodList(GetPeriodListRequest Request);
     }
 
-    [Export(typeof(IGetPeriodListOperation))]
     public class GetPeriodListOperation : IGetPeriodListOperation
     {
         #region Declarations
@@ -20,7 +19,6 @@ namespace DebtCollectionAccess.Operations
         private GetPeriodListRequest _Request;
         private GetPeriodListResponse _Response;
 
-        [Import]
         public IPeriodDao PeriodDao { get; set; }
 
         #endregion Declarations
@@ -28,7 +26,7 @@ namespace DebtCollectionAccess.Operations
         public GetPeriodListResponse GetPeriodList(GetPeriodListRequest Request)
         {
             _Request = Request;
-            _Response = new GetPeriodListResponse();
+            _Response = new GetPeriodListResponse { ValidationResults = new ValidationResults() };
 
             assignResponse();
 
@@ -37,7 +35,8 @@ namespace DebtCollectionAccess.Operations
 
         private void assignResponse()
         {
-            _Response.PeriodList = PeriodDao.GetPeriodList(_Request);
+          _Response.PeriodList = PeriodDao.GetPeriodList(_Request, _Response.ValidationResults);
+         
         }
     }
 }

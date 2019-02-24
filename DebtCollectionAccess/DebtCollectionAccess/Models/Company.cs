@@ -18,8 +18,8 @@ namespace DebtCollectionAccess
         public string Zip { get; set; }
         public int CompanyTypeId { get; set; }
         public string AddressLine2 { get; set; }
-        public double? Vatpercentage { get; set; }
-        public double? OtherCharges { get; set; }
+        public decimal? Vatpercentage { get; set; }
+        public decimal? OtherCharges { get; set; }
 
         public virtual CompanyType CompanyType { get; set; }
         public virtual ICollection<CompanyDiscount> CompanyDiscount { get; set; }

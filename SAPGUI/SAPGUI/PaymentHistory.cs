@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace SAPGUI
 {
-    public class PaymentHistory
-    {
-        public int Id { get; set; }
-        public int AccountId { get; set; }
-        public long ServiceId { get; set; }
-        public decimal Amount { get; set; }
-        public string PaymentMode { get; set; }
-        public DateTime PaymentDate { get; set; }
-        public string ServiceName { get; set; }
-    }
+    //public class PaymentHistory
+    //{
+    //    public int Id { get; set; }
+    //    public int AccountId { get; set; }
+    //    public long ServiceId { get; set; }
+    //    public decimal Amount { get; set; }
+    //    public string PaymentMode { get; set; }
+    //    public DateTime PaymentDate { get; set; }
+    //    public string ServiceName { get; set; }
+    //}
 }

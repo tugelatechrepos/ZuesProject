@@ -1,40 +1,18 @@
-﻿
+﻿using DebtCollectionAccess.Contracts;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
-using System.Text;
 
 namespace DebtCollectionAccess.Dao
 {
     public interface IAccountOpeningBalanceDao
     {
-        ICollection<AccountOpeningBalance> GetAccountOpeningBalanceList(GetAccountOpeningBalanceListRequest Request);
+        ICollection<AccountOpeningBalance> GetAccountOpeningBalanceList(GetAccountOpeningBalanceListRequest Request, ValidationResults validationResults = null);
 
-        PersistAccountOpeningBalanceListResponse PersistAccountOpeningBalanceList(PersistAccountOpeningBalanceListRequest Request);
+        ValidationResults PersistAccountOpeningBalanceList(PersistAccountOpeningBalanceListRequest Request, ValidationResults validationResults = null);
     }
 
-    public class GetAccountOpeningBalanceListRequest
-    {
-        public int PeriodId { get; set; }
-    }
-
-    public class GetAccountOpeningBalanceListResponse
-    {
-        public ICollection<AccountOpeningBalance> AccountOpeningBalanceList { get; set; }
-    }
-
-    public class PersistAccountOpeningBalanceListRequest
-    {
-        public ICollection<AccountOpeningBalance> AccountOpeningBalanceList { get; set; }
-    }
-
-    public class PersistAccountOpeningBalanceListResponse
-    {
-
-    }
-
-    [Export(typeof(IAccountOpeningBalanceDao))]
     public class AccountOpeningBalanceDao : IAccountOpeningBalanceDao
     {
         #region Declarations
@@ -43,31 +21,55 @@ namespace DebtCollectionAccess.Dao
 
         #endregion Declarations
 
-        public ICollection<AccountOpeningBalance> GetAccountOpeningBalanceList(GetAccountOpeningBalanceListRequest Request)
+        public ICollection<AccountOpeningBalance> GetAccountOpeningBalanceList(GetAccountOpeningBalanceListRequest Request, ValidationResults validationResults = null)
         {
             ICollection<AccountOpeningBalance> resultList = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                var query = _DbContext.AccountOpeningBalance.AsQueryable();
-                query = query.Where(x => x.Period.Id == Request.PeriodId);
-                resultList = query.ToList();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    var query = _DbContext.AccountOpeningBalance.AsQueryable();
+                    query = query.Where(x => x.Period.Id == Request.PeriodId);
+                    resultList = query.ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
             }
 
             return resultList;
         }
 
-        public PersistAccountOpeningBalanceListResponse PersistAccountOpeningBalanceList(PersistAccountOpeningBalanceListRequest Request)
+        public ValidationResults PersistAccountOpeningBalanceList(PersistAccountOpeningBalanceListRequest Request, ValidationResults validationResults = null)
         {
-            var response = new PersistAccountOpeningBalanceListResponse();
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                _DbContext.AccountOpeningBalance.UpdateRange(Request.AccountOpeningBalanceList);
-                _DbContext.SaveChanges();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    _DbContext.AccountOpeningBalance.UpdateRange(Request.AccountOpeningBalanceList);
+                    _DbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
             }
 
-            return response;
+            return validationResults;
         }
     }
 }

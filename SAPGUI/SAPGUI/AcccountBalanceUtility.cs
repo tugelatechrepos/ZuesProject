@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AccountBalanceManager.Client;
+using ProjectCoreLibrary;
 
 namespace SAPGUI
 {
@@ -10,12 +7,15 @@ namespace SAPGUI
     {
         public static void RegisterAccountBalances()
         {
-            var daoHelper = new DaoHelper();
-            var response = daoHelper.Execute(new DaoHelperRequest
-            {
-                Endpoint = @"accountBalance/maintain",
-                UseServiceUri = true,
-            });
+            var accountBalanceManagerProxy = IOCManager.Resolve<IAccountBalanceManagerProxy>();
+            var response = accountBalanceManagerProxy.MaintainAccountBalance();
+
+            //var daoHelper = new DaoHelper();
+            //var response = daoHelper.Execute(new DaoHelperRequest
+            //{
+            //    Endpoint = @"accountBalance/maintain",
+            //    UseServiceUri = true,
+            //});
         }
     }
 }

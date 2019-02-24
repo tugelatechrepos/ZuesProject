@@ -13,7 +13,7 @@ namespace DebtCollection
 {
     public partial class PaymentHistoryForm : Form
     {
-        public ICollection<PaymentHistory> PaymentHistoryList { get; set; }
+        public ICollection<AccountBalanceManager.Contracts.PaymentHistory> PaymentHistoryList { get; set; }
 
         public PaymentHistoryForm()
         {

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Composition;
-using System.Text;
+﻿using ProjectCoreLibrary;
+using System;
 
 namespace DebtCollectionAccess.Dao
 {
     public interface IDataCleanUpDao
     {
-        void CleanUpData();
+        ValidationResults CleanUpData(ValidationResults validationResults = null);
     }
 
-    [Export(typeof(IDataCleanUpDao))]
     public class DataCleanUpDao : IDataCleanUpDao
     {
         #region Declarations
@@ -19,18 +16,33 @@ namespace DebtCollectionAccess.Dao
 
         #endregion Declarations
 
-        public void CleanUpData()
+        public ValidationResults CleanUpData(ValidationResults validationResults = null)
         {
-            using (_DbContext = new DebtCollectionContext())
+            validationResults = new ValidationResults();
+            try
             {
-                _DbContext.PaymentHistory.RemoveRange(_DbContext.PaymentHistory);
-                _DbContext.Invoice.RemoveRange(_DbContext.Invoice);
-                _DbContext.AccountOpeningBalance.RemoveRange(_DbContext.AccountOpeningBalance);
-                _DbContext.AccountBalance.RemoveRange(_DbContext.AccountBalance);
-                _DbContext.Period.RemoveRange(_DbContext.Period);
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    _DbContext.PaymentHistory.RemoveRange(_DbContext.PaymentHistory);
+                    _DbContext.Invoice.RemoveRange(_DbContext.Invoice);
+                    _DbContext.AccountOpeningBalance.RemoveRange(_DbContext.AccountOpeningBalance);
+                    _DbContext.AccountBalance.RemoveRange(_DbContext.AccountBalance);
+                    _DbContext.Period.RemoveRange(_DbContext.Period);
 
-                _DbContext.SaveChanges();
+                    _DbContext.SaveChanges();
+                }
             }
+            catch(Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+
+            return validationResults;
         }
+         
     }
 }

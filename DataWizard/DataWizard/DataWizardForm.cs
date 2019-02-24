@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DebtCollectionAccess.Contracts;
+using DebtCollectionAccess.Operations;
+using ProjectCoreLibrary;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

@@ -1,32 +1,18 @@
-﻿
+﻿using DebtCollectionAccess.Contracts;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
-using System.Text;
 
 namespace DebtCollectionAccess.Dao
 {
     public interface IInvoiceDao
     {
-        void Persist(Invoice Invoice);
+        ValidationResults Persist(Invoice Invoice , ValidationResults validationResults = null);
 
-        ICollection<Invoice> GetInvoiceList(GetInvoiceListRequest Request);
+        ICollection<Invoice> GetInvoiceList(GetInvoiceListRequest Request , ValidationResults validationResults = null);
     }
 
-    public class GetInvoiceListRequest
-    {
-        public ICollection<int> InvoiceIdList { get; set; }
-
-        public ICollection<int> PeriodIdList { get; set; }
-
-        public DateTime? FromDate { get; set; }
-
-        public DateTime? ToDate { get; set; }
-    }
-
-
-    [Export(typeof(IInvoiceDao))]
     public class InvoiceDao : IInvoiceDao
     {
         #region Declarations
@@ -35,32 +21,58 @@ namespace DebtCollectionAccess.Dao
         
         #endregion Declarations
 
-        public void Persist(Invoice Invoice)
+        public ValidationResults Persist(Invoice Invoice, ValidationResults validationResults = null)
         {
-            using (_DbContext = new DebtCollectionContext())
+            validationResults = new ValidationResults();
+            try
             {
-                _DbContext.Invoice.Update(Invoice);
-                _DbContext.SaveChanges();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    _DbContext.Invoice.Update(Invoice);
+                    _DbContext.SaveChanges();
+                }
             }
+            catch(Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+            return validationResults;
         }
 
-        public ICollection<Invoice> GetInvoiceList(GetInvoiceListRequest Request)
+        public ICollection<Invoice> GetInvoiceList(GetInvoiceListRequest Request, ValidationResults validationResults = null)
         {
-            ICollection<Invoice> resultList;
+            ICollection<Invoice> resultList = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                var query = _DbContext.Invoice.AsQueryable();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    var query = _DbContext.Invoice.AsQueryable();
 
-                query = (Request.InvoiceIdList != null && Request.InvoiceIdList.Any()) ? query.Where(x => Request.InvoiceIdList.Contains(x.Id)) : query;
-                query = (Request.FromDate.HasValue && Request.FromDate.Value != DateTime.MinValue) ? query.Where(x => x.GeneratedOn >= Request.FromDate) : query;
-                query = (Request.ToDate.HasValue && Request.ToDate.Value != DateTime.MinValue) ? query.Where(x => x.GeneratedOn <= Request.ToDate) : query;
-                query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.PeriodId.Value)) : query;
-                query = query.OrderByDescending(x => x.Id);
+                    query = (Request.InvoiceIdList != null && Request.InvoiceIdList.Any()) ? query.Where(x => Request.InvoiceIdList.Contains(x.Id)) : query;
+                    query = (Request.FromDate.HasValue && Request.FromDate.Value != DateTime.MinValue) ? query.Where(x => x.GeneratedOn >= Request.FromDate) : query;
+                    query = (Request.ToDate.HasValue && Request.ToDate.Value != DateTime.MinValue) ? query.Where(x => x.GeneratedOn <= Request.ToDate) : query;
+                    query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.PeriodId.Value)) : query;
+                    query = query.OrderByDescending(x => x.Id);
 
-                resultList = query.ToList();
+                    resultList = query.ToList();
+                }
+
             }
-
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+         
             return resultList;
         }
     }

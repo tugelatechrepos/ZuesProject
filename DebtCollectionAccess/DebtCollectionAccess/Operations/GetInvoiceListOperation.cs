@@ -1,8 +1,8 @@
-﻿using DebtCollectionAccess.Dao;
-
+﻿using DebtCollectionAccess.Contracts;
+using DebtCollectionAccess.Dao;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Text;
 
 namespace DebtCollectionAccess.Operations
@@ -12,21 +12,6 @@ namespace DebtCollectionAccess.Operations
         GetInvoiceListResponse GetInvoiceList(GetInvoiceListRequest Request);
     }
 
-    public class GetInvoiceListRequest
-    {
-        public ICollection<int> InvoiceIdList { get; set; }
-
-        public DateTime? FromDate { get; set; }
-
-        public DateTime? ToDate { get; set; }
-    }
-
-    public class GetInvoiceListResponse
-    {
-        public ICollection<Invoice> InvoiceList { get; set; }
-    }
-
-    [Export(typeof(IGetInvoiceListOperation))]
     public class GetInvoiceListOperation : IGetInvoiceListOperation
     {
         #region Declarations
@@ -34,7 +19,6 @@ namespace DebtCollectionAccess.Operations
         private GetInvoiceListRequest _Request;
         private GetInvoiceListResponse _Response;
 
-        [Import]
         public IInvoiceDao InvoiceDao { get; set; }
 
         #endregion Declarations
@@ -42,7 +26,7 @@ namespace DebtCollectionAccess.Operations
         public GetInvoiceListResponse GetInvoiceList(GetInvoiceListRequest Request)
         {
             _Request = Request;
-            _Response = new GetInvoiceListResponse();
+            _Response = new GetInvoiceListResponse { ValidationResults = new ValidationResults() };
 
             assignResponse();
 
@@ -51,12 +35,8 @@ namespace DebtCollectionAccess.Operations
 
         public void assignResponse()
         {
-            _Response.InvoiceList = InvoiceDao.GetInvoiceList(new Dao.GetInvoiceListRequest
-            {
-                FromDate = _Request.FromDate,
-                ToDate = _Request.ToDate,
-                InvoiceIdList = _Request.InvoiceIdList
-            });
+           _Response.InvoiceList = InvoiceDao.GetInvoiceList(_Request, _Response.ValidationResults);
+       
         }
     }
 }

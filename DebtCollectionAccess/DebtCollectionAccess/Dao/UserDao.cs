@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ProjectCoreLibrary;
+using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
 using System.Text;
 
@@ -8,10 +8,9 @@ namespace DebtCollectionAccess.Dao
 {
     public interface IUserDao
     {
-        ICollection<Users> GetUserList();
+        ICollection<Users> GetUserList(ValidationResults validationResults = null);
     }
 
-    [Export(typeof(IUserDao))]
     public class UserDao : IUserDao
     {
         #region Declarations
@@ -20,15 +19,28 @@ namespace DebtCollectionAccess.Dao
 
         #endregion Declarations
 
-        public ICollection<Users> GetUserList()
+        public ICollection<Users> GetUserList(ValidationResults validationResults = null)
         {
             ICollection<Users> resultList = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                var query = _DbContext.Users.AsQueryable();
-                resultList = query.ToList();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    var query = _DbContext.Users.AsQueryable();
+                    resultList = query.ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+
             return resultList;
         }
     }

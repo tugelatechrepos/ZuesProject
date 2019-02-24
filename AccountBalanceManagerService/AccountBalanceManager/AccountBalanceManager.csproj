@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F8E7CA46-E2F4-49DB-AC65-C264EA5A00C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AccountBalanceManager</RootNamespace>
+    <AssemblyName>AccountBalanceManager</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DebtCollectionAccess">
+      <HintPath>..\..\Output\DebtCollectionAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectCoreLibrary">
+      <HintPath>..\..\Output\ProjectCoreLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client\AccountBalanceManagerProxy.cs" />
+    <Compile Include="Contracts\AccountBalance.cs" />
+    <Compile Include="Contracts\GenerateInvoiceResponse.cs" />
+    <Compile Include="Contracts\GetInvoiceListResponse.cs" />
+    <Compile Include="Contracts\GetPeriodDetailListRequest.cs" />
+    <Compile Include="Contracts\GetPeriodDetailListResponse.cs" />
+    <Compile Include="Contracts\InvoiceDetail.cs" />
+    <Compile Include="Contracts\MaintainAccountBalanceResponse.cs" />
+    <Compile Include="Contracts\PaymentHistory.cs" />
+    <Compile Include="Contracts\PeriodDetail.cs" />
+    <Compile Include="Operations\GenerateInvoiceOperation.cs" />
+    <Compile Include="Operations\GetAccountBalanceListOperation.cs" />
+    <Compile Include="Operations\GetInvoiceListOperation.cs" />
+    <Compile Include="Operations\GetPaymentHistoryListOperation.cs" />
+    <Compile Include="Operations\GetPeriodDetailListOperation.cs" />
+    <Compile Include="Operations\MaintainAccountBalanceOperation.cs" />
+    <Compile Include="Processors\AccountBalanceCalculationProcessor.cs" />
+    <Compile Include="Processors\CreateAccountBalanceListProcessor.cs" />
+    <Compile Include="Processors\GenerateInvoiceProcessor.cs" />
+    <Compile Include="Processors\UpdateAccountBalanceProcessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)bin\debug\*.dll"  "$(SolutionDir)..\Output\" /y</PostBuildEvent>
+  </PropertyGroup>
+</Project>

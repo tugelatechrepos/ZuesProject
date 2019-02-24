@@ -1,4 +1,5 @@
-﻿using DebtCollection.ViewModel;
+﻿using AccountBalanceManager.Contracts;
+using DebtCollection.ViewModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,16 +17,10 @@ namespace DebtCollection
 {
     public partial class InvoicePreview : Form
     {
-        private List<PaymentHistory> _PaymentHistoryList;
-        private Period _Period;
-        private List<InvoiceDataPreview> _InvoiceDataPreviewList;
         private DataTable _InvoiceLineItemListDataTable;
-        private DataTable _ExpenseDataTable;
-        private Invoice _Invoice;
-        private InvoiceDetail _InvoiceDetail;
-        private ICollection<Expense> _ExpenseList;
-        private decimal _PaymentTotalWithoutExpenses;
-        private decimal _ExpenseTotal;
+        private DataTable _ExpenseDataTable;        
+        private AccountBalanceManager.Contracts.InvoiceDetail _InvoiceDetail;
+        private ICollection<AccountBalanceManager.Contracts.Expense> _ExpenseList;
 
         public InvoiceDataPreviewRequest InvoiceDataPreviewRequest { get; set; }
 
@@ -126,7 +121,7 @@ namespace DebtCollection
                     dataRow[Constants.DESCRIPTION] = expense.Description;
                     dataRow[Constants.QUANTITY] = expense.Quantity;
                     dataRow[Constants.AMOUNT] = Math.Round(expense.Amount, 2, MidpointRounding.AwayFromZero);
-                    dataRow[Constants.VAT] = Math.Round(expense.Vat, 2, MidpointRounding.AwayFromZero);
+                    dataRow[Constants.VAT] = Math.Round(expense.VAT, 2, MidpointRounding.AwayFromZero);
 
                     _ExpenseDataTable.Rows.Add(dataRow);
                 }
@@ -138,11 +133,11 @@ namespace DebtCollection
 
         private void btnSaveExpenses_Click(object sender, EventArgs e)
         {
-            var expenseList = new List<Expense>();
+            var expenseList = new List<AccountBalanceManager.Contracts.Expense>();
 
             foreach (DataGridViewRow expenseRow in dgvExpense.Rows)
             {
-                var expense = new Expense();
+                var expense = new AccountBalanceManager.Contracts.Expense();
 
                 var description = Convert.ToString(expenseRow.Cells[0].Value);
                 var quantity = expenseRow.Cells[1].Value != DBNull.Value ? Convert.ToInt32(expenseRow.Cells[1].Value) : 1;
@@ -154,7 +149,7 @@ namespace DebtCollection
                 expense.Description = description;
                 expense.Quantity = quantity;
                 expense.Amount = amount;
-                expense.Vat = vat;
+                expense.VAT = vat;
                 expense.TotalAmount = totalAmount;
 
                 expenseList.Add(expense);
@@ -172,7 +167,7 @@ namespace DebtCollection
         private void persistInvoice()
         {
             var invoiceDetailJson = JsonConvert.SerializeObject(_InvoiceDetail);
-            var invoice = new Invoice
+            var invoice = new DebtCollectionAccess.Invoice
             {
                 Id = _InvoiceDetail.InvoiceId,
                 GeneratedOn = _InvoiceDetail.GeneratedOn,
@@ -180,7 +175,7 @@ namespace DebtCollection
                 Detail = invoiceDetailJson
             };
 
-            var response = InvoiceDataPreviewRequest.InvoiceHelper.PersistInvoice(new PersistInvoiceRequest
+            var response = InvoiceDataPreviewRequest.InvoiceHelper.PersistInvoice(new DebtCollectionAccess.Contracts.PersistInvoiceRequest
             {
                 Invoice = invoice
             });
@@ -189,11 +184,11 @@ namespace DebtCollection
 
         private void assignCalculatedFields()
         {
-            var expenseList = new List<Expense>();
+            var expenseList = new List<AccountBalanceManager.Contracts.Expense>();
 
             foreach(DataGridViewRow expenseRow in dgvExpense.Rows)
             {
-                var expense = new Expense();
+                var expense = new AccountBalanceManager.Contracts.Expense();
 
                 var description = Convert.ToString(expenseRow.Cells[0].Value);
                 var quantity = expenseRow.Cells[1].Value != DBNull.Value ? Convert.ToInt32(expenseRow.Cells[1].Value) : 1;
@@ -205,7 +200,7 @@ namespace DebtCollection
                 expense.Description = description;
                 expense.Quantity = quantity;
                 expense.Amount = amount;
-                expense.Vat = vat;
+                expense.VAT = vat;
 
                 expenseList.Add(expense);
             }
@@ -213,7 +208,7 @@ namespace DebtCollection
             var expenseLineItemTotalList = expenseList?.Select(x => new { ExpenselineItemtotal = x.Amount * x.Quantity });
 
             var expenseTotal = expenseLineItemTotalList?.Sum(x => x.ExpenselineItemtotal) ?? 0.0M;
-            var VatTotal = expenseList?.Sum(x => x.Vat) ?? 0.0M;
+            var VatTotal = expenseList?.Sum(x => x.VAT) ?? 0.0M;
 
             var invoiceLineItemListTotal = _InvoiceDetail.InvoiceLineItemList.Sum(x => x.Amount);
 

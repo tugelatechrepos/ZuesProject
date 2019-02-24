@@ -1,10 +1,8 @@
-﻿using DebtCollection.ViewModel;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AccountBalanceManager.Client;
+using AccountBalanceManager.Contracts;
+using DebtCollectionAccess.Client;
+using DebtCollectionAccess.Contracts;
+using ProjectCoreLibrary;
 
 namespace DebtCollection.ServiceHelpers
 {
@@ -12,7 +10,7 @@ namespace DebtCollection.ServiceHelpers
     {
         GenerateInvoiceResponse GenerateInvoice();
 
-        GetInvoiceListResponse GetInvoiceList(ViewModel.GetInvoiceListRequest Request);
+        AccountBalanceManager.Contracts.GetInvoiceListResponse GetInvoiceList(GetInvoiceListRequest Request);
 
         PersistInvoiceResponse PersistInvoice(PersistInvoiceRequest Request);
     }
@@ -28,40 +26,48 @@ namespace DebtCollection.ServiceHelpers
 
         public GenerateInvoiceResponse GenerateInvoice()
         {
-            var daoResponse = DaoHelper.Execute(new DaoHelperRequest    
-            {
-                Endpoint = @"invoice/generate",
-                UseServiceUri = true,
-            });
+            var accountBalanceManagerProxy = IOCManager.Resolve<IAccountBalanceManagerProxy>();
+            var response = accountBalanceManagerProxy.GenerateInvoice();
 
-            var response =  JsonConvert.DeserializeObject<GenerateInvoiceResponse>(daoResponse.data);
+            //var daoResponse = DaoHelper.Execute(new DaoHelperRequest    
+            //{
+            //    Endpoint = @"invoice/generate",
+            //    UseServiceUri = true,
+            //});
+
+            //var response =  JsonConvert.DeserializeObject<GenerateInvoiceResponse>(daoResponse.data);
 
             return response;
         }
 
         public PersistInvoiceResponse PersistInvoice(PersistInvoiceRequest Request)
         {
-            var daoResponse = DaoHelper.Execute(new DaoHelperRequest
-            {
-                Endpoint = @"invoice/persist",
-                RequestBody = Request
-            });
+            var accessProxy = IOCManager.Resolve<IDebtCollectionAccessProxy>();
+            var response = accessProxy.PersistInvoice(Request);
+            //var daoResponse = DaoHelper.Execute(new DaoHelperRequest
+            //{
+            //    Endpoint = @"invoice/persist",
+            //    RequestBody = Request
+            //});
 
-            var response = JsonConvert.DeserializeObject<PersistInvoiceResponse>(daoResponse.data);
+            //var response = JsonConvert.DeserializeObject<PersistInvoiceResponse>(daoResponse.data);
 
             return response;
         }
 
-        public GetInvoiceListResponse GetInvoiceList(ViewModel.GetInvoiceListRequest Request)
+        public AccountBalanceManager.Contracts.GetInvoiceListResponse GetInvoiceList(GetInvoiceListRequest Request)
         {
-            var daoResponse = DaoHelper.Execute(new DaoHelperRequest
-            {
-                Endpoint = @"invoice/list",
-                RequestBody = Request,
-                UseServiceUri = true,
-            });
+            var accountBalanceManagerProxy = IOCManager.Resolve<IAccountBalanceManagerProxy>();
+            var response = accountBalanceManagerProxy.GetInvoiceList(Request);
 
-            var response = JsonConvert.DeserializeObject<GetInvoiceListResponse>(daoResponse.data);
+            //var daoResponse = DaoHelper.Execute(new DaoHelperRequest
+            //{
+            //    Endpoint = @"invoice/list",
+            //    RequestBody = Request,
+            //    UseServiceUri = true,
+            //});
+
+            //var response = JsonConvert.DeserializeObject<GetInvoiceListResponse>(daoResponse.data);
 
             return response;
         }

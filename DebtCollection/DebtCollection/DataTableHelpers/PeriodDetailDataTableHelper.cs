@@ -10,7 +10,7 @@ namespace DebtCollection.DataTableHelpers
 {
     public class PeriodDetailDataTableHelper
     {
-        public static DataTable GetDataTable(ICollection<PeriodDetail> PeriodDetailList)
+        public static DataTable GetDataTable(ICollection<AccountBalanceManager.Contracts.PeriodDetail> PeriodDetailList)
         {
             var periodDetailDataTable = new DataTable();
 

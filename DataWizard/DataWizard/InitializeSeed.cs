@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DebtCollectionAccess;
+using DebtCollectionAccess.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;

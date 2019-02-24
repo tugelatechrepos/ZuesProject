@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AccountBalanceManager.Client;
+using ProjectCoreLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +12,14 @@ namespace DataWizard
     {
         public static void RegisterAccountBalances()
         {
-            var daoHelper = new DaoHelper();
-            var response = daoHelper.Execute(new DaoHelperRequest
-            {
-                Endpoint = @"accountBalance/maintain",
-                UseServiceUri = true,
-            });
+            var accountBalanceManagerProxy = IOCManager.Resolve<IAccountBalanceManagerProxy>();
+            var response = accountBalanceManagerProxy.MaintainAccountBalance();
+            //var daoHelper = new DaoHelper();
+            //var response = daoHelper.Execute(new DaoHelperRequest
+            //{
+            //    Endpoint = @"accountBalance/maintain",
+            //    UseServiceUri = true,
+            //});
         }
     }
 }

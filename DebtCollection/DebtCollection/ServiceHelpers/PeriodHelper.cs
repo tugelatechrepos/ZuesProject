@@ -1,5 +1,9 @@
-﻿using DebtCollection.ViewModel;
+﻿using AccountBalanceManager.Client;
+using AccountBalanceManager.Contracts;
+using DebtCollectionAccess.Client;
+using DebtCollectionAccess.Contracts;
 using Newtonsoft.Json;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,22 +20,7 @@ namespace DebtCollection.ServiceHelpers
 
         PersistPeriodListResponse PeristPeriodList(PersistPeriodListRequest Request);
 
-        GetPeriodDetailListProcessorResponse GetPeriodDetail(GetPeriodDetailListProcessorRequest Request);
-    }
-
-    public class GetPeriodListResponse
-    {
-        public ICollection<Period> PeriodList { get; set; }
-    }
-
-    public class PersistPeriodListRequest
-    {
-        public ICollection<Period> PeriodList { get; set; }
-    }
-
-    public class PersistPeriodListResponse
-    {
-        
+        GetPeriodDetailListResponse GetPeriodDetail(GetPeriodDetailListRequest Request);
     }
 
     public class PeriodHelper : IPeriodHelper
@@ -45,26 +34,36 @@ namespace DebtCollection.ServiceHelpers
 
         public GetPeriodListResponse GetPeriodList(GetPeriodListRequest Request)
         {
-            var daoHelperRequest = new DaoHelperRequest { Endpoint = @"period/list" };
-            var response = DaoHelper.Execute(daoHelperRequest);
-            var periodListResponse = JsonConvert.DeserializeObject<GetPeriodListResponse>(response.data);
-            return periodListResponse;
-        }
+            var accessProxy = IOCManager.Resolve<IDebtCollectionAccessProxy>();
+            var response = accessProxy.GetPeriodList(Request);
 
-        public PersistPeriodListResponse PeristPeriodList(PersistPeriodListRequest Request)
-        {
-            var daoHelperRequest = new DaoHelperRequest { Endpoint = @"period/persist" ,RequestBody = Request };
-            var daoResponse = DaoHelper.Execute(daoHelperRequest);
-            var response = JsonConvert.DeserializeObject<PersistPeriodListResponse>(daoResponse.data);
+            //var daoHelperRequest = new DaoHelperRequest { Endpoint = @"period/list" };
+            //var response = DaoHelper.Execute(daoHelperRequest);
+            //var periodListResponse = JsonConvert.DeserializeObject<GetPeriodListResponse>(response.data);
 
             return response;
         }
 
-        public GetPeriodDetailListProcessorResponse GetPeriodDetail(GetPeriodDetailListProcessorRequest Request)
+        public PersistPeriodListResponse PeristPeriodList(PersistPeriodListRequest Request)
         {
-            var daoHelperRequest = new DaoHelperRequest { Endpoint = @"period/detail" , RequestBody = Request, UseServiceUri = true};
-            var daoResponse = DaoHelper.Execute(daoHelperRequest);
-            var response = JsonConvert.DeserializeObject<GetPeriodDetailListProcessorResponse>(daoResponse.data);
+            var accessProxy = IOCManager.Resolve<IDebtCollectionAccessProxy>();
+            var response = accessProxy.PersistPeriodList(Request);
+
+            //var daoHelperRequest = new DaoHelperRequest { Endpoint = @"period/persist" ,RequestBody = Request };
+            //var daoResponse = DaoHelper.Execute(daoHelperRequest);
+            //var response = JsonConvert.DeserializeObject<PersistPeriodListResponse>(daoResponse.data);
+
+            return response;
+        }
+
+        public GetPeriodDetailListResponse GetPeriodDetail(GetPeriodDetailListRequest Request)
+        {
+            var accountBalanceManagerProxy = IOCManager.Resolve<IAccountBalanceManagerProxy>();
+            var response = accountBalanceManagerProxy.GetPeriodDetailList(Request);
+
+            //var daoHelperRequest = new DaoHelperRequest { Endpoint = @"period/detail", RequestBody = Request, UseServiceUri = true };
+            //var daoResponse = DaoHelper.Execute(daoHelperRequest);
+            //var response = JsonConvert.DeserializeObject<GetPeriodDetailListProcessorResponse>(daoResponse.data);
             return response;
         }
     }

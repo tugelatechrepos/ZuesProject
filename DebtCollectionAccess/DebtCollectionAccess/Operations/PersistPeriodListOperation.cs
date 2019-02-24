@@ -1,8 +1,8 @@
 ﻿using DebtCollectionAccess.Contracts;
 using DebtCollectionAccess.Dao;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
 using System.Text;
 
@@ -13,7 +13,6 @@ namespace DebtCollectionAccess.Operations
         PersistPeriodListResponse PersistPeriodList(PersistPeriodListRequest Request);
     }
 
-    [Export(typeof(IPersistPeriodListOperation))]
     public class PersistPeriodListOperation : IPersistPeriodListOperation
     {
         #region Declarations
@@ -21,7 +20,6 @@ namespace DebtCollectionAccess.Operations
         private PersistPeriodListRequest _Request;
         private PersistPeriodListResponse _Response;
 
-        [Import]
         public IPeriodDao PeriodDao { get; set; }
 
         #endregion Declarations
@@ -29,7 +27,7 @@ namespace DebtCollectionAccess.Operations
         public PersistPeriodListResponse PersistPeriodList(PersistPeriodListRequest Request)
         {
             _Request = Request;
-            _Response = new PersistPeriodListResponse();
+            _Response = new PersistPeriodListResponse { ValidationResults = new ValidationResults() };
 
             deletePeriodList();
             persist();
@@ -52,12 +50,15 @@ namespace DebtCollectionAccess.Operations
             if (IdListToDelete == null || !IdListToDelete.Any()) return;
 
             var periodListToDelete = existingPeriodList.Where(x => IdListToDelete.Contains(x.Id)).ToList();
-            PeriodDao.DeletePeriodList(periodListToDelete);
+
+           _Response.ValidationResults = PeriodDao.DeletePeriodList(periodListToDelete);
         }
 
         private void persist()
         {
-            PeriodDao.PersistPeriodList(_Request.PeriodList);
+            if (!_Response.ValidationResults.IsValid) return;
+
+            _Response.ValidationResults = PeriodDao.PersistPeriodList(_Request.PeriodList);
         }
     }
 }

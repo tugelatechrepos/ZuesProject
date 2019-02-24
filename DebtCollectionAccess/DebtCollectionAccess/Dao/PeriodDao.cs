@@ -1,69 +1,123 @@
 ﻿using DebtCollectionAccess.Contracts;
-
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
-using System.Text;
 
 namespace DebtCollectionAccess.Dao
 {
     public interface IPeriodDao
     {
-        ICollection<Period> GetPeriodList(GetPeriodListRequest Request);
+        ICollection<Period> GetPeriodList(GetPeriodListRequest Request, ValidationResults validationResults = null);
 
-        void PersistPeriodList(ICollection<Period> PeriodList);
+        ValidationResults PersistPeriodList(ICollection<Period> PeriodList, ValidationResults validationResults = null);
 
-        void DeletePeriodList(ICollection<Period> PeriodList);
+        ValidationResults DeletePeriodList(ICollection<Period> PeriodList, ValidationResults validationResults = null);
 
-        Period GetPeriodById(int Id);
+        Period GetPeriodById(int Id, ValidationResults validationResults = null);
     }
 
-    [Export(typeof(IPeriodDao))]
     public class PeriodDao : IPeriodDao
     {
         private DebtCollectionContext _DbContext;
 
-        public ICollection<Period> GetPeriodList(GetPeriodListRequest Request)
+        public ICollection<Period> GetPeriodList(GetPeriodListRequest Request, ValidationResults validationResults = null)
         {
             ICollection<Period> resultList = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                var query = _DbContext.Period.AsQueryable();
-                query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.Id)) : query;
-                query = query.OrderByDescending(x => x.FromDate);
-                resultList = query.ToList();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    var query = _DbContext.Period.AsQueryable();
+                    query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.Id)) : query;
+                    query = query.OrderByDescending(x => x.FromDate);
+                    resultList = query.ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
             }
 
             return resultList;
         }
 
-        public void PersistPeriodList(ICollection<Period> PeriodList)
+        public ValidationResults PersistPeriodList(ICollection<Period> PeriodList, ValidationResults validationResults = null)
         {
-            using (_DbContext = new DebtCollectionContext())
+            validationResults = new ValidationResults();
+
+            try
             {
-                _DbContext.UpdateRange(PeriodList);
-                _DbContext.SaveChanges();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    _DbContext.UpdateRange(PeriodList);
+                    _DbContext.SaveChanges();
+                }
             }
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+
+            return validationResults;
         }
 
-        public void DeletePeriodList(ICollection<Period> PeriodList)
+        public ValidationResults DeletePeriodList(ICollection<Period> PeriodList, ValidationResults validationResults = null)
         {
-            using (_DbContext = new DebtCollectionContext())
+            validationResults = new ValidationResults();
+
+            try
             {
-                _DbContext.RemoveRange(PeriodList);
-                _DbContext.SaveChanges();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    _DbContext.RemoveRange(PeriodList);
+                    _DbContext.SaveChanges();
+                }
             }
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+
+            return validationResults;
         }
 
-        public Period GetPeriodById(int Id)
+        public Period GetPeriodById(int Id, ValidationResults validationResults = null)
         {
-            Period result;
-            using (_DbContext = new DebtCollectionContext())
+            Period result = null;
+            validationResults = new ValidationResults();
+
+            try
             {
-                result = _DbContext.Period.FirstOrDefault(x => x.Id == Id);
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    result = _DbContext.Period.FirstOrDefault(x => x.Id == Id);
+                }
             }
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+
             return result;
         }
 

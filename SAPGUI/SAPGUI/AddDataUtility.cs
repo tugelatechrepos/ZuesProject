@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DebtCollectionAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,14 @@ namespace SAPGUI
 {
     public class AddDataUtility
     {
-        public ICollection<PaymentHistory> Add(ICollection<PaymentHistory> PaymentHistoryList)
+        public ICollection<AccountBalanceManager.Contracts.PaymentHistory> Add(ICollection<AccountBalanceManager.Contracts.PaymentHistory> PaymentHistoryList)
         {
             var currentDate = DateTime.Now.Date;
             var lastDayOfTheMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
             var fromDate = new DateTime(currentDate.Year, currentDate.Month, 1);
             var toDate = new DateTime(currentDate.Year, currentDate.Month, lastDayOfTheMonth);
 
-            var paymentHistoryList = new List<PaymentHistory>();
+            var paymentHistoryList = new List<AccountBalanceManager.Contracts.PaymentHistory>();
 
             var filteredPaymentHistoryList = PaymentHistoryList.Where(x => x.PaymentDate >= fromDate && x.PaymentDate <= toDate).ToList();
 
@@ -37,7 +38,7 @@ namespace SAPGUI
 
                     var paymentDate = new DateTime(highestDate.Year, highestDate.Month, incrementalDate);
 
-                    var record = new PaymentHistory
+                    var record = new AccountBalanceManager.Contracts.PaymentHistory
                     {
                         AccountId = paymentHistory.AccountId,
                         PaymentDate = paymentDate,

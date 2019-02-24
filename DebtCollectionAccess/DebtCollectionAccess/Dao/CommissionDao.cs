@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Composition;
+﻿using ProjectCoreLibrary;
+using System;
 using System.Linq;
-using System.Text;
 
 namespace DebtCollectionAccess.Dao
 {
     public interface ICommissionDao
     {
-        Commission GetCommission(double Yield);
+        Commission GetCommission(decimal Yield, ValidationResults validationResults = null);
     }
 
-    [Export(typeof(ICommissionDao))]
     public class CommissionDao : ICommissionDao
     {
         #region Declarations
@@ -20,15 +17,27 @@ namespace DebtCollectionAccess.Dao
 
         #endregion Declarations
 
-        public Commission GetCommission(double Yield)
+        public Commission GetCommission(decimal Yield, ValidationResults validationResults = null)
         {
             Commission result = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                result = _DbContext.Commission.FirstOrDefault(x => Yield >= x.LowerRange && Yield <= x.HigherRange);                
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    result = _DbContext.Commission.FirstOrDefault(x => Yield >= x.LowerRange && Yield <= x.HigherRange);
+                }
             }
-
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+           
             return result;
         }
     }

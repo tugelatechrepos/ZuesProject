@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DebtCollectionAccess.Client;
+using ProjectCoreLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +12,14 @@ namespace DataWizard
     {
         public static void CleanUp()
         {
-            var daoHelper = new DaoHelper();
-            var response = daoHelper.Execute(new DaoHelperRequest
-            {
-                Endpoint = @"dataCleanUp/delete"
-            });
+            var accessProxy = IOCManager.Resolve<IDebtCollectionAccessProxy>();
+            var response = accessProxy.CleanUpData();
+
+            //var daoHelper = new DaoHelper();
+            //var response = daoHelper.Execute(new DaoHelperRequest
+            //{
+            //    Endpoint = @"dataCleanUp/delete"
+            //});
 
         }
     }

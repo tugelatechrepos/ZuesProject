@@ -1,28 +1,16 @@
-﻿using System;
+﻿using DebtCollectionAccess.Contracts;
+using ProjectCoreLibrary;
+using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
-using System.Text;
 
 namespace DebtCollectionAccess.Dao
 {
     public interface IAccountAODDao
     {
-        ICollection<AccountAod> GetAccountAODList(GetAccountAODListRequest Request);
+        ICollection<AccountAod> GetAccountAODList(GetAccountAODListRequest Request,ValidationResults validationResults = null);
     }
 
-    public class GetAccountAODListRequest
-    {
-       public ICollection<int> AccountIdList { get; set; }
-       public ICollection<int> PeriodIdList { get; set; }
-    }
-
-    public class GetAccountAODListResponse
-    {
-        public ICollection<AccountAod> AccountAODList { get; set; }
-    }
-
-    [Export(typeof(IAccountAODDao))]
     public class AccountAODDao : IAccountAODDao
     {
         #region Declarations
@@ -31,20 +19,29 @@ namespace DebtCollectionAccess.Dao
 
         #endregion Declarations
 
-        public ICollection<AccountAod> GetAccountAODList(GetAccountAODListRequest Request)
+        public ICollection<AccountAod> GetAccountAODList(GetAccountAODListRequest Request, ValidationResults validationResults = null)
         {
             ICollection<AccountAod> resultList = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                var query = _DbContext.AccountAod.AsQueryable();
-                query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
-                //query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.PeriodId)) : query;
-                //query = query.OrderByDescending(x => x.PeriodId);
-
-                resultList = query.ToList();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    var query = _DbContext.AccountAod.AsQueryable();
+                    query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
+                    resultList = query.ToList();
+                }
             }
-
+            catch(Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+           
             return resultList;
         }
     }

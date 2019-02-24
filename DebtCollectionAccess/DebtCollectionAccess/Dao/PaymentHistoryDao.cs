@@ -1,21 +1,19 @@
 ﻿using DebtCollectionAccess.Contracts;
-
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
-using System.Text;
 
 namespace DebtCollectionAccess.Dao
 {
 
     public interface IPaymentHistoryDao
     {
-        ICollection<PaymentHistory> GetPaymentHistoryList(GetPaymentHistoryListRequest Request);
+        ICollection<PaymentHistory> GetPaymentHistoryList(GetPaymentHistoryListRequest Request, ValidationResults validationResults = null);
 
-        void PersistPaymentHistoryList(PersistPaymentHistoryListRequest Request);
+        ValidationResults PersistPaymentHistoryList(PersistPaymentHistoryListRequest Request, ValidationResults validationResults = null);
 
-        ICollection<int> GetAccountIdListFromPaymentHistory();
+        ICollection<int> GetAccountIdListFromPaymentHistory(ValidationResults validationResults = null);
     }
 
     public class GetPaymentHistoryListRequest
@@ -28,8 +26,6 @@ namespace DebtCollectionAccess.Dao
         public int Take { get; set; }
     }
 
-
-    [Export(typeof(IPaymentHistoryDao))]
     public class PaymentHistoryDao : IPaymentHistoryDao
     {
         #region Declarations
@@ -38,45 +34,85 @@ namespace DebtCollectionAccess.Dao
 
         #endregion Declarations
 
-        public ICollection<PaymentHistory> GetPaymentHistoryList(GetPaymentHistoryListRequest Request)
+        public ICollection<PaymentHistory> GetPaymentHistoryList(GetPaymentHistoryListRequest Request, ValidationResults validationResults = null)
         {
             ICollection<PaymentHistory> resultList = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                var query = _DbContext.PaymentHistory.AsQueryable();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    var query = _DbContext.PaymentHistory.AsQueryable();
 
-                query = (Request.FromDate.HasValue  && Request.FromDate.Value != DateTime.MinValue) ? query.Where(x => x.PaymentDate >= Request.FromDate.Value) : query;
-                query = (Request.ToDate.HasValue && Request.ToDate.Value != DateTime.MinValue) ?  query.Where(x => x.PaymentDate <= Request.ToDate.Value) : query;
-                query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
-                query = Request.InvoiceId.HasValue ? query.Where(x => x.Invoice.Id == Request.InvoiceId.Value) : query;
-                query = Request.Take > 0 ? query.Skip(Request.Skip).Take(Request.Take) : query ;
-                query = query.OrderBy(x => x.PaymentDate);
-              
-                resultList = query.ToList();
+                    query = (Request.FromDate.HasValue && Request.FromDate.Value != DateTime.MinValue) ? query.Where(x => x.PaymentDate >= Request.FromDate.Value) : query;
+                    query = (Request.ToDate.HasValue && Request.ToDate.Value != DateTime.MinValue) ? query.Where(x => x.PaymentDate <= Request.ToDate.Value) : query;
+                    query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
+                    query = Request.InvoiceId.HasValue ? query.Where(x => x.Invoice.Id == Request.InvoiceId.Value) : query;
+                    query = Request.Take > 0 ? query.Skip(Request.Skip).Take(Request.Take) : query;
+                    query = query.OrderBy(x => x.PaymentDate);
+
+                    resultList = query.ToList();
+                }
             }
+            catch(Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }          
 
             return resultList;
         }
 
-        public void PersistPaymentHistoryList(PersistPaymentHistoryListRequest Request)
+        public ValidationResults PersistPaymentHistoryList(PersistPaymentHistoryListRequest Request, ValidationResults validationResults = null)
         {
-            using (_DbContext = new DebtCollectionContext())
+            validationResults = new ValidationResults();
+
+            try
             {
-                _DbContext.PaymentHistory.UpdateRange(Request.PaymentHistoryList);
-                _DbContext.SaveChanges();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    _DbContext.PaymentHistory.UpdateRange(Request.PaymentHistoryList);
+                    _DbContext.SaveChanges();
+                }
             }
+            catch(Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+
+            return validationResults;
         }
 
-        public ICollection<int> GetAccountIdListFromPaymentHistory()
+        public ICollection<int> GetAccountIdListFromPaymentHistory(ValidationResults validationResults = null)
         {
             ICollection<int> resultList = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                var query = _DbContext.PaymentHistory.Select(x => x.AccountId)?.Distinct();
-                resultList = query?.ToList();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    var query = _DbContext.PaymentHistory.Select(x => x.AccountId)?.Distinct();
+                    resultList = query?.ToList();
+                }
             }
+            catch(Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+          
             return resultList;
         }
     }

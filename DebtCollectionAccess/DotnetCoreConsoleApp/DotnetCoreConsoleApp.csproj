@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DebtCollectionAccess\DebtCollectionAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DebtCollectionAccess">
+      <HintPath>..\DebtCollectionAccess\bin\Debug\netcoreapp2.0\DebtCollectionAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectCoreLibrary">
+      <HintPath>..\..\Output\ProjectCoreLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

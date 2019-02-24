@@ -9,7 +9,7 @@ namespace DebtCollectionAccess
         public int AccountId { get; set; }
         public long ServiceId { get; set; }
         public string PaymentMode { get; set; }
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public int? InvoiceId { get; set; }
 

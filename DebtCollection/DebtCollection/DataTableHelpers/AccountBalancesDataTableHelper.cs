@@ -10,7 +10,7 @@ namespace DebtCollection.DataTableHelpers
 {
     public static class AccountBalancesDataTableHelper
     {
-        public static DataTable GetDataTable(ICollection<AccountBalance> AccountBalanceList)
+        public static DataTable GetDataTable(ICollection<AccountBalanceManager.Contracts.AccountBalance> AccountBalanceList)
         {
             var dataTable = new DataTable();
             dataTable.Columns.Add(Constants.ID);

@@ -1,30 +1,18 @@
-﻿using DebtCollectionAccess.Operations;
+﻿using DebtCollectionAccess.Contracts;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Linq;
-using System.Text;
 
 namespace DebtCollectionAccess.Dao
 {
     public interface IAccountBalanceDao
     {
-        ICollection<AccountBalance> GetAccountBalanceList(GetAccountBalanceListRequest Request);
+        ICollection<AccountBalance> GetAccountBalanceList(GetAccountBalanceListRequest Request, ValidationResults validationResults = null);
 
-        PersistAccountBalanceListResponse persistAccountBalanceList(PersistAccountBalanceListRequest Request);
+        ValidationResults PersistAccountBalanceList(PersistAccountBalanceListRequest Request, ValidationResults validationResults = null);
     }
 
-    public class PersistAccountBalanceListRequest
-    {
-        public ICollection<AccountBalance> AccountBalanceList { get; set; }
-    }
-
-    public class PersistAccountBalanceListResponse
-    {
-
-    }
-
-    [Export(typeof(IAccountBalanceDao))]
     public class AccountBalanceDao : IAccountBalanceDao
     {
         #region Declarations
@@ -33,31 +21,56 @@ namespace DebtCollectionAccess.Dao
 
         #endregion Declarations
 
-        public ICollection<AccountBalance> GetAccountBalanceList(GetAccountBalanceListRequest Request)
+        public ICollection<AccountBalance> GetAccountBalanceList(GetAccountBalanceListRequest Request, ValidationResults validationResults = null)
         {
-            ICollection<AccountBalance> resultList;
+            ICollection<AccountBalance> resultList = null;
+            validationResults = new ValidationResults();
 
-            using (_DbContext = new DebtCollectionContext())
+            try
             {
-                var query = _DbContext.AccountBalance.AsQueryable();
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    var query = _DbContext.AccountBalance.AsQueryable();
 
-                query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
-                query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.Period.Id)) : query;
+                    query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
+                    query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.Period.Id)) : query;
 
-                resultList = query.ToList();
+                    resultList = query.ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }
+
             return resultList;
         }
-        
-        public PersistAccountBalanceListResponse persistAccountBalanceList(PersistAccountBalanceListRequest Request)
-        {
-            using (_DbContext = new DebtCollectionContext())
-            {
-                _DbContext.AccountBalance.UpdateRange(Request.AccountBalanceList);
-                _DbContext.SaveChanges();
-            }
 
-            return new PersistAccountBalanceListResponse();
+        public ValidationResults PersistAccountBalanceList(PersistAccountBalanceListRequest Request, ValidationResults validationResults = null)
+        {
+            validationResults = new ValidationResults();
+            try
+            {
+                using (_DbContext = new DebtCollectionContext())
+                {
+                    _DbContext.AccountBalance.UpdateRange(Request.AccountBalanceList);
+                    _DbContext.SaveChanges();
+                }
+            }
+            catch(Exception ex)
+            {
+                validationResults.Add(new ValidationResult
+                {
+                    ValidationMessage = ex.Message,
+                    StackTrace = ex.StackTrace
+                });
+            }          
+
+            return validationResults;
         }
     }
 }

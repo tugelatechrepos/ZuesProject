@@ -1,8 +1,7 @@
-﻿using DebtCollectionAccess.Dao;
-
+﻿using DebtCollectionAccess.Contracts;
+using DebtCollectionAccess.Dao;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Text;
 
 namespace DebtCollectionAccess.Operations
@@ -12,17 +11,6 @@ namespace DebtCollectionAccess.Operations
         PersistInvoiceResponse PersistInvoice(PersistInvoiceRequest Request);
     }
 
-    public class PersistInvoiceRequest
-    {
-        public Invoice Invoice { get; set; }
-    }
-
-    public class PersistInvoiceResponse
-    {
-        public int InvoiceId { get; set; }
-    }
-
-    [Export(typeof(IPersistInvoiceOperation))]
     public class PersistInvoiceOperation : IPersistInvoiceOperation
     {
         #region Declarations
@@ -30,7 +18,6 @@ namespace DebtCollectionAccess.Operations
         private PersistInvoiceRequest _Request;
         private PersistInvoiceResponse _Response;
 
-        [Import]
         public IInvoiceDao InvoiceDao { get; set; }
 
         #endregion Declarations
@@ -47,8 +34,7 @@ namespace DebtCollectionAccess.Operations
 
         private void persist()
         {
-            InvoiceDao.Persist(_Request.Invoice);
-
+            _Response.ValidationResults = InvoiceDao.Persist(_Request.Invoice);
             _Response.InvoiceId = _Request.Invoice.Id;
         }
     }

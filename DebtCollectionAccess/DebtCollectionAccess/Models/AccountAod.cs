@@ -7,6 +7,6 @@ namespace DebtCollectionAccess
     {
         public int Id { get; set; }
         public int AccountId { get; set; }
-        public double? Amount { get; set; }
+        public decimal? Amount { get; set; }
     }
 }

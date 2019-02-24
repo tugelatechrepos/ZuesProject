@@ -1,5 +1,7 @@
-﻿using DebtCollection.ViewModel;
+﻿using AccountBalanceManager.Client;
+using AccountBalanceManager.Operations;
 using Newtonsoft.Json;
+using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace DebtCollection.ServiceHelpers
 {
     public interface IAccountBalanceHelper
     {
-        GetAccountBalanceListResponse GetAccountBalanceList(GetAccountBalanceListRequest Request);
+        GetAccountBalanceListResponse GetAccountBalanceList(DebtCollectionAccess.Contracts.GetAccountBalanceListRequest Request);
     }
 
     public class AccountBalanceHelper : IAccountBalanceHelper
@@ -21,16 +23,19 @@ namespace DebtCollection.ServiceHelpers
 
         #endregion Declarations
 
-        public GetAccountBalanceListResponse GetAccountBalanceList(GetAccountBalanceListRequest Request)
+        public GetAccountBalanceListResponse GetAccountBalanceList(DebtCollectionAccess.Contracts.GetAccountBalanceListRequest Request)
         {
-            var daoResponse = DaoHelper.Execute(new DaoHelperRequest
-            {
-                Endpoint = @"accountBalance/list",
-                RequestBody = Request,
-                UseServiceUri = true,
-            });
+            var accountBalanceManagerProxy = IOCManager.Resolve<IAccountBalanceManagerProxy>();
+            var response = accountBalanceManagerProxy.GetAccountBalanceList(Request);
 
-            var response = JsonConvert.DeserializeObject<GetAccountBalanceListResponse>(daoResponse.data);
+            //var daoResponse = DaoHelper.Execute(new DaoHelperRequest
+            //{
+            //    Endpoint = @"accountBalance/list",
+            //    RequestBody = Request,
+            //    UseServiceUri = true,
+            //});
+
+            //var response = JsonConvert.DeserializeObject<GetAccountBalanceListResponse>(daoResponse.data);
 
             return response;
         }

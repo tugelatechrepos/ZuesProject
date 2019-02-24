@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AccountBalanceManager.Contracts;
+using DebtCollectionAccess.Contracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

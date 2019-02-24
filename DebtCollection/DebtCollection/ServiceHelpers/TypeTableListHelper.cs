@@ -1,10 +1,6 @@
-﻿using DebtCollection.ViewModel;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DebtCollectionAccess.Client;
+using DebtCollectionAccess.Contracts;
+using ProjectCoreLibrary;
 
 namespace DebtCollection.ServiceHelpers
 {
@@ -23,13 +19,16 @@ namespace DebtCollection.ServiceHelpers
 
         public GetTypeTableListResponse GetTypeTableList(GetTypeTableListRequest Request)
         {
-            var daoResponse = DaoHelper.Execute(new DaoHelperRequest
-            {
-                Endpoint = @"TableType/list",
-                RequestBody = Request
-            });
+            var accessProxy = IOCManager.Resolve<IDebtCollectionAccessProxy>();
+            var response = accessProxy.GetTypeTableList(Request);
 
-            var response = JsonConvert.DeserializeObject<GetTypeTableListResponse>(daoResponse.data);
+            //var daoResponse = DaoHelper.Execute(new DaoHelperRequest
+            //{
+            //    Endpoint = @"TableType/list",
+            //    RequestBody = Request
+            //});
+
+            //var response = JsonConvert.DeserializeObject<GetTypeTableListResponse>(daoResponse.data);
 
             return response;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AccountBalanceManager.Contracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -38,7 +39,19 @@ namespace SAPGUI
         private void bgAddPaymentHistory_DoWork(object sender, DoWorkEventArgs e)
         {
             var utilty = new PaymentHistoryDBUtility();
-            utilty.PersistData(PaymentHistoryList);
+
+            var paymentHistoryList = PaymentHistoryList.Select(x => new DebtCollectionAccess.PaymentHistory
+            {
+                Id = x.Id,
+                AccountId = x.AccountId,
+                Amount = x.Amount,
+                InvoiceId = x.InvoiceId,
+                PaymentDate = x.PaymentDate,
+                PaymentMode = x.PaymentMode,
+                ServiceId = x.ServiceId
+            }).ToList();
+
+            utilty.PersistData(paymentHistoryList);
             AcccountBalanceUtility.RegisterAccountBalances();
         }
 
