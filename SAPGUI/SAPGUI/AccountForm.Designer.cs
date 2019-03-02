@@ -125,6 +125,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(241)))), ((int)(((byte)(246)))));
             this.ClientSize = new System.Drawing.Size(800, 520);
             this.Controls.Add(this.txtAccountId);
             this.Controls.Add(this.label1);

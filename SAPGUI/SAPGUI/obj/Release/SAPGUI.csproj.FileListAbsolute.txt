@@ -172,3 +172,4 @@ D:\Shyam\ZuesProject\SAPGUI\SAPGUI\obj\Release\SAPGUI.application
 D:\Shyam\ZuesProject\SAPGUI\SAPGUI\obj\Release\SAPGUI.csproj.CopyComplete
 D:\Shyam\ZuesProject\SAPGUI\SAPGUI\obj\Release\SAPGUI.exe
 D:\Shyam\ZuesProject\SAPGUI\SAPGUI\obj\Release\SAPGUI.pdb
+D:\Shyam\ZuesProject\SAPGUI\SAPGUI\obj\Release\SAPGUI.csprojAssemblyReference.cache

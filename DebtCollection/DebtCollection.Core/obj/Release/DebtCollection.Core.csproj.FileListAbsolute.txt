@@ -7,3 +7,12 @@ D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\obj\Release\De
 D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\obj\Release\DebtCollection.Core.dll
 D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\obj\Release\DebtCollection.Core.pdb
 D:\Shyam\DebtCollectionProject\DebtCollection\DebtCollection.Core\obj\Release\DebtCollection.Core.csprojAssemblyReference.cache
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\bin\Release\DebtCollection.Core.dll
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\bin\Release\DebtCollection.Core.pdb
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\bin\Release\Autofac.dll
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\bin\Release\Autofac.xml
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Release\DebtCollection.Core.csprojAssemblyReference.cache
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Release\DebtCollection.Core.csproj.CoreCompileInputs.cache
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Release\DebtCollection.Core.csproj.CopyComplete
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Release\DebtCollection.Core.dll
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Release\DebtCollection.Core.pdb

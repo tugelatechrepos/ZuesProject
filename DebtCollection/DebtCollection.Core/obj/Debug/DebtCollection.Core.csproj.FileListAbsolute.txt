@@ -10,8 +10,8 @@ D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\bin\Debug\DebtCollection
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\bin\Debug\DebtCollection.Core.pdb
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\bin\Debug\Autofac.dll
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\bin\Debug\Autofac.xml
-D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.csprojAssemblyReference.cache
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.csproj.CoreCompileInputs.cache
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.csproj.CopyComplete
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.dll
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.pdb
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection.Core\obj\Debug\DebtCollection.Core.csprojAssemblyReference.cache

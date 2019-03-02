@@ -523,14 +523,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AccountBalanceManager.dll" size="49664">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AccountBalanceManager.dll" size="54272">
       <assemblyIdentity name="AccountBalanceManager" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>41+Pq8WF7mXIdnXbOh2btNOOYxwyBJs4eBcB4keAnkg=</dsig:DigestValue>
+        <dsig:DigestValue>0EnY9/i/AM9EuwasO/37kodvkyDSVx19lMp0jIRKjxU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -782,7 +782,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>eHbaoLNluPRBonIxBHAMLmygdCQ1Vn9/QX9DRLgiRsM=</dsig:DigestValue>
+        <dsig:DigestValue>NkItfb1JxPBvFuZbSkYiutOlMxVlQYSzEOIBYaGf37w=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -806,7 +806,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>yFx5lFy7vOayvswtWKvJeok5DHNPfoCm5KTRTALtrU0=</dsig:DigestValue>
+        <dsig:DigestValue>iZ9d/4CvtKaNrFf51K1t6neLU8ohlj2PLaMVADDF4wU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

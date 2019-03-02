@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="robot_icon.ico" />
+    <EmbeddedResource Include="WiniumDriver\Winium.Desktop.Driver.exe" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

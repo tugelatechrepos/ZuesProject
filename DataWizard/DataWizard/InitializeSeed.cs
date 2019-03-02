@@ -77,7 +77,7 @@ namespace DataWizard
                 {
                     FromDate = new DateTime(counterDate.Year, counterDate.Month, 1),
                     ToDate = new DateTime(counterDate.Year, counterDate.Month, lastDayOfTheMonth),
-                    Name = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(counterDate.Month)} Invoice Cycle"
+                    Name = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(counterDate.Month)} {counterDate.Year}"
                 };
 
                 periodList.Add(period);
@@ -112,7 +112,7 @@ namespace DataWizard
                 {
                     FromDate = counterDate,
                     ToDate = toDateOfTheMonth,
-                    Name = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(counterDate.Month)} Invoice Cycle"
+                    Name = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(counterDate.Month)} {counterDate.Month}"
                 };
 
                 _PeriodList.Add(newPeriod);

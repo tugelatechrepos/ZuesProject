@@ -14,18 +14,18 @@ namespace SAPGUI
 {
     public partial class AccountForm : Form//: MetroFramework.Forms.MetroForm
     {
-        private ICollection<PaymentHistory> _PaymentHistoryList;
+        public ICollection<PaymentHistory> PaymentHistoryList { get; set; }
 
         public AccountForm()
         {
             InitializeComponent();
-            assignData();
+            //assignData();
         }
 
         private void btnViewPaymentHistory_Click(object sender, EventArgs e)
         {
             var paymentHistoryForm = new PaymentHistoryForm();
-            paymentHistoryForm.PaymentHistoryList = _PaymentHistoryList;
+            paymentHistoryForm.PaymentHistoryList = PaymentHistoryList;
             paymentHistoryForm.execute();
             paymentHistoryForm.ShowDialog();
         }
@@ -33,15 +33,15 @@ namespace SAPGUI
         private void assignData()
         {
             var dbUtility = new PaymentHistoryDBUtility();
-            _PaymentHistoryList = dbUtility.GetData(new GetPaymentHistoryListRequest { Skip = 0, Take = 500});
-            _PaymentHistoryList = _PaymentHistoryList.OrderBy(x => x.AccountId).ThenByDescending(x => x.PaymentDate).ToList();
+            PaymentHistoryList = dbUtility.GetData(new GetPaymentHistoryListRequest { Skip = 0, Take = 500});
+            PaymentHistoryList = PaymentHistoryList.OrderBy(x => x.AccountId).ThenByDescending(x => x.PaymentDate).ToList();
         }
 
         private void btnFetch_Click(object sender, EventArgs e)
         {
             var accountId = Convert.ToInt32(txtAccountId.Text);
             
-            var filteredPaymentHistoryList = _PaymentHistoryList.Where(x => x.AccountId == accountId).ToList();
+            var filteredPaymentHistoryList = PaymentHistoryList.Where(x => x.AccountId == accountId).ToList();
 
             filteredPaymentHistoryList = filteredPaymentHistoryList.OrderByDescending(x => x.PaymentDate).ToList();
 
@@ -84,7 +84,7 @@ namespace SAPGUI
         private void btnAddPaymentHistory_Click(object sender, EventArgs e)
         {
              assignData();
-             var list = _PaymentHistoryList.GroupBy(x => x.AccountId)
+             var list = PaymentHistoryList.GroupBy(x => x.AccountId)
                 .Select(grp => new { AccountId = grp.Key, value = grp.OrderByDescending(y => y.PaymentDate).Take(5).ToList() }).ToList().SelectMany(z => z.value).ToList();
               
           

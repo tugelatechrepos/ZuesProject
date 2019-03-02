@@ -5,6 +5,8 @@ using Quellatalo.Nin.TheHands;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
+using System.Resources;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -55,6 +57,7 @@ namespace WindowsFormsApp1
 
         private void startWinium()
         {
+            //var winiumdriver = (byte[])Zues.Properties.Resources.ResourceManager.GetObject("winiumdriver");
             var applicationPath = $@"{ConfigurationManager.AppSettings["ApplicationPath"]}";
             _DesktopOptions = new DesktopOptions();
             _DesktopOptions.ApplicationPath = applicationPath;
@@ -62,12 +65,14 @@ namespace WindowsFormsApp1
             _Service = WiniumDriverService.CreateDefaultService(driverPath, "Winium.Desktop.Driver.exe");
             _Service.Port = 9999;
             _Service.HideCommandPromptWindow = true;
-           
 
+            
             _WiniumDriver = new WiniumDriver(_Service, _DesktopOptions);
             //_WiniumDriver = new WiniumDriver(driverPath, _DesktopOptions);
             Thread.Sleep(3000);
         }
+
+
 
         private void start()
         {
@@ -126,7 +131,7 @@ namespace WindowsFormsApp1
                 Thread.Sleep(sleepTime);
             }
 
-            
+            _Service.Dispose();
             _WiniumDriver.Close();
             
         }

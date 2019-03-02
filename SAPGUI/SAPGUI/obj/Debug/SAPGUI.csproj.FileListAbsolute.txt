@@ -173,4 +173,3 @@ D:\Shyam\ZuesProject\SAPGUI\SAPGUI\bin\Debug\System.ValueTuple.xml
 D:\Shyam\ZuesProject\SAPGUI\SAPGUI\obj\Debug\SAPGUI.exe.manifest
 D:\Shyam\ZuesProject\SAPGUI\SAPGUI\obj\Debug\SAPGUI.application
 D:\Shyam\ZuesProject\SAPGUI\SAPGUI\obj\Debug\SAPGUI.csproj.CopyComplete
-D:\Shyam\ZuesProject\SAPGUI\SAPGUI\obj\Debug\SAPGUI.csprojAssemblyReference.cache

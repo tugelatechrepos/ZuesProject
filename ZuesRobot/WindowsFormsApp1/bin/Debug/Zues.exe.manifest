@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Zues.exe" size="161760">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Zues.exe" size="2811360">
       <assemblyIdentity name="Zues" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>menSFjefaS2foc0p44YX+vQbNW6WIzQ3rbB0zQOm1Tw=</dsig:DigestValue>
+        <dsig:DigestValue>pM5ZPRUUpDYCzporDlvqghk6Yx01p0Yx3dOrzUKNuQM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

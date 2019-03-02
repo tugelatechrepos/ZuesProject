@@ -72,10 +72,11 @@ namespace DebtCollection
         private void btnAdd_Click(object sender, EventArgs e)
         {
             int rowNumber = dgvPeriod.Rows.Add();
-            dgvPeriod.Rows[rowNumber].Cells[1].Value = dtFromDate.Value.ToString("dd/MM/yyyy");
-            dgvPeriod.Rows[rowNumber].Cells[2].Value = dtToDate.Value.ToString("dd/MM/yyyy");
-            dgvPeriod.Rows[rowNumber].Cells[3].Value = dtRunDate.Value.ToString("dd/MM/yyyy");
-            dgvPeriod.Rows[rowNumber].Cells[4].Value = txtBoxDescription.Text;
+
+            dgvPeriod.Rows[rowNumber].Cells[1].Value = txtBoxDescription.Text;
+            dgvPeriod.Rows[rowNumber].Cells[2].Value = dtFromDate.Value.ToString("dd/MM/yyyy");
+            dgvPeriod.Rows[rowNumber].Cells[3].Value = dtToDate.Value.ToString("dd/MM/yyyy");
+            dgvPeriod.Rows[rowNumber].Cells[4].Value = dtRunDate.Value.ToString("dd/MM/yyyy");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -295,11 +296,14 @@ namespace DebtCollection
             if (paymentHistoryListResponse.PaymentHistoryList == null || !paymentHistoryListResponse.PaymentHistoryList.Any())
             { MessageBox.Show("No Actuals found for this date", "Payment List", MessageBoxButtons.OK); rptPaymentHistoy.Visible = false; return; }
 
-            var paymentHistoryDataTable = PaymentHistoryDataTableHelper.GetDataTable(paymentHistoryListResponse.PaymentHistoryList,true);
+            var paymentHistoryList = paymentHistoryListResponse.PaymentHistoryList.OrderBy(x => x.AccountId).ThenByDescending(x => x.PaymentDate).ToList();
+
+            var paymentHistoryDataTable = PaymentHistoryDataTableHelper.GetDataTable(paymentHistoryList, true);
             rptPaymentHistoy.Visible = true;
             rptPaymentHistoy.LocalReport.DataSources.Clear();
             var paymentHistoryDataSource = new ReportDataSource("PaymentHistory", paymentHistoryDataTable);
             rptPaymentHistoy.LocalReport.DataSources.Add(paymentHistoryDataSource);
+            rptPaymentHistoy.LocalReport.ReportEmbeddedResource = "DebtCollection.PaymentHistoryReport.rdlc";
             rptPaymentHistoy.LocalReport.Refresh();
             rptPaymentHistoy.RefreshReport();
         }

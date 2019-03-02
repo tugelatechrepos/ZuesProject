@@ -799,14 +799,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SAPGUI.exe" size="75232">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SAPGUI.exe" size="76768">
       <assemblyIdentity name="SAPGUI" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>G5KTrdAGZXfU/6o6sHHFTO2s2rIIRQrNe8Jg5VZeDA0=</dsig:DigestValue>
+        <dsig:DigestValue>2idFKY4hO5jto4bT0iUlZAiAu5s83DM3Pgy8My6Rl4Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

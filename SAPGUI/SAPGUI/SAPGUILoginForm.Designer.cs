@@ -35,7 +35,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSubmit = new MetroFramework.Controls.MetroButton();
+            this.pnlSAPLoading = new System.Windows.Forms.Panel();
+            this.lblSAPLoading = new System.Windows.Forms.Label();
+            this.bgSAPLoad = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pnlSAPLoading.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -101,11 +105,38 @@
             this.btnSubmit.UseSelectable = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
+            // pnlSAPLoading
+            // 
+            this.pnlSAPLoading.Controls.Add(this.lblSAPLoading);
+            this.pnlSAPLoading.Location = new System.Drawing.Point(555, 264);
+            this.pnlSAPLoading.Name = "pnlSAPLoading";
+            this.pnlSAPLoading.Size = new System.Drawing.Size(200, 49);
+            this.pnlSAPLoading.TabIndex = 12;
+            this.pnlSAPLoading.Visible = false;
+            // 
+            // lblSAPLoading
+            // 
+            this.lblSAPLoading.AutoSize = true;
+            this.lblSAPLoading.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSAPLoading.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblSAPLoading.Location = new System.Drawing.Point(13, 19);
+            this.lblSAPLoading.Name = "lblSAPLoading";
+            this.lblSAPLoading.Size = new System.Drawing.Size(172, 14);
+            this.lblSAPLoading.TabIndex = 0;
+            this.lblSAPLoading.Text = "Loading SAP.. Please Wait";
+            // 
+            // bgSAPLoad
+            // 
+            this.bgSAPLoad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgSAPLoad_DoWork);
+            this.bgSAPLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgSAPLoad_RunWorkerCompleted);
+            // 
             // SAPGUILoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(241)))), ((int)(((byte)(246)))));
             this.ClientSize = new System.Drawing.Size(880, 529);
+            this.Controls.Add(this.pnlSAPLoading);
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -117,6 +148,8 @@
             this.Text = "SAP GUI";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pnlSAPLoading.ResumeLayout(false);
+            this.pnlSAPLoading.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,6 +163,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private MetroFramework.Controls.MetroButton btnSubmit;
+        private System.Windows.Forms.Panel pnlSAPLoading;
+        private System.Windows.Forms.Label lblSAPLoading;
+        private System.ComponentModel.BackgroundWorker bgSAPLoad;
     }
 }
 
