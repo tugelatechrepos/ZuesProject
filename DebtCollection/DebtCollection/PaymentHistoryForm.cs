@@ -23,7 +23,7 @@ namespace DebtCollection
         public void Execute()
         {
             assignPaymentHistoryListDataTable();
-            styleGrid(dgvPaymentHistory,30);
+            StyleGridHelper.StyleGrid(dgvPaymentHistory,30);
         }
 
         private void assignPaymentHistoryListDataTable()
@@ -52,32 +52,6 @@ namespace DebtCollection
 
             dgvPaymentHistory.DataSource = dataTable;
         }
-
-        private void styleGrid(DataGridView dataGridView, int? ColumnHeight = null)
-        {
-            dataGridView.BorderStyle = BorderStyle.FixedSingle;
-            dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
-
-            dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridView.DefaultCellStyle.SelectionBackColor = Color.DarkTurquoise;
-            dataGridView.DefaultCellStyle.SelectionForeColor = Color.WhiteSmoke;
-            dataGridView.BackgroundColor = Color.White;
-
-            dataGridView.EnableHeadersVisualStyles = false;
-            dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
-            dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-
-            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView.RowTemplate.Height = 20;
-
-            if (ColumnHeight.HasValue)
-                dataGridView.ColumnHeadersHeight = ColumnHeight.Value;
-
-            dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 9F, FontStyle.Bold);
-
-            dataGridView.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-        }
+       
     }
 }

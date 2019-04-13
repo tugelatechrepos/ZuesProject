@@ -20,6 +20,8 @@ namespace AccountBalanceManagerService.Processor
         public ICollection<Period> PeriodList { get; set; } 
 
         public Period CurrentPeriod { get; set; }
+
+        public int CompanyId { get; set; }
     }
 
     public class CreateAccountBalanceListResponse
@@ -209,8 +211,9 @@ namespace AccountBalanceManagerService.Processor
             int Take = 1000;
             do
             {
+                _AccountBalanceList.ForEach(x => x.CompanyId = _Request.CompanyId);
                 var listToPersist = _AccountBalanceList.Skip(Skip).Take(Take).ToList();
-
+                listToPersist.ForEach(x => x.CompanyId = _Request.CompanyId);
                 var response = DebtCollectionAccessProxy.PersistAccountBalanceList(new PersistAccountBalanceListRequest
                 {
                     AccountBalanceList = listToPersist

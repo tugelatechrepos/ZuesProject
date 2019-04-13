@@ -21,13 +21,11 @@ namespace DebtCollection
         #region Declarations
 
         private ICollection<DebtCollectionAccess.Period> _PeriodList;
-        private List<ViewModel.AccountBalance> _AccountBalanceList;
         private List<int> _AccountIdList;
         private DebtCollectionAccess.Period _CurrentPeriod;
         private DebtCollectionAccess.Period _PreviousPeriod;
-        private ICollection<DebtCollectionAccess.Invoice> _InvoiceList;
-        private ICollection<AccountBalanceManager.Contracts.InvoiceDetail> _InvoiceDetailList;
         private ICollection<AccountBalanceManager.Contracts.PeriodDetail> _PeriodReadinessDetailList;
+        private const int COMPANY_ID = 3;
 
         public IPeriodHelper Periodhelper { get; set; }
         public IInvoiceHelper InvoiceHelper { get; set; }
@@ -51,8 +49,11 @@ namespace DebtCollection
             Accent.Blue400, TextShade.BLACK);
 
             materialTabSelector1.BaseTabControl.TabPages.Remove(tabGenerateInvoice);
+            materialTabSelector1.BaseTabControl.TabPages.Remove(tabInvoices);
 
-            materialTabSelector1.Width = 480;
+            materialTabSelector1.Width = 380;
+
+            //materialTabSelector1.Width = 560;
             for (int i = 0; i < materialTabSelector1.BaseTabControl.TabPages.Count; i++)
             {
                 materialTabSelector1.BaseTabControl.TabPages[i].TabIndex = i;
@@ -67,17 +68,7 @@ namespace DebtCollection
             TypeTableListHelper = IOCManager.Resolve<ITypeTableListHelper>();
             CommissionHelper = IOCManager.Resolve<ICommissionHelper>();
             AccountBalanceHelper = IOCManager.Resolve<IAccountBalanceHelper>();            
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            int rowNumber = dgvPeriod.Rows.Add();
-
-            dgvPeriod.Rows[rowNumber].Cells[1].Value = txtBoxDescription.Text;
-            dgvPeriod.Rows[rowNumber].Cells[2].Value = dtFromDate.Value.ToString("dd/MM/yyyy");
-            dgvPeriod.Rows[rowNumber].Cells[3].Value = dtToDate.Value.ToString("dd/MM/yyyy");
-            dgvPeriod.Rows[rowNumber].Cells[4].Value = dtRunDate.Value.ToString("dd/MM/yyyy");
-        }
+        }     
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -88,10 +79,8 @@ namespace DebtCollection
         
         private void styleGrids()
         {
-            styleGrid(dgvPeriod);
-            styleGrid(dgvPeriodDetail);
-            styleGrid(dgvAccountBalance, 30);
-            styleGrid(dgvInvoiceList);
+            StyleGridHelper.StyleGrid(dgvPeriodDetail);
+            StyleGridHelper.StyleGrid(dgvAccountBalance,30);
         }
 
         private void assignCurrentPeriod()
@@ -110,89 +99,28 @@ namespace DebtCollection
             _PreviousPeriod = _PeriodList.Where(x => x.ToDate < _CurrentPeriod.FromDate)?.OrderByDescending(x => x.ToDate)?.FirstOrDefault();
         }
 
-        private void setLabelForCurrentPeriod()
-        {
-            if (_PeriodReadinessDetailList == null || !_PeriodReadinessDetailList.Any()) return;
-            var periodDetail = _PeriodReadinessDetailList.FirstOrDefault(x => x.PeriodId == _CurrentPeriod.Id);
-            if (periodDetail == null || !periodDetail.Readiness) return;
-
-            btnGenerateInvoice.Enabled = true;          
-            lblCurrentPeriod.Text = $"for current period {_CurrentPeriod.FromDate.ToString("dd/MM/yyyy")} - {_CurrentPeriod.ToDate.ToString("dd/MM/yyyy")}";
-        }
-
-        private void styleGrid(DataGridView dataGridView , int? ColumnHeight = null)
-        {
-            dataGridView.BorderStyle = BorderStyle.FixedSingle;
-            dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(238, 239, 249);
-            dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridView.DefaultCellStyle.SelectionBackColor = Color.DarkTurquoise;
-            dataGridView.DefaultCellStyle.SelectionForeColor = Color.WhiteSmoke;
-            dataGridView.BackgroundColor = Color.White;
-
-            dataGridView.EnableHeadersVisualStyles = false;
-            dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(20, 25, 72);
-            dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-
-            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView.RowTemplate.Height = 20;
-
-            if (ColumnHeight.HasValue)
-                dataGridView.ColumnHeadersHeight = ColumnHeight.Value;
-
-            //dgvPeriod.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 9F, FontStyle.Bold);
-
-            dataGridView.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-        }             
-
         private void loadPeriodList()
         {
             if (!periodLoadBackgroundWorker.IsBusy)
             {
-                pbLoading.Visible = true;
+                pbPeriodDetailLoading.Visible = true;
                 periodLoadBackgroundWorker.RunWorkerAsync();
             }
         }
 
         private void periodLoadBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var response = Periodhelper.GetPeriodList(new DebtCollectionAccess.Contracts.GetPeriodListRequest());
+            var response = Periodhelper.GetPeriodList(new DebtCollectionAccess.Contracts.GetPeriodListRequest { CompanyId = COMPANY_ID });
             _PeriodList = response.PeriodList;
 
             assignPeriodReadinessDetail();
         }
-
-        private void SavePeriod_Click(object sender, EventArgs e)
-        {
-            var periodList = new List<DebtCollectionAccess.Period>();
-
-            foreach (DataGridViewRow periodRow in dgvPeriod.Rows)
-            {
-                var period = new DebtCollectionAccess.Period
-                {
-                    Id = periodRow.Cells[0].Value == null ? 0 : Convert.ToInt32(periodRow.Cells[0].Value),
-                    FromDate = DateTime.ParseExact(Convert.ToString(periodRow.Cells[2].Value), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None),
-                    ToDate = DateTime.ParseExact(Convert.ToString(periodRow.Cells[3].Value), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None),
-                    Name = Convert.ToString(periodRow.Cells[1].Value),
-                    RunDate = !string.IsNullOrEmpty(Convert.ToString(periodRow.Cells[4].Value)) ? DateTime.ParseExact(periodRow.Cells[4].Value.ToString(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None) : (DateTime?)null,
-                };
-                periodList.Add(period);
-            }
-
-            var response = Periodhelper.PeristPeriodList(new DebtCollectionAccess.Contracts.PersistPeriodListRequest { PeriodList = periodList });        
-
-            MessageBox.Show("Saved successfully", "Save Period", MessageBoxButtons.OK);
-
-            btnReloadPeriod_Click(null, null);
-        }     
-
+      
         private void btnReloadPeriod_Click(object sender, EventArgs e)
         {
             if (!periodLoadBackgroundWorker.IsBusy)
             {
-                pbLoading.Visible = true;
+                pbPeriodDetailLoading.Visible = true;
                 pbPeriodDetailLoading.Visible = true;
                 periodLoadBackgroundWorker.RunWorkerAsync();
             }
@@ -200,12 +128,9 @@ namespace DebtCollection
 
         private void periodLoadBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            pbLoading.Visible = false;
             pbPeriodDetailLoading.Visible = false;
 
             if (_PeriodList == null || !_PeriodList.Any()) return;
-
-            dgvPeriod.Rows.Clear();
 
             var periodList = _PeriodList;
 
@@ -213,21 +138,8 @@ namespace DebtCollection
             cmbSelectAbPeriod.DisplayMember = "Name";
             cmbSelectAbPeriod.ValueMember = "Id";
 
-            foreach (var period in _PeriodList)
-            {
-                var rowNumber = dgvPeriod.Rows.Add();
-                dgvPeriod.Rows[rowNumber].Cells[0].Value = period.Id;
-                dgvPeriod.Rows[rowNumber].Cells[1].Value = period.Name;
-                dgvPeriod.Rows[rowNumber].Cells[2].Value = period.FromDate.ToString("dd/MM/yyyy");
-                dgvPeriod.Rows[rowNumber].Cells[3].Value = period.ToDate.ToString("dd/MM/yyyy");
-                dgvPeriod.Rows[rowNumber].Cells[4].Value = period.RunDate.HasValue ? period.RunDate.Value.ToString("dd/MM/yyyy") : null;
-                
-            }
-
             assignCurrentPeriod();
-            setLabelForCurrentPeriod();
             bindDataToPeriodDetailGrid();
-            getInvoiceList();
         }
 
         private void bindDataToPeriodDetailGrid()
@@ -237,8 +149,15 @@ namespace DebtCollection
             pnlLegend.Visible = true;           
             dgvPeriodDetail.Visible = true;
 
+            dgvPeriodDetail.Columns.Clear();
             var dataTable = PeriodDetailDataTableHelper.GetDataTable(_PeriodReadinessDetailList);
             dgvPeriodDetail.DataSource = dataTable;
+            var btn = new DataGridViewButtonColumn();
+            btn.HeaderText = Constants.INVOICE_BUTTON;
+            btn.Text = "Preview Invoice";
+            btn.Name = "PreviewInvoice";
+            btn.UseColumnTextForButtonValue = true;
+            dgvPeriodDetail.Columns.Add(btn);           
         }
 
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -260,7 +179,7 @@ namespace DebtCollection
                     break;
 
                 case "tabInvoices":
-                    setLabelForCurrentPeriod();
+                    
                     break;
 
                 case "tabAccountBalance":
@@ -291,6 +210,7 @@ namespace DebtCollection
                 AccountIdList = (AccountIdValue.HasValue && AccountIdValue != 0) ? new List<int> { AccountIdValue.Value } : null,
                 FromDate = fromDate,
                 ToDate = toDate,
+                CompanyId = COMPANY_ID
             });       
 
             if (paymentHistoryListResponse.PaymentHistoryList == null || !paymentHistoryListResponse.PaymentHistoryList.Any())
@@ -308,20 +228,10 @@ namespace DebtCollection
             rptPaymentHistoy.RefreshReport();
         }
 
-        private void getInvoiceList()
-        {
-            if (!bgGetInvoiceList.IsBusy)
-            {
-                pbLoading.Visible = true;
-                bgGetInvoiceList.RunWorkerAsync();
-            }
-        }
-
         private void assignAccountIdList()
         {
             if (!accountIdListbgWorker.IsBusy)
             {
-                pbLoading.Visible = true;
                 accountIdListbgWorker.RunWorkerAsync();
             }
         }
@@ -336,7 +246,6 @@ namespace DebtCollection
         {
             if (_AccountIdList == null || !_AccountIdList.Any()) return;
 
-            pbLoading.Visible = false;
 
             var itemList = new List<string> { "--All--" };
 
@@ -345,113 +254,7 @@ namespace DebtCollection
             itemList.AddRange(accountIdListString);
 
             cmbAccountId.DataSource = itemList;
-        }
-
-        private void btnGenerateInvoice_Click(object sender, EventArgs e)
-        {
-            if (!bgGenerateInvoice.IsBusy)
-            {
-                pbLoading.Visible = true;
-                lblGenerateInvoiceStatus.Text = "Generating Invoice. Please wait..";
-                bgGenerateInvoice.RunWorkerAsync();
-            }
-        }
-
-        private void dgvInvoiceList_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex == -1) return;
-
-            var selectedRow = dgvInvoiceList.Rows[e.RowIndex];
-            var invoiceId = Convert.ToInt32(selectedRow.Cells[0].Value);
-
-            var response = InvoiceHelper.GetInvoiceList(new DebtCollectionAccess.Contracts.GetInvoiceListRequest { InvoiceIdList = new List<int> { invoiceId } });
-
-            var invoiceDetail = response.InvoiceDetailList.FirstOrDefault();          
-
-            using (var invoicePreviewForm = new InvoicePreview())
-            {
-                invoicePreviewForm.InvoiceDataPreviewRequest = new InvoiceDataPreviewRequest
-                {
-                 InvoiceDetail = invoiceDetail,
-                 InvoiceHelper = InvoiceHelper,
-                };
-
-                invoicePreviewForm.newExecute();
-                invoicePreviewForm.ShowDialog();
-            }
-
-            getInvoiceList();
-        }
-
-        private void bgGenerateInvoice_DoWork(object sender, DoWorkEventArgs e)
-        {
-            var response = InvoiceHelper.GenerateInvoice();
-        }
-
-        private void bgGenerateInvoice_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            pbLoading.Visible = false;
-            lblGenerateInvoiceStatus.Text = string.Empty;
-            MessageBox.Show("Invoice generated successfully", "Generate Invoice", MessageBoxButtons.OK);
-
-            getInvoiceList();
-        }
-
-        private void bgGetInvoiceList_DoWork(object sender, DoWorkEventArgs e)
-        {
-            if (_CurrentPeriod == null) return;
-
-            var response = InvoiceHelper.GetInvoiceList(new DebtCollectionAccess.Contracts.GetInvoiceListRequest
-            {
-                FromDate = _CurrentPeriod.FromDate,
-                ToDate = _CurrentPeriod.ToDate,
-            });           
-
-            _InvoiceList = response.InvoiceList;
-            _InvoiceDetailList = response.InvoiceDetailList;
-        }
-
-        private void bgGetInvoiceList_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            pbLoading.Visible = false;
-
-            if (_InvoiceDetailList == null || !_InvoiceDetailList.Any()) return;
-            List<InvoiceDataForGrid> InvoiceDataForGridList = new List<InvoiceDataForGrid>();
-
-            foreach(var invoiceDetail in _InvoiceDetailList)
-            {
-                var count = invoiceDetail.InvoiceLineItemList.Count();
-                var invoiceLineItem = invoiceDetail.InvoiceLineItemList.OrderByDescending(y => y.PeriodId).FirstOrDefault();
-                var expenseTotal = invoiceDetail.ExpenseList?.Sum(x => x.TotalAmount) ?? 0.0M ;
-                var invoiceId = invoiceDetail.InvoiceId;
-                var date = invoiceDetail.GeneratedOn;
-                var Yield = invoiceDetail.InvoiceLineItemList.Sum(x=> x.Yield)/ count;
-                var Commission = invoiceDetail.InvoiceLineItemList.Sum(x=> x.CommissionPercentage)/ count;
-                var totalOpeningBal = invoiceDetail.InvoiceLineItemList.Sum(x=>x.TotalOpeningBalance);
-                var totalPaid = invoiceDetail.InvoiceLineItemList.Sum(x=>x.TotalPaid);
-                var InvoiceTotal = invoiceDetail.InvoiceLineItemList.Sum(x => x.Amount) + expenseTotal ;
-
-                var invoiceDataForGrid = new InvoiceDataForGrid
-                {
-                    Id = invoiceId,
-                    Date = date,
-                    TotalOpeningBalance = totalOpeningBal,
-                    TotalPaid = totalPaid,
-                    YieldPercentage = $"{Math.Round(Yield, 2, MidpointRounding.AwayFromZero)}",
-                    CommisionOnYield = Commission,
-                    InvoiceTotal = InvoiceTotal
-                };
-
-                InvoiceDataForGridList.Add(invoiceDataForGrid);
-            }
-          
-            var dataTable = InvoiceDataTableHelper.GetInvoiceDataTable(InvoiceDataForGridList);
-
-            dgvInvoiceList.Visible = true;
-            dgvInvoiceList.DataSource = dataTable;
-
-            btnGenerateInvoice.Text = "Re-Generate Invoice";
-        }
+        }     
 
         private void cmbSelectAbPeriod_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -460,7 +263,8 @@ namespace DebtCollection
 
             var response = AccountBalanceHelper.GetAccountBalanceList(new DebtCollectionAccess.Contracts.GetAccountBalanceListRequest
             {
-                PeriodIdList = new List<int> { periodId }
+                PeriodIdList = new List<int> { periodId },
+                CompanyId = COMPANY_ID,
             });
         
             if (response.AccountBalanceList == null || !response.AccountBalanceList.Any()) return;
@@ -477,7 +281,7 @@ namespace DebtCollection
         {
             if (_PeriodList == null || !_PeriodList.Any()) return;
 
-            var response = Periodhelper.GetPeriodDetail(new AccountBalanceManager.Contracts.GetPeriodDetailListRequest());
+            var response = Periodhelper.GetPeriodDetail(new AccountBalanceManager.Contracts.GetPeriodDetailListRequest { CompanyId = COMPANY_ID});
 
            _PeriodReadinessDetailList = response.PeriodDetailList;            
         }
@@ -498,7 +302,8 @@ namespace DebtCollection
             {
                 AccountIdList = new List<int> { accountId },
                 FromDate = period.FromDate,
-                ToDate = period.ToDate
+                ToDate = period.ToDate,
+                CompanyId = COMPANY_ID
             });
 
             var paymentHistoryList = response.PaymentHistoryList;
@@ -518,6 +323,10 @@ namespace DebtCollection
 
         private void dgvAccountBalance_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+
+            dgvAccountBalance.Columns[Constants.ID].Visible = false;
+            dgvAccountBalance.Columns[Constants.OWNER_NAME].Visible = false;
+
             foreach (DataGridViewRow row in dgvAccountBalance.Rows)
             {
                 var isPaymentMissedCell = Convert.ToString(row.Cells[Constants.IS_PAYMENT_MISSED].Value);
@@ -533,19 +342,19 @@ namespace DebtCollection
 
                 if (isPaymentMissed.HasValue && isPaymentMissed.Value)
                 {
-                    row.Cells[Constants.ACCOUNT_STATUS].Style.BackColor = Color.Red;
+                    row.Cells[Constants.ACCOUNT_STATUS].Style.BackColor = (Color)new ColorConverter().ConvertFromString("#cc3232");
                     continue;
                 }
 
                 if (isPartialPayment.HasValue && isPartialPayment.Value)
                 {
-                    row.Cells[Constants.ACCOUNT_STATUS].Style.BackColor = Color.Yellow;
+                    row.Cells[Constants.ACCOUNT_STATUS].Style.BackColor = (Color)new ColorConverter().ConvertFromString("#e7b416");
                     continue;
                 }
 
                 if (isRemainingBalanceCell == 0.0M  ||  (totalPaid >= AOD))
                 {
-                    row.Cells[Constants.ACCOUNT_STATUS].Style.BackColor = Color.LightGreen;
+                    row.Cells[Constants.ACCOUNT_STATUS].Style.BackColor = (Color)new ColorConverter().ConvertFromString("#2dc937");
                     continue;
                 }
 
@@ -563,11 +372,39 @@ namespace DebtCollection
         {
             if (dgvPeriodDetail.Rows == null || dgvPeriodDetail.Rows.Count == 0) return;
 
+            dgvPeriodDetail.Columns[Constants.PERIOD_ID].Visible = false;
+
             foreach (DataGridViewRow row in dgvPeriodDetail.Rows)
             {
-                bool readiness = Convert.ToString(row.Cells[Constants.READINESS].Value) == "Yes" ? true : false;
+                bool readiness = Convert.ToString(row.Cells[Constants.TARGET_METRIC].Value) == "Yes" ? true : false;
 
-                row.Cells[Constants.READINESS].Style.BackColor = readiness ? Color.LightGreen : Color.Red;
+                row.Cells[Constants.TARGET_METRIC].Style.BackColor = readiness ? (Color)new ColorConverter().ConvertFromString("#2dc937") : (Color)new ColorConverter().ConvertFromString("#cc3232");
+            }
+
+           
+        }
+
+        private void dgvPeriodDetail_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1) return;
+
+            if (e.ColumnIndex == dgvPeriodDetail.Columns["PreviewInvoice"].Index)
+            {
+                var periodId = Convert.ToInt32(dgvPeriodDetail[Constants.PERIOD_ID, e.RowIndex].Value);
+
+                if(periodId == _CurrentPeriod.Id)
+                {
+                    MessageBox.Show("You cannot preview Invoice for Current Period","Generate Invoice",MessageBoxButtons.OK);
+                    return;
+                }
+
+                var invoiceForm = new frmInvoice();
+                invoiceForm.PeriodId = periodId;
+                invoiceForm.PeriodHelper = Periodhelper;
+                invoiceForm.InvoiceHelper = InvoiceHelper;
+                invoiceForm.CompanyId = COMPANY_ID;
+                invoiceForm.Execute();
+                invoiceForm.ShowDialog();
             }
         }
     }

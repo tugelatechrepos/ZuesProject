@@ -26,6 +26,7 @@ namespace DataWizard
         private List<AccountDayServiceAmount> _AccountDayServiceAmountList;
         private ICollection<int> _AccountIdList = new List<int> { 135216, 131613, 142502, 142238, 140022 };
         private ICollection<PaymentHistory> _PaymentHistoryList;
+        private const int COMPANY_ID = 3;
 
         public ICollection<PaymentHistory> GetpaymentHistoryListData()
         {
@@ -147,7 +148,8 @@ namespace DataWizard
                     PaymentDate = new DateTime(Date.Year, Date.Month, dayServiceAmount.Day),
                     ServiceId = dayServiceAmount.ServiceId,
                     Amount = dayServiceAmount.Amount,
-                    PaymentMode = "Manual Payment"
+                    PaymentMode = "Manual Payment",
+                    CompanyId = COMPANY_ID
                 });
             }
         }

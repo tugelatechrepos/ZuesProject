@@ -10,10 +10,10 @@ namespace DataWizard
 {
     public class AcccountBalanceUtility
     {
-        public static void RegisterAccountBalances()
+        public static void RegisterAccountBalances(int CompanyId)
         {
             var accountBalanceManagerProxy = IOCManager.Resolve<IAccountBalanceManagerProxy>();
-            var response = accountBalanceManagerProxy.MaintainAccountBalance();
+            var response = accountBalanceManagerProxy.MaintainAccountBalance(new AccountBalanceManager.Contracts.MaintainAccountBalanceRequest { CompanyId = CompanyId });
             //var daoHelper = new DaoHelper();
             //var response = daoHelper.Execute(new DaoHelperRequest
             //{

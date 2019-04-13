@@ -523,14 +523,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AccountBalanceManager.dll" size="54272">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AccountBalanceManager.dll" size="52736">
       <assemblyIdentity name="AccountBalanceManager" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0EnY9/i/AM9EuwasO/37kodvkyDSVx19lMp0jIRKjxU=</dsig:DigestValue>
+        <dsig:DigestValue>NLpNAffNiOSUFomyim786XQGyAcVqbDoPLXX6XgO5zM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -547,26 +547,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DataWizard.exe" size="77280">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DataWizard.exe" size="77792">
       <assemblyIdentity name="DataWizard" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Phzs+Ze70PPtXy3Yb3/WYtUSDAFw+EpKyQQUrr3r228=</dsig:DigestValue>
+        <dsig:DigestValue>+BMx04ndWS2GZGr6OnEKGnbwwA6S5P7RcYqzAWWXFNw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DebtCollectionAccess.dll" size="67584">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DebtCollectionAccess.dll" size="77824">
       <assemblyIdentity name="DebtCollectionAccess" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>PhFdPYhkmZNxjH/LNjyK/9mos+FC3scd4vsBEjHf4i4=</dsig:DigestValue>
+        <dsig:DigestValue>//E6DSeHFDS5dF96WPFJIlD0uLIDnkX4Ufs//BpyWXE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

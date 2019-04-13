@@ -1,4 +1,7 @@
-﻿namespace DebtCollectionAccess
+﻿using System;
+using System.Collections.Generic;
+
+namespace DebtCollectionAccess
 {
     public partial class AccountOpeningBalance
     {

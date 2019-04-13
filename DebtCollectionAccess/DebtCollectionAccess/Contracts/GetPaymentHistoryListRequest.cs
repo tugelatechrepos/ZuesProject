@@ -17,5 +17,7 @@ namespace DebtCollectionAccess.Contracts
         public int Skip { get; set; }
 
         public int Take { get; set; }
+
+        public int CompanyId { get; set; }
     }
 }

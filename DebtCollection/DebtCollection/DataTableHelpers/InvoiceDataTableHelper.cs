@@ -17,8 +17,8 @@ namespace DebtCollection.DataTableHelpers
             dataTable.Columns.Add(Constants.DATE);
             dataTable.Columns.Add(Constants.OPENING_BALANCE);
             dataTable.Columns.Add(Constants.TOTAL_PAID);
-            dataTable.Columns.Add(Constants.AVERAGE_YIELD_PERCENTAGE);
-            dataTable.Columns.Add(Constants.AVERAGE_COMMISSION_PERCENTAGE);
+            dataTable.Columns.Add(Constants.YIELD_PERCENTAGE);
+            dataTable.Columns.Add(Constants.COMMISSION_PERCENTAGE);
             dataTable.Columns.Add(Constants.INVOICE_TOTAL);
 
             if(InvoiceList != null && InvoiceList.Any())
@@ -30,8 +30,8 @@ namespace DebtCollection.DataTableHelpers
                     dataRow[Constants.DATE] = invoice.Date.ToString("dd/MM/yyyy");
                     dataRow[Constants.OPENING_BALANCE] = Math.Round(invoice.TotalOpeningBalance, 2, MidpointRounding.AwayFromZero);
                     dataRow[Constants.TOTAL_PAID] = Math.Round(invoice.TotalPaid, 2, MidpointRounding.AwayFromZero);
-                    dataRow[Constants.AVERAGE_YIELD_PERCENTAGE] = invoice.YieldPercentage;
-                    dataRow[Constants.AVERAGE_COMMISSION_PERCENTAGE] = $"{ Math.Round(invoice.CommisionOnYield, 2, MidpointRounding.AwayFromZero)}";
+                    dataRow[Constants.YIELD_PERCENTAGE] = invoice.YieldPercentage;
+                    dataRow[Constants.COMMISSION_PERCENTAGE] = $"{ Math.Round(invoice.CommisionOnYield, 2, MidpointRounding.AwayFromZero)}";
                     dataRow[Constants.INVOICE_TOTAL] = Math.Round(invoice.InvoiceTotal, 2, MidpointRounding.AwayFromZero);
 
                     dataTable.Rows.Add(dataRow);

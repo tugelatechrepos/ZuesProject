@@ -58,11 +58,13 @@
   <ItemGroup>
     <Compile Include="Client\AccountBalanceManagerProxy.cs" />
     <Compile Include="Contracts\AccountBalance.cs" />
+    <Compile Include="Contracts\GenerateInvoiceRequest.cs" />
     <Compile Include="Contracts\GenerateInvoiceResponse.cs" />
     <Compile Include="Contracts\GetInvoiceListResponse.cs" />
     <Compile Include="Contracts\GetPeriodDetailListRequest.cs" />
     <Compile Include="Contracts\GetPeriodDetailListResponse.cs" />
     <Compile Include="Contracts\InvoiceDetail.cs" />
+    <Compile Include="Contracts\MaintainAccountBalanceRequest.cs" />
     <Compile Include="Contracts\MaintainAccountBalanceResponse.cs" />
     <Compile Include="Contracts\PaymentHistory.cs" />
     <Compile Include="Contracts\PeriodDetail.cs" />

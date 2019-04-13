@@ -13,5 +13,7 @@ namespace DebtCollectionAccess.Contracts
         public DateTime? ToDate { get; set; }
 
         public ICollection<int> PeriodIdList { get; set; }
+
+        public int CompanyId { get; set; }
     }
 }

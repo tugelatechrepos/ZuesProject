@@ -31,7 +31,11 @@ namespace DebtCollectionAccess.Dao
                 using (_DbContext = new DebtCollectionContext())
                 {
                     var query = _DbContext.Period.AsQueryable();
+
+                    query = Request.CompanyId != 0 ? query.Where(x => x.CompanyId == Request.CompanyId) : query;
                     query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.Id)) : query;
+
+                    if (Request.CompanyId == 0 && (Request.PeriodIdList == null || !Request.PeriodIdList.Any())) return null;
                     query = query.OrderByDescending(x => x.FromDate);
                     resultList = query.ToList();
                 }

@@ -42,7 +42,8 @@ namespace DebtCollectionAccess.Operations
                 ToDate = _Request.ToDate,
                 InvoiceId = _Request.InvoiceId,
                 Skip = _Request.Skip,
-                Take = _Request.Take
+                Take = _Request.Take,
+                CompanyId = _Request.CompanyId
             } , 
             _Response.ValidationResults);
 

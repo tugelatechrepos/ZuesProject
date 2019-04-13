@@ -8,7 +8,7 @@ namespace DebtCollection.ServiceHelpers
 {
     public interface IInvoiceHelper
     {
-        GenerateInvoiceResponse GenerateInvoice();
+        GenerateInvoiceResponse GenerateInvoice(GenerateInvoiceRequest Request);
 
         AccountBalanceManager.Contracts.GetInvoiceListResponse GetInvoiceList(GetInvoiceListRequest Request);
 
@@ -24,10 +24,10 @@ namespace DebtCollection.ServiceHelpers
 
         #endregion Declarations
 
-        public GenerateInvoiceResponse GenerateInvoice()
+        public GenerateInvoiceResponse GenerateInvoice(GenerateInvoiceRequest Request)
         {
             var accountBalanceManagerProxy = IOCManager.Resolve<IAccountBalanceManagerProxy>();
-            var response = accountBalanceManagerProxy.GenerateInvoice();
+            var response = accountBalanceManagerProxy.GenerateInvoice(Request);
 
             //var daoResponse = DaoHelper.Execute(new DaoHelperRequest    
             //{

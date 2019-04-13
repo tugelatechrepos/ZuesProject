@@ -491,3 +491,4 @@ D:\Shyam\ZuesProject\DebtCollection\DebtCollection\obj\Debug\DebtCollection.cspr
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection\obj\Debug\DebtCollection.csproj.CoreCompileInputs.cache
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection\obj\Debug\DebtCollection.exe.manifest
 D:\Shyam\ZuesProject\DebtCollection\DebtCollection\obj\Debug\DebtCollection.exe
+D:\Shyam\ZuesProject\DebtCollection\DebtCollection\obj\Debug\DebtCollection.frmInvoice.resources

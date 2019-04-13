@@ -32,6 +32,7 @@ namespace DebtCollectionAccess.Dao
                 {
                     var query = _DbContext.AccountBalance.AsQueryable();
 
+                    query = query.Where(x => x.CompanyId == Request.CompanyId);
                     query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
                     query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.Period.Id)) : query;
 

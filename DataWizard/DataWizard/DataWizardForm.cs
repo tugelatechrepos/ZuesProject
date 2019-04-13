@@ -16,6 +16,7 @@ namespace DataWizard
     public partial class frmDataWizard : MetroFramework.Forms.MetroForm
     {
         private bool _IsDataPresent;
+        private const int COMPANY_ID = 3;
 
         public frmDataWizard()
         {
@@ -29,7 +30,8 @@ namespace DataWizard
             var paymentHistoryList = PaymentHistoryDBUtility.GetData(new GetPaymentHistoryListRequest
             {
                 Skip = 0,
-                Take = 1
+                Take = 1,
+                CompanyId = COMPANY_ID
             });
 
             _IsDataPresent = (paymentHistoryList != null && paymentHistoryList.Any());

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace DebtCollectionAccess
@@ -17,7 +16,9 @@ namespace DebtCollectionAccess
         public bool? IsPartialPayment { get; set; }
         public int? Version { get; set; }
         public int? OwnerId { get; set; }
+        public int? CompanyId { get; set; }
 
+        public virtual Company Company { get; set; }
         public virtual Users Owner { get; set; }
         public virtual Period Period { get; set; }
     }

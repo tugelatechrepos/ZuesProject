@@ -12,9 +12,9 @@ namespace DebtCollectionAccess
         public decimal? Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public int? InvoiceId { get; set; }
+        public int? CompanyId { get; set; }
 
         public virtual Invoice Invoice { get; set; }
-        public virtual ServiceType Service { get; set; }        
-
+        public virtual ServiceType Service { get; set; }
     }
 }

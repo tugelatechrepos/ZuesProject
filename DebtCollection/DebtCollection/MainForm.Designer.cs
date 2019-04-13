@@ -36,30 +36,12 @@ namespace DebtCollection
             this.tabPeriodSetUp = new System.Windows.Forms.TabPage();
             this.pbPeriodDetailLoading = new System.Windows.Forms.PictureBox();
             this.pnlLegend = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
-            this.panel8 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.dgvPeriodDetail = new System.Windows.Forms.DataGridView();
             this.btnReloadPeriod = new MaterialSkin.Controls.MaterialFlatButton();
-            this.pbLoading = new System.Windows.Forms.PictureBox();
-            this.SavePeriod = new MaterialSkin.Controls.MaterialFlatButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtBoxDescription = new System.Windows.Forms.TextBox();
-            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
-            this.btnAdd = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.dtRunDate = new System.Windows.Forms.DateTimePicker();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.dtToDate = new System.Windows.Forms.DateTimePicker();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.dtFromDate = new System.Windows.Forms.DateTimePicker();
-            this.dgvPeriod = new System.Windows.Forms.DataGridView();
-            this.txtId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtFromDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtToDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtRunDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabGenerateInvoice = new System.Windows.Forms.TabPage();
             this.tabInvoices = new System.Windows.Forms.TabPage();
             this.lblGenerateInvoiceStatus = new MaterialSkin.Controls.MaterialLabel();
@@ -100,9 +82,6 @@ namespace DebtCollection
             ((System.ComponentModel.ISupportInitialize)(this.pbPeriodDetailLoading)).BeginInit();
             this.pnlLegend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPeriodDetail)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPeriod)).BeginInit();
             this.tabInvoices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInvoiceList)).BeginInit();
             this.tabPaymentHistory.SuspendLayout();
@@ -135,10 +114,6 @@ namespace DebtCollection
             this.tabPeriodSetUp.Controls.Add(this.pnlLegend);
             this.tabPeriodSetUp.Controls.Add(this.dgvPeriodDetail);
             this.tabPeriodSetUp.Controls.Add(this.btnReloadPeriod);
-            this.tabPeriodSetUp.Controls.Add(this.pbLoading);
-            this.tabPeriodSetUp.Controls.Add(this.SavePeriod);
-            this.tabPeriodSetUp.Controls.Add(this.groupBox1);
-            this.tabPeriodSetUp.Controls.Add(this.dgvPeriod);
             this.tabPeriodSetUp.Location = new System.Drawing.Point(4, 22);
             this.tabPeriodSetUp.Name = "tabPeriodSetUp";
             this.tabPeriodSetUp.Padding = new System.Windows.Forms.Padding(3);
@@ -153,7 +128,7 @@ namespace DebtCollection
             this.pbPeriodDetailLoading.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbPeriodDetailLoading.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbPeriodDetailLoading.Image = global::DebtCollection.Properties.Resources.loader;
-            this.pbPeriodDetailLoading.Location = new System.Drawing.Point(395, 362);
+            this.pbPeriodDetailLoading.Location = new System.Drawing.Point(257, 138);
             this.pbPeriodDetailLoading.Name = "pbPeriodDetailLoading";
             this.pbPeriodDetailLoading.Size = new System.Drawing.Size(147, 100);
             this.pbPeriodDetailLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -163,15 +138,23 @@ namespace DebtCollection
             // 
             // pnlLegend
             // 
+            this.pnlLegend.Controls.Add(this.panel1);
             this.pnlLegend.Controls.Add(this.label5);
-            this.pnlLegend.Controls.Add(this.panel8);
             this.pnlLegend.Controls.Add(this.label4);
             this.pnlLegend.Controls.Add(this.panel9);
-            this.pnlLegend.Location = new System.Drawing.Point(696, 244);
+            this.pnlLegend.Location = new System.Drawing.Point(560, 23);
             this.pnlLegend.Name = "pnlLegend";
             this.pnlLegend.Size = new System.Drawing.Size(282, 74);
             this.pnlLegend.TabIndex = 12;
             this.pnlLegend.Visible = false;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(201)))), ((int)(((byte)(55)))));
+            this.panel1.Location = new System.Drawing.Point(174, 40);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(106, 24);
+            this.panel1.TabIndex = 11;
             // 
             // label5
             // 
@@ -182,14 +165,6 @@ namespace DebtCollection
             this.label5.Size = new System.Drawing.Size(140, 15);
             this.label5.TabIndex = 8;
             this.label5.Text = "Total Paid < Target Yield";
-            // 
-            // panel8
-            // 
-            this.panel8.BackColor = System.Drawing.Color.LightGreen;
-            this.panel8.Location = new System.Drawing.Point(174, 43);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(106, 26);
-            this.panel8.TabIndex = 11;
             // 
             // label4
             // 
@@ -203,7 +178,7 @@ namespace DebtCollection
             // 
             // panel9
             // 
-            this.panel9.BackColor = System.Drawing.Color.Red;
+            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.panel9.Location = new System.Drawing.Point(174, 10);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(106, 24);
@@ -214,12 +189,13 @@ namespace DebtCollection
             this.dgvPeriodDetail.AllowUserToAddRows = false;
             this.dgvPeriodDetail.AllowUserToDeleteRows = false;
             this.dgvPeriodDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPeriodDetail.Location = new System.Drawing.Point(334, 322);
+            this.dgvPeriodDetail.Location = new System.Drawing.Point(6, 113);
             this.dgvPeriodDetail.Name = "dgvPeriodDetail";
             this.dgvPeriodDetail.ReadOnly = true;
-            this.dgvPeriodDetail.Size = new System.Drawing.Size(645, 239);
+            this.dgvPeriodDetail.Size = new System.Drawing.Size(836, 182);
             this.dgvPeriodDetail.TabIndex = 7;
             this.dgvPeriodDetail.Visible = false;
+            this.dgvPeriodDetail.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPeriodDetail_CellContentClick);
             this.dgvPeriodDetail.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvPeriodDetail_DataBindingComplete);
             // 
             // btnReloadPeriod
@@ -227,215 +203,16 @@ namespace DebtCollection
             this.btnReloadPeriod.AutoSize = true;
             this.btnReloadPeriod.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnReloadPeriod.Depth = 0;
-            this.btnReloadPeriod.Location = new System.Drawing.Point(447, 244);
+            this.btnReloadPeriod.Location = new System.Drawing.Point(7, 313);
             this.btnReloadPeriod.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnReloadPeriod.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnReloadPeriod.Name = "btnReloadPeriod";
             this.btnReloadPeriod.Primary = false;
-            this.btnReloadPeriod.Size = new System.Drawing.Size(114, 36);
+            this.btnReloadPeriod.Size = new System.Drawing.Size(70, 36);
             this.btnReloadPeriod.TabIndex = 6;
-            this.btnReloadPeriod.Text = "Reload Period";
+            this.btnReloadPeriod.Text = "Refresh";
             this.btnReloadPeriod.UseVisualStyleBackColor = true;
             this.btnReloadPeriod.Click += new System.EventHandler(this.btnReloadPeriod_Click);
-            // 
-            // pbLoading
-            // 
-            this.pbLoading.BackColor = System.Drawing.Color.Transparent;
-            this.pbLoading.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pbLoading.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pbLoading.Image = global::DebtCollection.Properties.Resources.loader;
-            this.pbLoading.Location = new System.Drawing.Point(366, 76);
-            this.pbLoading.Name = "pbLoading";
-            this.pbLoading.Size = new System.Drawing.Size(147, 100);
-            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pbLoading.TabIndex = 5;
-            this.pbLoading.TabStop = false;
-            this.pbLoading.Visible = false;
-            // 
-            // SavePeriod
-            // 
-            this.SavePeriod.AutoSize = true;
-            this.SavePeriod.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.SavePeriod.Depth = 0;
-            this.SavePeriod.Location = new System.Drawing.Point(378, 244);
-            this.SavePeriod.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.SavePeriod.MouseState = MaterialSkin.MouseState.HOVER;
-            this.SavePeriod.Name = "SavePeriod";
-            this.SavePeriod.Primary = false;
-            this.SavePeriod.Size = new System.Drawing.Size(46, 36);
-            this.SavePeriod.TabIndex = 4;
-            this.SavePeriod.Text = "Save";
-            this.SavePeriod.UseVisualStyleBackColor = true;
-            this.SavePeriod.Click += new System.EventHandler(this.SavePeriod_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.txtBoxDescription);
-            this.groupBox1.Controls.Add(this.materialLabel4);
-            this.groupBox1.Controls.Add(this.btnAdd);
-            this.groupBox1.Controls.Add(this.materialLabel3);
-            this.groupBox1.Controls.Add(this.dtRunDate);
-            this.groupBox1.Controls.Add(this.materialLabel2);
-            this.groupBox1.Controls.Add(this.dtToDate);
-            this.groupBox1.Controls.Add(this.materialLabel1);
-            this.groupBox1.Controls.Add(this.dtFromDate);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.groupBox1.Location = new System.Drawing.Point(6, 20);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(295, 218);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Add Period";
-            // 
-            // txtBoxDescription
-            // 
-            this.txtBoxDescription.Location = new System.Drawing.Point(103, 131);
-            this.txtBoxDescription.Name = "txtBoxDescription";
-            this.txtBoxDescription.Size = new System.Drawing.Size(144, 23);
-            this.txtBoxDescription.TabIndex = 9;
-            // 
-            // materialLabel4
-            // 
-            this.materialLabel4.AutoSize = true;
-            this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel4.Location = new System.Drawing.Point(6, 132);
-            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(83, 18);
-            this.materialLabel4.TabIndex = 8;
-            this.materialLabel4.Text = "Description";
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.AutoSize = true;
-            this.btnAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnAdd.Depth = 0;
-            this.btnAdd.Location = new System.Drawing.Point(10, 170);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnAdd.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Primary = false;
-            this.btnAdd.Size = new System.Drawing.Size(94, 36);
-            this.btnAdd.TabIndex = 7;
-            this.btnAdd.Text = "Add to grid";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // materialLabel3
-            // 
-            this.materialLabel3.AutoSize = true;
-            this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(6, 91);
-            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(70, 18);
-            this.materialLabel3.TabIndex = 6;
-            this.materialLabel3.Text = "Run Date";
-            // 
-            // dtRunDate
-            // 
-            this.dtRunDate.CustomFormat = "dd/MM/yyyy";
-            this.dtRunDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtRunDate.Location = new System.Drawing.Point(103, 89);
-            this.dtRunDate.Name = "dtRunDate";
-            this.dtRunDate.Size = new System.Drawing.Size(108, 23);
-            this.dtRunDate.TabIndex = 5;
-            // 
-            // materialLabel2
-            // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel2.Location = new System.Drawing.Point(6, 56);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(61, 18);
-            this.materialLabel2.TabIndex = 4;
-            this.materialLabel2.Text = "To Date";
-            // 
-            // dtToDate
-            // 
-            this.dtToDate.CustomFormat = "dd/MM/yyyy";
-            this.dtToDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtToDate.Location = new System.Drawing.Point(103, 55);
-            this.dtToDate.Name = "dtToDate";
-            this.dtToDate.Size = new System.Drawing.Size(108, 23);
-            this.dtToDate.TabIndex = 3;
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(6, 25);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(79, 18);
-            this.materialLabel1.TabIndex = 2;
-            this.materialLabel1.Text = "From Date";
-            // 
-            // dtFromDate
-            // 
-            this.dtFromDate.CustomFormat = "dd/MM/yyyy";
-            this.dtFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtFromDate.Location = new System.Drawing.Point(103, 24);
-            this.dtFromDate.Name = "dtFromDate";
-            this.dtFromDate.Size = new System.Drawing.Size(108, 23);
-            this.dtFromDate.TabIndex = 1;
-            // 
-            // dgvPeriod
-            // 
-            this.dgvPeriod.AllowUserToAddRows = false;
-            this.dgvPeriod.BackgroundColor = System.Drawing.Color.White;
-            this.dgvPeriod.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPeriod.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.txtId,
-            this.txtName,
-            this.txtFromDate,
-            this.txtToDate,
-            this.txtRunDate});
-            this.dgvPeriod.Location = new System.Drawing.Point(334, 20);
-            this.dgvPeriod.Name = "dgvPeriod";
-            this.dgvPeriod.Size = new System.Drawing.Size(645, 218);
-            this.dgvPeriod.TabIndex = 0;
-            // 
-            // txtId
-            // 
-            this.txtId.HeaderText = "Id";
-            this.txtId.Name = "txtId";
-            this.txtId.Visible = false;
-            this.txtId.Width = 150;
-            // 
-            // txtName
-            // 
-            this.txtName.HeaderText = "Period Name";
-            this.txtName.Name = "txtName";
-            this.txtName.Width = 150;
-            // 
-            // txtFromDate
-            // 
-            this.txtFromDate.HeaderText = "Start Date";
-            this.txtFromDate.Name = "txtFromDate";
-            this.txtFromDate.Width = 150;
-            // 
-            // txtToDate
-            // 
-            this.txtToDate.HeaderText = "End Date";
-            this.txtToDate.Name = "txtToDate";
-            this.txtToDate.Width = 150;
-            // 
-            // txtRunDate
-            // 
-            this.txtRunDate.HeaderText = "Target Invoice Date";
-            this.txtRunDate.Name = "txtRunDate";
-            this.txtRunDate.Width = 150;
             // 
             // tabGenerateInvoice
             // 
@@ -500,7 +277,6 @@ namespace DebtCollection
             this.btnGenerateInvoice.TabIndex = 4;
             this.btnGenerateInvoice.Text = "Generate Invoice";
             this.btnGenerateInvoice.UseVisualStyleBackColor = true;
-            this.btnGenerateInvoice.Click += new System.EventHandler(this.btnGenerateInvoice_Click);
             // 
             // dgvInvoiceList
             // 
@@ -513,7 +289,6 @@ namespace DebtCollection
             this.dgvInvoiceList.Size = new System.Drawing.Size(944, 384);
             this.dgvInvoiceList.TabIndex = 2;
             this.dgvInvoiceList.Visible = false;
-            this.dgvInvoiceList.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvInvoiceList_CellMouseDoubleClick);
             // 
             // tabPaymentHistory
             // 
@@ -682,7 +457,7 @@ namespace DebtCollection
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.LightGreen;
+            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(201)))), ((int)(((byte)(55)))));
             this.panel7.Location = new System.Drawing.Point(119, 11);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(134, 20);
@@ -710,7 +485,7 @@ namespace DebtCollection
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.Yellow;
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(180)))), ((int)(((byte)(22)))));
             this.panel6.Location = new System.Drawing.Point(120, 67);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(132, 21);
@@ -718,7 +493,7 @@ namespace DebtCollection
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.Color.Red;
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.panel5.Location = new System.Drawing.Point(120, 37);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(132, 22);
@@ -784,16 +559,6 @@ namespace DebtCollection
             this.accountIdListbgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.accountIdListbgWorker_DoWork);
             this.accountIdListbgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.accountIdListbgWorker_RunWorkerCompleted);
             // 
-            // bgGenerateInvoice
-            // 
-            this.bgGenerateInvoice.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgGenerateInvoice_DoWork);
-            this.bgGenerateInvoice.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgGenerateInvoice_RunWorkerCompleted);
-            // 
-            // bgGetInvoiceList
-            // 
-            this.bgGetInvoiceList.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgGetInvoiceList_DoWork);
-            this.bgGetInvoiceList.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgGetInvoiceList_RunWorkerCompleted);
-            // 
             // metroProgressSpinner1
             // 
             this.metroProgressSpinner1.Location = new System.Drawing.Point(0, 0);
@@ -825,10 +590,6 @@ namespace DebtCollection
             this.pnlLegend.ResumeLayout(false);
             this.pnlLegend.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPeriodDetail)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPeriod)).EndInit();
             this.tabInvoices.ResumeLayout(false);
             this.tabInvoices.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInvoiceList)).EndInit();
@@ -853,18 +614,6 @@ namespace DebtCollection
         private System.Windows.Forms.TabPage tabInvoices;
         private System.Windows.Forms.TabPage tabPaymentHistory;
         private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
-        private System.Windows.Forms.DataGridView dgvPeriod;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private MaterialSkin.Controls.MaterialFlatButton btnAdd;
-        private MaterialSkin.Controls.MaterialLabel materialLabel3;
-        private System.Windows.Forms.DateTimePicker dtRunDate;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
-        private System.Windows.Forms.DateTimePicker dtToDate;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private System.Windows.Forms.DateTimePicker dtFromDate;
-        private MaterialSkin.Controls.MaterialFlatButton SavePeriod;
-        private MaterialSkin.Controls.MaterialLabel materialLabel4;
-        private System.Windows.Forms.TextBox txtBoxDescription;
         private Microsoft.Reporting.WinForms.ReportViewer rptPaymentHistoy;
         private System.Windows.Forms.BindingSource PaymentHistoryBindingSource;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -873,7 +622,6 @@ namespace DebtCollection
         private System.Windows.Forms.DateTimePicker dtpActualToDate;
         private MaterialSkin.Controls.MaterialLabel materialLabel6;
         private MaterialSkin.Controls.MaterialFlatButton btnGetActuals;
-        private System.Windows.Forms.PictureBox pbLoading;
         private System.ComponentModel.BackgroundWorker periodLoadBackgroundWorker;
         private MaterialSkin.Controls.MaterialFlatButton btnReloadPeriod;
         private System.ComponentModel.BackgroundWorker periodSavebackgroundWorker;
@@ -890,11 +638,6 @@ namespace DebtCollection
         private System.ComponentModel.BackgroundWorker bgGenerateInvoice;
         private System.ComponentModel.BackgroundWorker bgGetInvoiceList;
         private MaterialSkin.Controls.MaterialLabel lblGenerateInvoiceStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn txtId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn txtName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn txtFromDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn txtToDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn txtRunDate;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label2;
@@ -902,7 +645,6 @@ namespace DebtCollection
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dgvPeriodDetail;
-        private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -910,5 +652,6 @@ namespace DebtCollection
         private MetroFramework.Controls.MetroProgressSpinner metroProgressSpinner1;
         private System.Windows.Forms.PictureBox pbPeriodDetailLoading;
         private System.Windows.Forms.Panel pnlAccountBalanceStatus;
+        private System.Windows.Forms.Panel panel1;
     }
 }

@@ -54,6 +54,7 @@ namespace DebtCollectionAccess.Dao
                 {
                     var query = _DbContext.Invoice.AsQueryable();
 
+                    query = query.Where(x => x.CompanyId == Request.CompanyId);
                     query = (Request.InvoiceIdList != null && Request.InvoiceIdList.Any()) ? query.Where(x => Request.InvoiceIdList.Contains(x.Id)) : query;
                     query = (Request.FromDate.HasValue && Request.FromDate.Value != DateTime.MinValue) ? query.Where(x => x.GeneratedOn >= Request.FromDate) : query;
                     query = (Request.ToDate.HasValue && Request.ToDate.Value != DateTime.MinValue) ? query.Where(x => x.GeneratedOn <= Request.ToDate) : query;

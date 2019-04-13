@@ -15,7 +15,7 @@ namespace AccountBalanceManagerService.Processor
 
     public class AccountBalanceCalculationProcessorRequest
     {
-
+        public int CompanyId { get; set; }
     }
 
     public class AccountBalanceCalculationProcessorResponse
@@ -29,6 +29,7 @@ namespace AccountBalanceManagerService.Processor
 
         #region Declarations
 
+        private AccountBalanceCalculationProcessorRequest _Request;
         private AccountBalanceCalculationProcessorResponse _Response;
         private ICollection<Period> _PeriodList;
         private Period _CurrentPeriod;
@@ -44,6 +45,7 @@ namespace AccountBalanceManagerService.Processor
 
         public AccountBalanceCalculationProcessorResponse ProcessAccountBalanceList(AccountBalanceCalculationProcessorRequest Request)
         {
+            _Request = Request;
             _Response = new AccountBalanceCalculationProcessorResponse { ValidationResults = new ValidationResults() };
 
             execute();
@@ -64,7 +66,7 @@ namespace AccountBalanceManagerService.Processor
 
         private void assignPeriodList()
         {
-            var response = DebtCollectionAccessProxy.GetPeriodList(new GetPeriodListRequest());
+            var response = DebtCollectionAccessProxy.GetPeriodList(new GetPeriodListRequest { CompanyId = _Request.CompanyId });
 
             _Response.ValidationResults = response.ValidationResults;
             _PeriodList = response.PeriodList;
@@ -94,7 +96,8 @@ namespace AccountBalanceManagerService.Processor
                 var response = DebtCollectionAccessProxy.GetPaymentHistoryList(new GetPaymentHistoryListRequest
                 {
                     Skip = Skip,
-                    Take = Take
+                    Take = Take,
+                    CompanyId = _Request.CompanyId,
                 });
 
                 _Response.ValidationResults = response.ValidationResults;
@@ -144,7 +147,8 @@ namespace AccountBalanceManagerService.Processor
             {
                 CurrentPeriod = _CurrentPeriod,
                 PaymentHistoryList = _PaymentHistoryList,
-                PeriodList = _PeriodList
+                PeriodList = _PeriodList,
+                CompanyId = _Request.CompanyId
             });
 
             _Response.ValidationResults = response.ValidationResults;
@@ -161,7 +165,8 @@ namespace AccountBalanceManagerService.Processor
                 PeriodList = _PeriodList,
                 CurrentPeriodAccountBalanceList = _CurrentPeriodAccountBalanceList,
                 CurrentPeriodOpeningBalanceList = _CurrentPeriodOpeningBalanceList,
-                PaymentHistoryList = _PaymentHistoryList
+                PaymentHistoryList = _PaymentHistoryList,
+                CompanyId = _Request.CompanyId,
             });
 
             _Response.ValidationResults = response.ValidationResults;

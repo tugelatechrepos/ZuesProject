@@ -24,6 +24,7 @@ namespace DebtCollectionAccess.Dao
         public int? InvoiceId { get; set; }
         public int Skip { get; set; }
         public int Take { get; set; }
+        public int CompanyId { get; set; }
     }
 
     public class PaymentHistoryDao : IPaymentHistoryDao
@@ -45,12 +46,13 @@ namespace DebtCollectionAccess.Dao
                 {
                     var query = _DbContext.PaymentHistory.AsQueryable();
 
+                    query = query.Where(x => x.CompanyId == Request.CompanyId);
                     query = (Request.FromDate.HasValue && Request.FromDate.Value != DateTime.MinValue) ? query.Where(x => x.PaymentDate >= Request.FromDate.Value) : query;
                     query = (Request.ToDate.HasValue && Request.ToDate.Value != DateTime.MinValue) ? query.Where(x => x.PaymentDate <= Request.ToDate.Value) : query;
                     query = (Request.AccountIdList != null && Request.AccountIdList.Any()) ? query.Where(x => Request.AccountIdList.Contains(x.AccountId)) : query;
                     query = Request.InvoiceId.HasValue ? query.Where(x => x.Invoice.Id == Request.InvoiceId.Value) : query;
                     query = Request.Take > 0 ? query.Skip(Request.Skip).Take(Request.Take) : query;
-                    query = query.OrderBy(x => x.PaymentDate);
+                    query = query.OrderByDescending(x => x.PaymentDate);
 
                     resultList = query.ToList();
                 }

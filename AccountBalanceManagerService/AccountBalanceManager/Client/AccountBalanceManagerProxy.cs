@@ -13,11 +13,11 @@ namespace AccountBalanceManager.Client
     {
         Operations.GetPaymentHistoryListResponse GetPaymentHistoryList(GetPaymentHistoryListRequest Request);
 
-        MaintainAccountBalanceResponse MaintainAccountBalance();
+        MaintainAccountBalanceResponse MaintainAccountBalance(MaintainAccountBalanceRequest Request);
 
         Operations.GetAccountBalanceListResponse GetAccountBalanceList(GetAccountBalanceListRequest Request);
 
-        GenerateInvoiceResponse GenerateInvoice();
+        GenerateInvoiceResponse GenerateInvoice(GenerateInvoiceRequest Request);
 
         Contracts.GetInvoiceListResponse GetInvoiceList(GetInvoiceListRequest Request);
 
@@ -48,9 +48,9 @@ namespace AccountBalanceManager.Client
             return response;
         }
 
-        public MaintainAccountBalanceResponse MaintainAccountBalance()
+        public MaintainAccountBalanceResponse MaintainAccountBalance(MaintainAccountBalanceRequest Request)
         {
-            var response = MaintainAccountBalanceOperation.MaintainAccountBalance();
+            var response = MaintainAccountBalanceOperation.MaintainAccountBalance(Request);
             return response;
         }
 
@@ -60,9 +60,9 @@ namespace AccountBalanceManager.Client
             return response;
         }
 
-        public GenerateInvoiceResponse GenerateInvoice()
+        public GenerateInvoiceResponse GenerateInvoice(GenerateInvoiceRequest Request)
         {
-            var response = GenerateInvoiceOperation.GenerateInvoice();
+            var response = GenerateInvoiceOperation.GenerateInvoice(Request);
             return response;
         }
 

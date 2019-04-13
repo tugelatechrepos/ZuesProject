@@ -8,5 +8,6 @@ namespace AccountBalanceManager.Contracts
 {
     public class GetPeriodDetailListRequest
     {
+        public int CompanyId { get; set; }
     }
 }

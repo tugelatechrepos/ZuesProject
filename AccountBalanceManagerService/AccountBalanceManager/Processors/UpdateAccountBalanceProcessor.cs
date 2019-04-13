@@ -24,6 +24,8 @@ namespace AccountBalanceManagerService.Processor
         public Period CurrentPeriod { get; set; }
 
         public ICollection<AccountOpeningBalance> CurrentPeriodOpeningBalanceList { get; set; }
+
+        public int CompanyId { get; set; }
     }
 
     public class UpdateAccountBalanceProcessorResponse
@@ -165,6 +167,7 @@ namespace AccountBalanceManagerService.Processor
                 accountBalance.IsPaymentMissed = promisedAmount == null ? (bool?)null : totalPaid == 0;
                 accountBalance.PeriodId = currentPeriodAccountBalance.PeriodId;
                 accountBalance.OwnerId = currentPeriodAccountBalance.OwnerId;
+                accountBalance.CompanyId = currentPeriodAccountBalance.CompanyId;
 
                 _AccountBalanceList.Add(accountBalance);
             }
@@ -184,7 +187,8 @@ namespace AccountBalanceManagerService.Processor
                 OpeningBalance = x.RemainingBalance.Value,
                 RemainingBalance = x.RemainingBalance,
                 PeriodId = _NextPeriod.Id,
-                OwnerId = x.OwnerId
+                OwnerId = x.OwnerId,
+                CompanyId = x.CompanyId
             }).ToList();
 
             _AccountBalanceList.AddRange(accountBalanceListForNextPeriod);
@@ -245,6 +249,7 @@ namespace AccountBalanceManagerService.Processor
                     accountBalance.IsPartialPayment = totalPaid > 0 ? aodAmount < totalPaid : (bool?)null;
                     accountBalance.IsPaymentMissed = totalPaid == 0;
                     accountBalance.OwnerId = accountOwner?.OwnerId;
+                    accountBalance.CompanyId = _Request.CompanyId;
 
                     accountBalanceList.Add(accountBalance);
                 }

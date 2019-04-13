@@ -35,14 +35,18 @@ namespace DebtCollection
         public static readonly string CLOSING_BALANCE = "Closing Balance";
         public static readonly string READINESS = "Readiness";
         public static readonly string PERIOD_NAME = "Name";
+        public static readonly string PERIOD_ID = "PeriodId";
+        public static readonly string INVOICE_BUTTON = "Invoice";
+        public static readonly string TARGET_METRIC = "Target Metric";
 
 
         public static readonly string DATE = "Date";
         public static readonly string YIELD_PERCENTAGE = "Yield %";
         public static readonly string COMMISSION_PERCENTAGE = "Commission %";
         public static readonly string INVOICE_TOTAL = "Invoice Total";
+        public static readonly string PRINT_INVOICE= "Print Invoice";
 
-        
+
         public static readonly string FROM_DATE = "From Date";
         public static readonly string TO_DATE = "To Date";
         public static readonly string RUN_DATE = "Run Date";

@@ -19,6 +19,7 @@ namespace DataWizard
         private DateTime _LastDate;
         private bool _AnyNewPeriod;
         private bool _IsPersistPaymentHistoryCalled;
+        private const int COMPANY_ID = 3;
 
         public void Initialize()
         {
@@ -49,7 +50,7 @@ namespace DataWizard
 
         private void assignPeriodList()
         {
-            var response = PeriodDBUtility.GetPeriodList(new GetPeriodListRequest());
+            var response = PeriodDBUtility.GetPeriodList(new GetPeriodListRequest { CompanyId = COMPANY_ID });
 
             _PeriodList = response.PeriodList;
         }
@@ -77,7 +78,8 @@ namespace DataWizard
                 {
                     FromDate = new DateTime(counterDate.Year, counterDate.Month, 1),
                     ToDate = new DateTime(counterDate.Year, counterDate.Month, lastDayOfTheMonth),
-                    Name = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(counterDate.Month)} {counterDate.Year}"
+                    Name = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(counterDate.Month)} {counterDate.Year}",
+                    CompanyId = COMPANY_ID
                 };
 
                 periodList.Add(period);
@@ -112,7 +114,8 @@ namespace DataWizard
                 {
                     FromDate = counterDate,
                     ToDate = toDateOfTheMonth,
-                    Name = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(counterDate.Month)} {counterDate.Month}"
+                    Name = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(counterDate.Month)} {counterDate.Month}",
+                    CompanyId = COMPANY_ID
                 };
 
                 _PeriodList.Add(newPeriod);
@@ -138,7 +141,7 @@ namespace DataWizard
         {
             if (!_IsPersistPaymentHistoryCalled) return;
 
-            var response = PeriodDBUtility.GetPeriodList(new GetPeriodListRequest());
+            var response = PeriodDBUtility.GetPeriodList(new GetPeriodListRequest { CompanyId = COMPANY_ID });
             var periodList = response.PeriodList;
 
             var accountIdList = _PaymentHistoryList.Select(x => x.AccountId).Distinct().ToList();
@@ -154,7 +157,7 @@ namespace DataWizard
             {
                 AccountId = x,
                 OpeningBalance = 5000,
-                PeriodId = currentPeriod.Id
+                PeriodId = currentPeriod.Id,
             }).ToList();
 
             AccountOpeningBalanceDBUtility.PersistAccountOpeningBalanceList(new PersistAccountOpeningBalanceListRequest
@@ -165,7 +168,7 @@ namespace DataWizard
         {
             if (_IsPersistPaymentHistoryCalled || _AnyNewPeriod)
             {
-                AcccountBalanceUtility.RegisterAccountBalances();
+                AcccountBalanceUtility.RegisterAccountBalances(COMPANY_ID);
             }
         }
 

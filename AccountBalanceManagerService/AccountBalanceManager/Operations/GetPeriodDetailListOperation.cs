@@ -42,7 +42,7 @@ namespace AccountBalanceManager.Operations
 
         private void assignPeriodList()
         {
-            var response = DebtCollectionAccessProxy.GetPeriodList(new DebtCollectionAccess.Contracts.GetPeriodListRequest());
+            var response = DebtCollectionAccessProxy.GetPeriodList(new DebtCollectionAccess.Contracts.GetPeriodListRequest { CompanyId = _Request.CompanyId });
 
             _PeriodList = response.PeriodList;
         }
@@ -56,7 +56,8 @@ namespace AccountBalanceManager.Operations
 
             var response = DebtCollectionAccessProxy.GetAccountBalanceList(new DebtCollectionAccess.Contracts.GetAccountBalanceListRequest
             {
-                PeriodIdList = periodIdList
+                PeriodIdList = periodIdList,
+                CompanyId = _Request.CompanyId
             });
 
 

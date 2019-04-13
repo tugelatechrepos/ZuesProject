@@ -147,6 +147,12 @@
     <Compile Include="DataTableHelpers\PeriodDataTableHelper.cs" />
     <Compile Include="DataTableHelpers\PeriodDetailDataTableHelper.cs" />
     <Compile Include="Invoice.cs" />
+    <Compile Include="InvoiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InvoiceForm.Designer.cs">
+      <DependentUpon>InvoiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaymentHistoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,6 +185,7 @@
     <Compile Include="ServiceHelpers\PaymentHistoryHelper.cs" />
     <Compile Include="ServiceHelpers\PeriodHelper.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="StyleGridHelper.cs" />
     <Compile Include="ViewModel\AccountBalance.cs" />
     <Compile Include="ViewModel\Commission.cs" />
     <Compile Include="ViewModel\GenerateInvoiceResponse.cs" />
@@ -208,6 +215,9 @@
     <Compile Include="ViewModel\PersistPaymentHistoryListRequest.cs" />
     <Compile Include="ViewModel\PersistPaymentHistoryListResponse.cs" />
     <Compile Include="ViewModel\ServiceType.cs" />
+    <EmbeddedResource Include="InvoiceForm.resx">
+      <DependentUpon>InvoiceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PaymentHistoryForm.resx">
       <DependentUpon>PaymentHistoryForm.cs</DependentUpon>
     </EmbeddedResource>

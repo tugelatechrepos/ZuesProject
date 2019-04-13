@@ -6,12 +6,14 @@ namespace AccountBalanceManager.Operations
 {
     public interface IGenerateInvoiceOperation
     {
-        GenerateInvoiceResponse GenerateInvoice();
+        GenerateInvoiceResponse GenerateInvoice(GenerateInvoiceRequest Request);
     }
 
     public class GenerateInvoiceOperation : IGenerateInvoiceOperation
     {
         #region Declarations
+
+        private GenerateInvoiceRequest _Request;
 
         private GenerateInvoiceResponse _Response;
 
@@ -19,8 +21,9 @@ namespace AccountBalanceManager.Operations
 
         #endregion Declarations
 
-        public GenerateInvoiceResponse GenerateInvoice()
+        public GenerateInvoiceResponse GenerateInvoice(GenerateInvoiceRequest Request)
         {
+            _Request = Request;
             _Response = new GenerateInvoiceResponse { ValidationResults = new ValidationResults() };
 
             generate();
@@ -30,7 +33,12 @@ namespace AccountBalanceManager.Operations
 
         private void generate()
         {
-            var response = GenerateInvoiceProcessor.GenerateInvoice();
+            var response = GenerateInvoiceProcessor.GenerateInvoice(new GenerateInvoiceProcessorRequest
+            {
+                PeriodId = _Request.PeriodId,
+                CompanyId = _Request.CompanyId,
+            });
+
             _Response.InvoiceId = response.InvoiceId;
             _Response.ValidationResults = response.ValidationResults;
         }

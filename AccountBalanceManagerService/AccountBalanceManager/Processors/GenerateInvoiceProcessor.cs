@@ -12,7 +12,14 @@ namespace AccountBalanceManagerService.Processor
 {
     public interface IGenerateInvoiceProcessor
     {
-        GenerateInvoiceProcessorResponse GenerateInvoice();
+        GenerateInvoiceProcessorResponse GenerateInvoice(GenerateInvoiceProcessorRequest Request);
+    }
+
+    public class GenerateInvoiceProcessorRequest
+    {
+        public int PeriodId { get; set; }
+
+        public int CompanyId { get; set; }
     }
 
     public class GenerateInvoiceProcessorResponse
@@ -27,23 +34,21 @@ namespace AccountBalanceManagerService.Processor
     {
         #region Declarations
 
+        private GenerateInvoiceProcessorRequest _Request;
         private GenerateInvoiceProcessorResponse _Response;
-        private ICollection<Period> _PeriodList;
-        private Period _CurrentPeriod;
-        private InvoiceDetail _CurrentPeriodLatestInvoiceDetail;
         private InvoiceDetail _InvoiceDetail;
         private List<InvoiceLineItem> _InvoiceLineItemList;
         private List<InvoiceServiceView> _InvoiceServiceViewList;
-        private List<DebtCollectionAccess.PaymentHistory> _MarkPaymentHistoryList;
-        private ICollection<ServiceType> _ServiceTyeList;
-
-       
-       public IDebtCollectionAccessProxy DebtCollectionAccessProxy { get; set; }
+        private ICollection<ServiceType> _ServiceTypeList;
+        private Period _Period;
+        
+        public IDebtCollectionAccessProxy DebtCollectionAccessProxy { get; set; }
 
         #endregion Declarations
 
-        public GenerateInvoiceProcessorResponse GenerateInvoice()
+        public GenerateInvoiceProcessorResponse GenerateInvoice(GenerateInvoiceProcessorRequest Request)
         {
+            _Request = Request;
             _Response = new GenerateInvoiceProcessorResponse { ValidationResults = new ValidationResults() };
 
             execute();
@@ -53,31 +58,33 @@ namespace AccountBalanceManagerService.Processor
 
         private void execute()
         {
-            assignPeriodList();
-            assignCurrentPeriod();
+            assignPeriod();
             assignServiceTypeList();
-            assignLatestInvoiceDetailForCurrentPeriod();
-            processInvoiceItemList();
-            persistInvoice();
-            persistPaymentHistoryList();
+            processInvoice();         
+            persistInvoice();            
         }
 
-        private void assignPeriodList()
+        private void assignPeriod()
         {
-            var response = DebtCollectionAccessProxy.GetPeriodList(new GetPeriodListRequest());
+            var periodListResponse = DebtCollectionAccessProxy.GetPeriodList(new GetPeriodListRequest
+            {
+                PeriodIdList = new List<int> { _Request.PeriodId }
+            });
 
-            _PeriodList = response.PeriodList;
-        }
+            _Period = periodListResponse.PeriodList.FirstOrDefault();
+        }      
 
-        private void assignCurrentPeriod()
+        private void processInvoice()
         {
-            if (_PeriodList == null || !_PeriodList.Any()) return;
+            _InvoiceLineItemList = new List<InvoiceLineItem>();
+            _InvoiceServiceViewList = new List<InvoiceServiceView>();
 
-            var currentMonth = DateTime.Now.Date.Month;
-            var currentYear = DateTime.Now.Date.Year;
+            var paymentHistoryList = getPaymentHistoryList(_Period);
+            var totalOpeningBalance = getTotalOpeningBalance(_Period.Id);
 
-            _CurrentPeriod = _PeriodList.FirstOrDefault(x => x.FromDate.Month == currentMonth && x.FromDate.Year == currentYear);
-        }
+            assignInvoiceLineItemList(paymentHistoryList, _Period, totalOpeningBalance);
+            assignInvoiceServiceViewList(paymentHistoryList, _Period, totalOpeningBalance);
+        }   
 
         private void assignServiceTypeList()
         {
@@ -86,61 +93,8 @@ namespace AccountBalanceManagerService.Processor
                 IncludeServiceTypeList = true
             });
 
-            _ServiceTyeList = response.ServiceTypeList;
-        }
-
-        private void assignLatestInvoiceDetailForCurrentPeriod()
-        {
-            var invoiceListResponse = DebtCollectionAccessProxy.GetInvoiceList(new GetInvoiceListRequest { PeriodIdList = new List<int> { _CurrentPeriod.Id } });
-
-            var invoiceDetailListString = invoiceListResponse.InvoiceList.Select(x => x.Detail);
-            var invoiceDetailList = new List<InvoiceDetail>();
-
-            foreach(var invoice in invoiceListResponse.InvoiceList)
-            {
-                var invoiceDetail = Newtonsoft.Json.JsonConvert.DeserializeObject<InvoiceDetail>(invoice.Detail);
-                invoiceDetail.InvoiceId = invoice.Id;
-                invoiceDetail.GeneratedOn = invoice.GeneratedOn;
-                invoiceDetail.PeriodId = invoice.PeriodId;
-                invoiceDetailList.Add(invoiceDetail);
-            }            
-
-            if (invoiceDetailList == null || !invoiceDetailList.Any()) return;
-
-            _CurrentPeriodLatestInvoiceDetail = invoiceDetailList.OrderByDescending(x => x.InvoiceId).FirstOrDefault();
-        }
-
-        private void processInvoiceItemList()
-        {
-            if (_PeriodList == null || !_PeriodList.Any()) return;
-
-            var periodList = _PeriodList.Where(x => x.FromDate <= _CurrentPeriod.FromDate).OrderByDescending(x => x.FromDate);
-            _InvoiceLineItemList = new List<InvoiceLineItem>();
-            _InvoiceServiceViewList = new List<InvoiceServiceView>();
-            _MarkPaymentHistoryList = new List<DebtCollectionAccess.PaymentHistory>();
-
-            _InvoiceDetail = new InvoiceDetail
-            {
-                InvoiceLineItemList = _InvoiceLineItemList,
-                InvoiceServiceViewList = _InvoiceServiceViewList,
-                ExpenseList = _CurrentPeriodLatestInvoiceDetail?.ExpenseList
-            };
-
-            foreach (var period in periodList)
-            {
-                var paymentHistoryList = getPaymentHistoryList(period);
-
-                if (period != _CurrentPeriod)
-                {
-                    redactPaymentHistoryList(paymentHistoryList);
-                }
-
-                _MarkPaymentHistoryList.AddRange(paymentHistoryList);
-                var totalOpeningBalance = getTotalOpeningBalance(period.Id);
-                assignInvoiceLineItemList(paymentHistoryList, period, totalOpeningBalance);
-                assignInvoiceServiceViewList(paymentHistoryList, period, totalOpeningBalance);
-            }
-        }
+            _ServiceTypeList = response.ServiceTypeList;
+        }   
 
         private void assignInvoiceLineItemList(ICollection<DebtCollectionAccess.PaymentHistory> PaymentHistoryList, Period Period, decimal TotalOpeningBalance)
         {
@@ -176,7 +130,7 @@ namespace AccountBalanceManagerService.Processor
             var serviceDetailList = PaymentHistoryList.GroupBy(x => x.ServiceId).Select(y => new ServiceDetail
             {
                 ServiceId = y.Key,
-                ServiceName = _ServiceTyeList.FirstOrDefault(serviceType => serviceType.Id == y.Key).Name,
+                ServiceName = _ServiceTypeList.FirstOrDefault(serviceType => serviceType.Id == y.Key).Name,
                 AccountIdList = y.Select(acc => acc.AccountId).Distinct().ToList(),
                 NumberOfAccounts = y.Select(acc => acc.AccountId).Distinct().Count(),
                 Amount = y.Sum(c => c.Amount.Value)
@@ -198,35 +152,7 @@ namespace AccountBalanceManagerService.Processor
 
 
             _InvoiceServiceViewList.Add(invoiceServiceView);
-        }
-
-        private void redactPaymentHistoryList(List<DebtCollectionAccess.PaymentHistory> PaymentHistoryList)
-        {
-            var accountIdList = PaymentHistoryList.Select(x => x.AccountId).Distinct().ToList();
-
-            var accountInceptionList = getAccountInceptionList(accountIdList);
-
-            if (accountInceptionList == null || !accountInceptionList.Any()) return;
-
-            foreach (var accountId in accountIdList)
-            {
-                var accountInception = accountInceptionList.FirstOrDefault(x => x.AccountId == accountId);
-
-                if (accountInception == null) continue;
-
-                PaymentHistoryList.RemoveAll(x => x.AccountId == accountId && x.PaymentDate < accountInception.StartDate);
-            }
-        }
-
-        private ICollection<AccountInception> getAccountInceptionList(ICollection<int> AccountIdList)
-        {
-            var response = DebtCollectionAccessProxy.GetAccountInceptionList(new GetAccountInceptionListRequest
-            {
-                AccountIdList = AccountIdList
-            });
-
-            return response.AccountInceptionList;
-        }
+        }  
 
         private decimal getCommissionPercentage(decimal Yield)
         {
@@ -236,18 +162,16 @@ namespace AccountBalanceManagerService.Processor
 
         private decimal getTotalOpeningBalance(int PeriodId)
         {
-            var response = DebtCollectionAccessProxy.GetAccountBalanceList(new GetAccountBalanceListRequest { PeriodIdList = new List<int> { PeriodId } });
+            var response = DebtCollectionAccessProxy.GetAccountBalanceList(new GetAccountBalanceListRequest { PeriodIdList = new List<int> { PeriodId } ,CompanyId = _Request.CompanyId});
 
             var accountBalanceList = response.AccountBalanceList;
             var totalOpeningBalance = accountBalanceList.Sum(x => x.OpeningBalance);
             return totalOpeningBalance;
-
         }
 
         private List<DebtCollectionAccess.PaymentHistory> getPaymentHistoryList(Period Period)
         {
-            var paymentHistoryList = new List<DebtCollectionAccess.PaymentHistory>();
-            var invoiceId = Period == _CurrentPeriod ? (int?)null : _CurrentPeriodLatestInvoiceDetail?.InvoiceId  ?? null ;
+            var paymentHistoryList = new List<DebtCollectionAccess.PaymentHistory>();           
 
             int Skip = 0;
             int Take = 1000;
@@ -258,8 +182,8 @@ namespace AccountBalanceManagerService.Processor
                     FromDate = Period.FromDate,
                     ToDate = Period.ToDate,
                     Skip = Skip,
-                    Take = Take,
-                    InvoiceId = invoiceId
+                    Take = Take,  
+                    CompanyId = _Request.CompanyId,
                 });
 
                 if (paymentHistoryListResponse.PaymentHistoryList == null || !paymentHistoryListResponse.PaymentHistoryList.Any()) continue;
@@ -273,37 +197,25 @@ namespace AccountBalanceManagerService.Processor
 
         private void persistInvoice()
         {
+            _InvoiceDetail = new InvoiceDetail
+            {
+                GeneratedOn = DateTime.Now.Date,
+                InvoiceLineItemList = _InvoiceLineItemList,
+                InvoiceServiceViewList = _InvoiceServiceViewList,
+                PeriodId = _Period.Id
+            };
+
             var invoice = new Invoice
             {
-                PeriodId = _CurrentPeriod.Id,
+                PeriodId = _Period.Id,
                 Detail = JsonConvert.SerializeObject(_InvoiceDetail),
                 GeneratedOn = DateTime.Now.Date,
+                CompanyId = _Request.CompanyId,
             };
 
             var response = DebtCollectionAccessProxy.PersistInvoice(new PersistInvoiceRequest { Invoice = invoice });
 
             _Response.InvoiceId = response.InvoiceId;
-        }
-
-        private void persistPaymentHistoryList()
-        {
-            if (!_Response.InvoiceId.HasValue || _Response.InvoiceId.Value == 0) return;
-            if (_MarkPaymentHistoryList == null || !_MarkPaymentHistoryList.Any()) return;
-
-            _MarkPaymentHistoryList.ForEach(x => x.InvoiceId = _Response.InvoiceId.Value);
-
-            int Skip = 0;
-            int Take = 1000;
-            do
-            {
-                var listToPersist = _MarkPaymentHistoryList.Skip(Skip).Take(Take).ToList();
-                Skip = listToPersist.Count();
-                var response = DebtCollectionAccessProxy.PersistPaymentHistoryList(new PersistPaymentHistoryListRequest
-                {
-                    PaymentHistoryList = listToPersist
-                });
-            }
-            while (Skip == Take);
-        }
+        }       
     }
 }
