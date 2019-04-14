@@ -17,6 +17,7 @@ namespace DebtCollectionAccess
 
         public virtual DbSet<AccountAod> AccountAod { get; set; }
         public virtual DbSet<AccountBalance> AccountBalance { get; set; }
+        public virtual DbSet<AccountBalanceStatus> AccountBalanceStatus { get; set; }
         public virtual DbSet<AccountInception> AccountInception { get; set; }
         public virtual DbSet<AccountOpeningBalance> AccountOpeningBalance { get; set; }
         public virtual DbSet<AccountOwner> AccountOwner { get; set; }
@@ -75,6 +76,19 @@ namespace DebtCollectionAccess
                     .WithMany(p => p.AccountBalance)
                     .HasForeignKey(d => d.PeriodId)
                     .HasConstraintName("FK_PeriodId_Period");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.AccountBalance)
+                    .HasForeignKey(d => d.StatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StatusId_AccountBalanceStatus");
+            });
+
+            modelBuilder.Entity<AccountBalanceStatus>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<AccountInception>(entity =>

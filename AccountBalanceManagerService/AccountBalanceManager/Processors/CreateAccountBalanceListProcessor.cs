@@ -1,4 +1,6 @@
-﻿using DebtCollectionAccess;
+﻿using AccountBalanceManager.Enum;
+using AccountBalanceManager.Processors;
+using DebtCollectionAccess;
 using DebtCollectionAccess.Client;
 using DebtCollectionAccess.Contracts;
 using ProjectCoreLibrary;
@@ -17,7 +19,7 @@ namespace AccountBalanceManagerService.Processor
     {
         public ICollection<PaymentHistory> PaymentHistoryList { get; set; }
 
-        public ICollection<Period> PeriodList { get; set; } 
+        public ICollection<Period> PeriodList { get; set; }
 
         public Period CurrentPeriod { get; set; }
 
@@ -31,7 +33,7 @@ namespace AccountBalanceManagerService.Processor
         public ValidationResults ValidationResults { get; set; }
     }
 
-   
+
     public class CreateAccountBalanceListProcessor : ICreateAccountBalanceListProcessor
     {
         #region Declarations
@@ -104,20 +106,20 @@ namespace AccountBalanceManagerService.Processor
             });
 
             _CurrentPeriodOpeningBalanceList = response.AccountOpeningBalanceList;
-        }   
+        }
 
         private void assignAccountAodList()
         {
             var accountIdList = _PaymentHistoryList.Select(x => x.AccountId).Distinct().ToList();
-             var response = DebtCollectionAccessProxy.GetAccountAODList(new GetAccountAODListRequest { AccountIdList = accountIdList });
-            _AccountAODList =  response.AccountAODList;
+            var response = DebtCollectionAccessProxy.GetAccountAODList(new GetAccountAODListRequest { AccountIdList = accountIdList });
+            _AccountAODList = response.AccountAODList;
         }
 
         private void assignAccountOwnerList()
         {
             var accountIdList = _PaymentHistoryList.Select(x => x.AccountId).Distinct().ToList();
             var response = DebtCollectionAccessProxy.GetAccountOwnerList(new GetAccountOwnerListRequest { AccountIdList = accountIdList });
-            _AccountOwnerList =  response.AccountOwnerList;
+            _AccountOwnerList = response.AccountOwnerList;
         }
 
         private void assignAccountBalanceList()
@@ -134,9 +136,9 @@ namespace AccountBalanceManagerService.Processor
                 }).ToList();
 
                 var accountIdList = accountGroupList.Select(x => x.AccountId).Distinct().ToList();
-                var periodIdList = periodList.Select(x => x.Id).Distinct().ToList();               
+                var periodIdList = periodList.Select(x => x.Id).Distinct().ToList();
 
-                foreach(var accountGroup in accountGroupList)
+                foreach (var accountGroup in accountGroupList)
                 {
                     var accountOpeningBalance = getOpeningBalance(period, accountGroup.AccountId);
                     var totalPaid = accountGroup.TotalPaid;
@@ -145,6 +147,7 @@ namespace AccountBalanceManagerService.Processor
                     var remainingBalance = period == _CurrentPeriod ? (totalPaid >= accountOpeningBalance) ? 0 : (accountOpeningBalance - totalPaid) : accountOpeningBalance;
                     var aodAmount = _AccountAODList.FirstOrDefault(x => x.AccountId == accountGroup.AccountId)?.Amount;
                     var accountOwner = _AccountOwnerList.FirstOrDefault(x => x.AccountId == accountGroup.AccountId);
+
 
                     var accountbalance = new AccountBalance();
                     accountbalance.AccountId = accountGroup.AccountId;
@@ -156,11 +159,12 @@ namespace AccountBalanceManagerService.Processor
                     accountbalance.IsPartialPayment = totalPaid > 0 ? totalPaid < aodAmount : (bool?)null;
                     accountbalance.IsPaymentMissed = totalPaid == 0;
                     accountbalance.OwnerId = accountOwner?.OwnerId;
+                    accountbalance.StatusId = (int)AccountBalanceStatusHelper.GetAccountBalanceStatus(accountbalance);
 
                     _AccountBalanceList.Add(accountbalance);
-                }            
+                }
             }
-        }        
+        }
 
         private void assignNextPeriodAccountBalanceList()
         {
@@ -176,7 +180,8 @@ namespace AccountBalanceManagerService.Processor
                 RemainingBalance = x.RemainingBalance,
                 AccountId = x.AccountId,
                 PeriodId = _NextPeriod.Id,
-                OwnerId = _AccountOwnerList?.FirstOrDefault(y=>y.AccountId == x.AccountId)?.OwnerId
+                OwnerId = _AccountOwnerList?.FirstOrDefault(y => y.AccountId == x.AccountId)?.OwnerId,
+                StatusId = (int)AccountBalanceStatusHelper.GetAccountBalanceStatus(x)
             }).ToList();
 
             _AccountBalanceList.AddRange(accountBalanceList);
@@ -197,9 +202,7 @@ namespace AccountBalanceManagerService.Processor
             }
 
             var forwardPeriod = _PeriodList.ToList()[periodIndex - 1];
-
             var accountBalance = _AccountBalanceList.FirstOrDefault(x => x.PeriodId == forwardPeriod.Id && x.AccountId == AccountId);
-
             return accountBalance.OpeningBalance;
         }
 

@@ -523,14 +523,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AccountBalanceManager.dll" size="52736">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AccountBalanceManager.dll" size="53760">
       <assemblyIdentity name="AccountBalanceManager" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ycGhiCWaj78LhtOLF48se2KVpDXfXtrpCv+ukd6H9gg=</dsig:DigestValue>
+        <dsig:DigestValue>wqYK7qXbW7Eg2+vSqGmX7DJP2hqazqjjwjzXPtol9g4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -547,14 +547,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DebtCollection.exe" size="221664">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DebtCollection.exe" size="222688">
       <assemblyIdentity name="DebtCollection" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>iygutn8qjo6XzCvd8DDtF3JJXTlemgyyNPBvfJL0ulY=</dsig:DigestValue>
+        <dsig:DigestValue>QEkOACt1NO1q9wHInqD6lNqw6WBg3Y/6DUmyT02yOW4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -566,19 +566,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>k8dND3y51iFzw4Lv6pbBhGKNM9YqrH6F2Hqw8iT8k7U=</dsig:DigestValue>
+        <dsig:DigestValue>IPRSt+zkZaHpKR76U5P3rfJhOo06KrIKaRR21obaSkk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DebtCollectionAccess.dll" size="77824">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DebtCollectionAccess.dll" size="79360">
       <assemblyIdentity name="DebtCollectionAccess" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>NiRhopG0Gj5DKW6ChQRj5ts/i4YDdTtegXZBK8K3mPc=</dsig:DigestValue>
+        <dsig:DigestValue>el7Ev3mfjp/Rs6oJnqx82AE4F2lYULdi0lftbvI6J1I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

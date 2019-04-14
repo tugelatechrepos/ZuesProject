@@ -1,4 +1,5 @@
-﻿using DebtCollectionAccess;
+﻿using AccountBalanceManager.Processors;
+using DebtCollectionAccess;
 using DebtCollectionAccess.Client;
 using DebtCollectionAccess.Contracts;
 using ProjectCoreLibrary;
@@ -168,6 +169,7 @@ namespace AccountBalanceManagerService.Processor
                 accountBalance.PeriodId = currentPeriodAccountBalance.PeriodId;
                 accountBalance.OwnerId = currentPeriodAccountBalance.OwnerId;
                 accountBalance.CompanyId = currentPeriodAccountBalance.CompanyId;
+                accountBalance.StatusId = (int)AccountBalanceStatusHelper.GetAccountBalanceStatus(accountBalance);
 
                 _AccountBalanceList.Add(accountBalance);
             }
@@ -188,7 +190,8 @@ namespace AccountBalanceManagerService.Processor
                 RemainingBalance = x.RemainingBalance,
                 PeriodId = _NextPeriod.Id,
                 OwnerId = x.OwnerId,
-                CompanyId = x.CompanyId
+                CompanyId = x.CompanyId,
+                StatusId = (int)AccountBalanceStatusHelper.GetAccountBalanceStatus(x),
             }).ToList();
 
             _AccountBalanceList.AddRange(accountBalanceListForNextPeriod);
@@ -250,6 +253,7 @@ namespace AccountBalanceManagerService.Processor
                     accountBalance.IsPaymentMissed = totalPaid == 0;
                     accountBalance.OwnerId = accountOwner?.OwnerId;
                     accountBalance.CompanyId = _Request.CompanyId;
+                    accountBalance.StatusId = (int)AccountBalanceStatusHelper.GetAccountBalanceStatus(accountBalance);
 
                     accountBalanceList.Add(accountBalance);
                 }

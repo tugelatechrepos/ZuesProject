@@ -32,6 +32,7 @@ namespace DebtCollection
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.PaymentHistoryBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mainTabControl = new MaterialSkin.Controls.MaterialTabControl();
             this.tabPeriodSetUp = new System.Windows.Forms.TabPage();
             this.pbPeriodDetailLoading = new System.Windows.Forms.PictureBox();
@@ -59,6 +60,13 @@ namespace DebtCollection
             this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
             this.rptPaymentHistoy = new Microsoft.Reporting.WinForms.ReportViewer();
             this.tabAccountBalance = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtAccountName = new System.Windows.Forms.TextBox();
+            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.cmbSelectAbPeriod = new System.Windows.Forms.ComboBox();
+            this.cmbAccountBalStatus = new System.Windows.Forms.ComboBox();
+            this.materialLabel13 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.pnlAccountBalanceStatus = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -66,8 +74,6 @@ namespace DebtCollection
             this.label2 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.materialLabel13 = new MaterialSkin.Controls.MaterialLabel();
-            this.cmbSelectAbPeriod = new System.Windows.Forms.ComboBox();
             this.dgvAccountBalance = new System.Windows.Forms.DataGridView();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.periodLoadBackgroundWorker = new System.ComponentModel.BackgroundWorker();
@@ -76,7 +82,7 @@ namespace DebtCollection
             this.bgGenerateInvoice = new System.ComponentModel.BackgroundWorker();
             this.bgGetInvoiceList = new System.ComponentModel.BackgroundWorker();
             this.metroProgressSpinner1 = new MetroFramework.Controls.MetroProgressSpinner();
-            this.PaymentHistoryBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.PaymentHistoryBindingSource)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.tabPeriodSetUp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPeriodDetailLoading)).BeginInit();
@@ -87,10 +93,14 @@ namespace DebtCollection
             this.tabPaymentHistory.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabAccountBalance.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.pnlAccountBalanceStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountBalance)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PaymentHistoryBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // PaymentHistoryBindingSource
+            // 
+            this.PaymentHistoryBindingSource.DataSource = typeof(DebtCollection.ViewModel.PaymentHistory);
             // 
             // mainTabControl
             // 
@@ -127,7 +137,6 @@ namespace DebtCollection
             this.pbPeriodDetailLoading.BackColor = System.Drawing.Color.Transparent;
             this.pbPeriodDetailLoading.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pbPeriodDetailLoading.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pbPeriodDetailLoading.Image = global::DebtCollection.Properties.Resources.loader;
             this.pbPeriodDetailLoading.Location = new System.Drawing.Point(257, 138);
             this.pbPeriodDetailLoading.Name = "pbPeriodDetailLoading";
             this.pbPeriodDetailLoading.Size = new System.Drawing.Size(147, 100);
@@ -242,24 +251,24 @@ namespace DebtCollection
             // 
             this.lblGenerateInvoiceStatus.AutoSize = true;
             this.lblGenerateInvoiceStatus.Depth = 0;
-            this.lblGenerateInvoiceStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.lblGenerateInvoiceStatus.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblGenerateInvoiceStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblGenerateInvoiceStatus.Location = new System.Drawing.Point(24, 83);
             this.lblGenerateInvoiceStatus.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblGenerateInvoiceStatus.Name = "lblGenerateInvoiceStatus";
-            this.lblGenerateInvoiceStatus.Size = new System.Drawing.Size(0, 18);
+            this.lblGenerateInvoiceStatus.Size = new System.Drawing.Size(0, 19);
             this.lblGenerateInvoiceStatus.TabIndex = 6;
             // 
             // lblCurrentPeriod
             // 
             this.lblCurrentPeriod.AutoSize = true;
             this.lblCurrentPeriod.Depth = 0;
-            this.lblCurrentPeriod.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.lblCurrentPeriod.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblCurrentPeriod.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblCurrentPeriod.Location = new System.Drawing.Point(169, 32);
             this.lblCurrentPeriod.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblCurrentPeriod.Name = "lblCurrentPeriod";
-            this.lblCurrentPeriod.Size = new System.Drawing.Size(0, 18);
+            this.lblCurrentPeriod.Size = new System.Drawing.Size(0, 19);
             this.lblCurrentPeriod.TabIndex = 5;
             // 
             // btnGenerateInvoice
@@ -335,12 +344,12 @@ namespace DebtCollection
             // 
             this.materialLabel15.AutoSize = true;
             this.materialLabel15.Depth = 0;
-            this.materialLabel15.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel15.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel15.Location = new System.Drawing.Point(6, 19);
             this.materialLabel15.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel15.Name = "materialLabel15";
-            this.materialLabel15.Size = new System.Drawing.Size(77, 18);
+            this.materialLabel15.Size = new System.Drawing.Size(81, 19);
             this.materialLabel15.TabIndex = 6;
             this.materialLabel15.Text = "Account Id";
             // 
@@ -373,12 +382,12 @@ namespace DebtCollection
             // 
             this.materialLabel7.AutoSize = true;
             this.materialLabel7.Depth = 0;
-            this.materialLabel7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel7.Location = new System.Drawing.Point(449, 19);
             this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel7.Name = "materialLabel7";
-            this.materialLabel7.Size = new System.Drawing.Size(61, 18);
+            this.materialLabel7.Size = new System.Drawing.Size(62, 19);
             this.materialLabel7.TabIndex = 4;
             this.materialLabel7.Text = "To Date";
             // 
@@ -395,12 +404,12 @@ namespace DebtCollection
             // 
             this.materialLabel6.AutoSize = true;
             this.materialLabel6.Depth = 0;
-            this.materialLabel6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel6.Location = new System.Drawing.Point(237, 18);
             this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
-            this.materialLabel6.Size = new System.Drawing.Size(79, 18);
+            this.materialLabel6.Size = new System.Drawing.Size(79, 19);
             this.materialLabel6.TabIndex = 3;
             this.materialLabel6.Text = "From Date";
             // 
@@ -413,15 +422,14 @@ namespace DebtCollection
             this.rptPaymentHistoy.Location = new System.Drawing.Point(6, 119);
             this.rptPaymentHistoy.Name = "rptPaymentHistoy";
             this.rptPaymentHistoy.ServerReport.BearerToken = null;
-            this.rptPaymentHistoy.Size = new System.Drawing.Size(959, 435);
+            this.rptPaymentHistoy.Size = new System.Drawing.Size(962, 422);
             this.rptPaymentHistoy.TabIndex = 0;
             this.rptPaymentHistoy.Visible = false;
             // 
             // tabAccountBalance
             // 
+            this.tabAccountBalance.Controls.Add(this.groupBox1);
             this.tabAccountBalance.Controls.Add(this.pnlAccountBalanceStatus);
-            this.tabAccountBalance.Controls.Add(this.materialLabel13);
-            this.tabAccountBalance.Controls.Add(this.cmbSelectAbPeriod);
             this.tabAccountBalance.Controls.Add(this.dgvAccountBalance);
             this.tabAccountBalance.Location = new System.Drawing.Point(4, 22);
             this.tabAccountBalance.Name = "tabAccountBalance";
@@ -430,6 +438,90 @@ namespace DebtCollection
             this.tabAccountBalance.TabIndex = 4;
             this.tabAccountBalance.Text = "Accounts";
             this.tabAccountBalance.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txtAccountName);
+            this.groupBox1.Controls.Add(this.materialLabel2);
+            this.groupBox1.Controls.Add(this.cmbSelectAbPeriod);
+            this.groupBox1.Controls.Add(this.cmbAccountBalStatus);
+            this.groupBox1.Controls.Add(this.materialLabel13);
+            this.groupBox1.Controls.Add(this.materialLabel1);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(18, 14);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(372, 127);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Filters";
+            // 
+            // txtAccountName
+            // 
+            this.txtAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAccountName.Location = new System.Drawing.Point(123, 25);
+            this.txtAccountName.Name = "txtAccountName";
+            this.txtAccountName.Size = new System.Drawing.Size(189, 21);
+            this.txtAccountName.TabIndex = 13;
+            // 
+            // materialLabel2
+            // 
+            this.materialLabel2.AutoSize = true;
+            this.materialLabel2.Depth = 0;
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel2.Location = new System.Drawing.Point(8, 25);
+            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel2.Name = "materialLabel2";
+            this.materialLabel2.Size = new System.Drawing.Size(109, 19);
+            this.materialLabel2.TabIndex = 12;
+            this.materialLabel2.Text = "Account Name";
+            // 
+            // cmbSelectAbPeriod
+            // 
+            this.cmbSelectAbPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSelectAbPeriod.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
+            this.cmbSelectAbPeriod.FormattingEnabled = true;
+            this.cmbSelectAbPeriod.Location = new System.Drawing.Point(123, 60);
+            this.cmbSelectAbPeriod.Name = "cmbSelectAbPeriod";
+            this.cmbSelectAbPeriod.Size = new System.Drawing.Size(164, 21);
+            this.cmbSelectAbPeriod.TabIndex = 1;
+            this.cmbSelectAbPeriod.SelectedIndexChanged += new System.EventHandler(this.cmbSelectAbPeriod_SelectedIndexChanged);
+            // 
+            // cmbAccountBalStatus
+            // 
+            this.cmbAccountBalStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAccountBalStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
+            this.cmbAccountBalStatus.FormattingEnabled = true;
+            this.cmbAccountBalStatus.Location = new System.Drawing.Point(123, 94);
+            this.cmbAccountBalStatus.Name = "cmbAccountBalStatus";
+            this.cmbAccountBalStatus.Size = new System.Drawing.Size(164, 21);
+            this.cmbAccountBalStatus.TabIndex = 11;
+            // 
+            // materialLabel13
+            // 
+            this.materialLabel13.AutoSize = true;
+            this.materialLabel13.Depth = 0;
+            this.materialLabel13.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel13.Location = new System.Drawing.Point(7, 63);
+            this.materialLabel13.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel13.Name = "materialLabel13";
+            this.materialLabel13.Size = new System.Drawing.Size(52, 19);
+            this.materialLabel13.TabIndex = 2;
+            this.materialLabel13.Text = "Period";
+            // 
+            // materialLabel1
+            // 
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(7, 95);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(52, 19);
+            this.materialLabel1.TabIndex = 10;
+            this.materialLabel1.Text = "Status";
             // 
             // pnlAccountBalanceStatus
             // 
@@ -499,39 +591,15 @@ namespace DebtCollection
             this.panel5.Size = new System.Drawing.Size(132, 22);
             this.panel5.TabIndex = 5;
             // 
-            // materialLabel13
-            // 
-            this.materialLabel13.AutoSize = true;
-            this.materialLabel13.Depth = 0;
-            this.materialLabel13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.materialLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel13.Location = new System.Drawing.Point(33, 42);
-            this.materialLabel13.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel13.Name = "materialLabel13";
-            this.materialLabel13.Size = new System.Drawing.Size(96, 18);
-            this.materialLabel13.TabIndex = 2;
-            this.materialLabel13.Text = "Select Period";
-            // 
-            // cmbSelectAbPeriod
-            // 
-            this.cmbSelectAbPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSelectAbPeriod.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbSelectAbPeriod.FormattingEnabled = true;
-            this.cmbSelectAbPeriod.Location = new System.Drawing.Point(135, 39);
-            this.cmbSelectAbPeriod.Name = "cmbSelectAbPeriod";
-            this.cmbSelectAbPeriod.Size = new System.Drawing.Size(164, 24);
-            this.cmbSelectAbPeriod.TabIndex = 1;
-            this.cmbSelectAbPeriod.SelectedIndexChanged += new System.EventHandler(this.cmbSelectAbPeriod_SelectedIndexChanged);
-            // 
             // dgvAccountBalance
             // 
             this.dgvAccountBalance.AllowUserToAddRows = false;
             this.dgvAccountBalance.AllowUserToDeleteRows = false;
             this.dgvAccountBalance.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAccountBalance.Location = new System.Drawing.Point(6, 120);
+            this.dgvAccountBalance.Location = new System.Drawing.Point(6, 154);
             this.dgvAccountBalance.Name = "dgvAccountBalance";
             this.dgvAccountBalance.ReadOnly = true;
-            this.dgvAccountBalance.Size = new System.Drawing.Size(973, 450);
+            this.dgvAccountBalance.Size = new System.Drawing.Size(973, 365);
             this.dgvAccountBalance.TabIndex = 0;
             this.dgvAccountBalance.Visible = false;
             this.dgvAccountBalance.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAccountBalance_CellMouseDoubleClick);
@@ -568,10 +636,6 @@ namespace DebtCollection
             this.metroProgressSpinner1.TabIndex = 0;
             this.metroProgressSpinner1.UseSelectable = true;
             // 
-            // PaymentHistoryBindingSource
-            // 
-            this.PaymentHistoryBindingSource.DataSource = typeof(DebtCollection.ViewModel.PaymentHistory);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -583,6 +647,7 @@ namespace DebtCollection
             this.Text = "Collect.io";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.PaymentHistoryBindingSource)).EndInit();
             this.mainTabControl.ResumeLayout(false);
             this.tabPeriodSetUp.ResumeLayout(false);
             this.tabPeriodSetUp.PerformLayout();
@@ -597,11 +662,11 @@ namespace DebtCollection
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabAccountBalance.ResumeLayout(false);
-            this.tabAccountBalance.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.pnlAccountBalanceStatus.ResumeLayout(false);
             this.pnlAccountBalanceStatus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccountBalance)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PaymentHistoryBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -653,5 +718,10 @@ namespace DebtCollection
         private System.Windows.Forms.PictureBox pbPeriodDetailLoading;
         private System.Windows.Forms.Panel pnlAccountBalanceStatus;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txtAccountName;
+        private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private System.Windows.Forms.ComboBox cmbAccountBalStatus;
+        private MaterialSkin.Controls.MaterialLabel materialLabel1;
     }
 }

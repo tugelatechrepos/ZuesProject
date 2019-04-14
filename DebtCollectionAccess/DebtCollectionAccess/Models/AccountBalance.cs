@@ -17,9 +17,11 @@ namespace DebtCollectionAccess
         public int? Version { get; set; }
         public int? OwnerId { get; set; }
         public int? CompanyId { get; set; }
+        public int StatusId { get; set; }
 
         public virtual Company Company { get; set; }
         public virtual Users Owner { get; set; }
         public virtual Period Period { get; set; }
+        public virtual AccountBalanceStatus Status { get; set; }
     }
 }

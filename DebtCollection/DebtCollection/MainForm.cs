@@ -12,6 +12,7 @@ using DebtCollection.ViewModel;
 using DebtCollection.ServiceHelpers;
 using DebtCollection.Core;
 using DebtCollection.DataTableHelpers;
+using AccountBalanceManager.Enum;
 
 namespace DebtCollection
 {
@@ -265,6 +266,7 @@ namespace DebtCollection
             {
                 PeriodIdList = new List<int> { periodId },
                 CompanyId = COMPANY_ID,
+                StatusIdList = new List<int> { (int)AccountBalanceStatusEnum.None , (int)AccountBalanceStatusEnum.IsPartialPayment , (int)AccountBalanceStatusEnum.IsPaymentMissed, (int)AccountBalanceStatusEnum.IsFullyPaid}
             });
         
             if (response.AccountBalanceList == null || !response.AccountBalanceList.Any()) return;
