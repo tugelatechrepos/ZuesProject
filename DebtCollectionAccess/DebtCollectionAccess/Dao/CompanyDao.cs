@@ -16,7 +16,7 @@ namespace DebtCollectionAccess.Dao
     {
         #region Declarations
 
-        private DebtCollectionContext _DbContext;
+        private MainContext _DbContext;
 
         #endregion Declarations
 
@@ -27,7 +27,7 @@ namespace DebtCollectionAccess.Dao
 
             try
             {
-                using (_DbContext = new DebtCollectionContext())
+                using (_DbContext = new MainContext())
                 {
                     var query = _DbContext.Company.AsQueryable();
 

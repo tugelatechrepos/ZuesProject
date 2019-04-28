@@ -1,0 +1,14 @@
+409,300
+
+60,54
+
+loc = pyautogui.locateOnScreen("C:\\RobotTest\\paymentList.PNG")
+cord = pyautogui.center(loc)
+pyautogui.click(cord)
+
+
+pywinauto.mouse.click(button='left', coords=(60, 54))
+
+app.connect(title_re = "SAP Logon 740")
+
+left=18, top=282, width=135, height=36

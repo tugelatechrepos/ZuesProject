@@ -17,3 +17,4 @@ D:\Shyam\ZuesProject\DebtCollectionAccess\DebtCollectionAccess\obj\Debug\netcore
 D:\Shyam\ZuesProject\DebtCollectionAccess\DebtCollectionAccess\obj\Debug\netcoreapp2.0\DebtCollectionAccess.pdb
 D:\Shyam\ZuesProject\DebtCollectionAccess\DebtCollectionAccess\bin\Debug\netcoreapp2.0\ProjectCoreLibrary.dll
 D:\Shyam\ZuesProject\DebtCollectionAccess\DebtCollectionAccess\obj\Debug\netcoreapp2.0\DebtCollectionAccess.csproj.CopyComplete
+D:\Shyam\ZuesProject\DebtCollectionAccess\DebtCollectionAccess\obj\Debug\netcoreapp2.0\DebtCollectionAccess.csprojAssemblyReference.cache

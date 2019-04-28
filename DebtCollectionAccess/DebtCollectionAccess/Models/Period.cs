@@ -20,7 +20,6 @@ namespace DebtCollectionAccess
         public bool? IsInvoiced { get; set; }
         public int? CompanyId { get; set; }
 
-        public virtual Company Company { get; set; }
         public virtual ICollection<AccountBalance> AccountBalance { get; set; }
         public virtual ICollection<AccountOpeningBalance> AccountOpeningBalance { get; set; }
         public virtual ICollection<Invoice> Invoice { get; set; }

@@ -16,7 +16,6 @@ namespace DebtCollectionAccess
         public int? PeriodId { get; set; }
         public int? CompanyId { get; set; }
 
-        public virtual Company Company { get; set; }
         public virtual Period Period { get; set; }
         public virtual ICollection<PaymentHistory> PaymentHistory { get; set; }
     }

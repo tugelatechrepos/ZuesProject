@@ -18,9 +18,9 @@ namespace DebtCollectionAccess.Operations
 
         private GetClientListRequest _Request;
         private GetClientListResponse _Response;
-        private ICollection<AgencyCompany> _AgencyClientList;
+        private ICollection<CompanyClient> _CompanyClientList;
 
-        public IAgencyCompanyDao AgencyCompanyDao { get; set; }
+        public ICompanyClientDao CompanyClientDao { get; set; }
         public ICompanyDao CompanyDao { get; set; }
 
         #endregion Declarations
@@ -40,20 +40,20 @@ namespace DebtCollectionAccess.Operations
         {
             if (!_Response.ValidationResults.IsValid) return;
 
-            var response = AgencyCompanyDao.GetAgencyCompanyList(new GetAgencyCompanyListRequest
+            var response = CompanyClientDao.GetAgencyCompanyList(new GetCompanyClientListRequest
             {
-                AgencyId = _Request.AgencyId,
+                CompanyId = _Request.CompanyId,
             } , _Response.ValidationResults);
 
-            _AgencyClientList = response;
+            _CompanyClientList = response;
         }
 
         private void assignCompanyList()
         {
             if (!_Response.ValidationResults.IsValid) return;
-            if (_AgencyClientList == null || !_AgencyClientList.Any()) return;
+            if (_CompanyClientList == null || !_CompanyClientList.Any()) return;
 
-            var clientIdList = _AgencyClientList.Select(x => x.ClientId).ToList();
+            var clientIdList = _CompanyClientList.Select(x => x.ClientId).ToList();
             _Response.CompanyList = CompanyDao.GetCompanyList(new GetCompanyListRequest
             {
                 CompanyIdList = clientIdList

@@ -66,7 +66,7 @@ namespace AccountBalanceManagerService.Processor
 
         private void assignPeriod()
         {
-            var periodListResponse = DebtCollectionAccessProxy.GetPeriodList(new GetPeriodListRequest
+            var periodListResponse = DebtCollectionAccessProxy.GetPeriodList(new DebtCollectionAccess.Contracts.GetPeriodListRequest
             {
                 PeriodIdList = new List<int> { _Request.PeriodId }
             });

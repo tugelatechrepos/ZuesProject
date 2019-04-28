@@ -1,4 +1,5 @@
 ﻿using DebtCollectionAccess.Contracts;
+using DebtCollectionAccess.Models;
 using ProjectCoreLibrary;
 using System;
 using System.Collections.Generic;
@@ -28,9 +29,9 @@ namespace DebtCollectionAccess.Dao
 
             try
             {
-                using (_DbContext = new DebtCollectionContext())
+                using (var dbContext =  DebtCollectionDBFactory.GetDBContext(Request.CompanyId))
                 {
-                    var query = _DbContext.Period.AsQueryable();
+                    var query = dbContext.Period.AsQueryable();
 
                     query = Request.CompanyId != 0 ? query.Where(x => x.CompanyId == Request.CompanyId) : query;
                     query = (Request.PeriodIdList != null && Request.PeriodIdList.Any()) ? query.Where(x => Request.PeriodIdList.Contains(x.Id)) : query;
@@ -56,7 +57,7 @@ namespace DebtCollectionAccess.Dao
         public ValidationResults PersistPeriodList(ICollection<Period> PeriodList, ValidationResults validationResults = null)
         {
             validationResults = new ValidationResults();
-
+            
             try
             {
                 using (_DbContext = new DebtCollectionContext())

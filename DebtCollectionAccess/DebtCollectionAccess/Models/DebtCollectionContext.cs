@@ -21,13 +21,13 @@ namespace DebtCollectionAccess
         public virtual DbSet<AccountInception> AccountInception { get; set; }
         public virtual DbSet<AccountOpeningBalance> AccountOpeningBalance { get; set; }
         public virtual DbSet<AccountOwner> AccountOwner { get; set; }
-        public virtual DbSet<AgencyCompany> AgencyCompany { get; set; }
         public virtual DbSet<Commission> Commission { get; set; }
-        public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<CompanyDiscount> CompanyDiscount { get; set; }
         public virtual DbSet<CompanyType> CompanyType { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<PaymentHistory> PaymentHistory { get; set; }
+        public virtual DbSet<PaymentHistoryPayload> PaymentHistoryPayload { get; set; }
+        public virtual DbSet<PaymentHistoryPayloadPeriod> PaymentHistoryPayloadPeriod { get; set; }
         public virtual DbSet<Period> Period { get; set; }
         public virtual DbSet<ServiceType> ServiceType { get; set; }
         public virtual DbSet<Users> Users { get; set; }
@@ -36,7 +36,6 @@ namespace DebtCollectionAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseNpgsql("Host=localhost;Database=DebtCollection;Username=postgres;Password=abcd@1234");
             }
         }
@@ -61,11 +60,6 @@ namespace DebtCollectionAccess
                 entity.Property(e => e.PromisedAmount).HasColumnType("numeric(8,0)");
 
                 entity.Property(e => e.RemainingBalance).HasColumnType("numeric(8,0)");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.AccountBalance)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_CompanyId_Company");
 
                 entity.HasOne(d => d.Owner)
                     .WithMany(p => p.AccountBalance)
@@ -116,23 +110,6 @@ namespace DebtCollectionAccess
                     .HasConstraintName("FK_OwnerId_Owner");
             });
 
-            modelBuilder.Entity<AgencyCompany>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Agency)
-                    .WithMany(p => p.AgencyCompanyAgency)
-                    .HasForeignKey(d => d.AgencyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AgencyId_Company");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.AgencyCompanyClient)
-                    .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ClientId_Company");
-            });
-
             modelBuilder.Entity<Commission>(entity =>
             {
                 entity.Property(e => e.CommissionPercentage).HasColumnType("numeric(8,0)");
@@ -142,49 +119,9 @@ namespace DebtCollectionAccess
                 entity.Property(e => e.LowerRange).HasColumnType("numeric(8,0)");
             });
 
-            modelBuilder.Entity<Company>(entity =>
-            {
-                entity.Property(e => e.AddressLine1)
-                    .IsRequired()
-                    .HasColumnType("character varying");
-
-                entity.Property(e => e.AddressLine2)
-                    .HasColumnName("Address Line 2")
-                    .HasColumnType("character varying");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnType("character varying");
-
-                entity.Property(e => e.Phone)
-                    .IsRequired()
-                    .HasColumnType("character varying");
-
-                entity.Property(e => e.PrimaryEmail)
-                    .IsRequired()
-                    .HasColumnType("character varying");
-
-                entity.Property(e => e.Vatpercentage).HasColumnName("VATPercentage");
-
-                entity.Property(e => e.Zip)
-                    .IsRequired()
-                    .HasColumnType("character varying");
-
-                entity.HasOne(d => d.CompanyType)
-                    .WithMany(p => p.Company)
-                    .HasForeignKey(d => d.CompanyTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CompanyId_CompanyType");
-            });
-
             modelBuilder.Entity<CompanyDiscount>(entity =>
             {
                 entity.Property(e => e.Discount).HasColumnType("numeric(8,0)");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.CompanyDiscount)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_CompanyId_Company");
             });
 
             modelBuilder.Entity<CompanyType>(entity =>
@@ -201,11 +138,6 @@ namespace DebtCollectionAccess
                     .HasColumnType("jsonb");
 
                 entity.Property(e => e.GeneratedOn).HasColumnType("date");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.Invoice)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_CompanyId_Company");
 
                 entity.HasOne(d => d.Period)
                     .WithMany(p => p.Invoice)
@@ -233,6 +165,24 @@ namespace DebtCollectionAccess
                     .HasConstraintName("FK_ServiceId_Service");
             });
 
+            modelBuilder.Entity<PaymentHistoryPayload>(entity =>
+            {
+                entity.Property(e => e.Payload)
+                    .IsRequired()
+                    .HasColumnType("json");
+
+                entity.HasOne(d => d.PaymentHistoryPayloadPeriod)
+                    .WithMany(p => p.PaymentHistoryPayload)
+                    .HasForeignKey(d => d.PaymentHistoryPayloadPeriodId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PaymentHistoryPayloadPeriodId_PaymentHistoryPayloadPeriod");
+            });
+
+            modelBuilder.Entity<PaymentHistoryPayloadPeriod>(entity =>
+            {
+                entity.Property(e => e.RunDate).HasColumnType("date");
+            });
+
             modelBuilder.Entity<Period>(entity =>
             {
                 entity.Property(e => e.FromDate).HasColumnType("date");
@@ -244,11 +194,6 @@ namespace DebtCollectionAccess
                 entity.Property(e => e.RunDate).HasColumnType("date");
 
                 entity.Property(e => e.ToDate).HasColumnType("date");
-
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.Period)
-                    .HasForeignKey(d => d.CompanyId)
-                    .HasConstraintName("FK_CompanyId_Company");
             });
 
             modelBuilder.Entity<ServiceType>(entity =>

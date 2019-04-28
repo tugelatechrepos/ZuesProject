@@ -63,6 +63,8 @@
     <Compile Include="Contracts\GetInvoiceListResponse.cs" />
     <Compile Include="Contracts\GetPeriodDetailListRequest.cs" />
     <Compile Include="Contracts\GetPeriodDetailListResponse.cs" />
+    <Compile Include="Contracts\GetPeriodListRequest.cs" />
+    <Compile Include="Contracts\GetPeriodListResponse.cs" />
     <Compile Include="Contracts\InvoiceDetail.cs" />
     <Compile Include="Contracts\MaintainAccountBalanceRequest.cs" />
     <Compile Include="Contracts\MaintainAccountBalanceResponse.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Operations\GetInvoiceListOperation.cs" />
     <Compile Include="Operations\GetPaymentHistoryListOperation.cs" />
     <Compile Include="Operations\GetPeriodDetailListOperation.cs" />
+    <Compile Include="Operations\GetPeriodListOperation.cs" />
     <Compile Include="Operations\MaintainAccountBalanceOperation.cs" />
     <Compile Include="Processors\AccountBalanceCalculationProcessor.cs" />
     <Compile Include="Processors\AccountBalanceStatusHelper.cs" />

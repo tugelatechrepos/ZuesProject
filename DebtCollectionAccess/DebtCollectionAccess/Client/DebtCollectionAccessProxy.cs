@@ -41,6 +41,14 @@ namespace DebtCollectionAccess.Client
         PersistPaymentHistoryListResponse PersistPaymentHistoryList(PersistPaymentHistoryListRequest Request);
 
         PersistPeriodListResponse PersistPeriodList(PersistPeriodListRequest Request);
+
+        PersistPaymentHistoryPayloadListResponse PersistPaymentHistoryPayloadList(PersistPaymentHistoryPayloadListRequest Request);
+
+        PersistPaymentHistoryPayloadPeriodResponse PersistPaymentHistoryPayloadPeriod(PersistPaymentHistoryPayloadPeriodRequest Request);
+
+        GetPaymentHistoryPayloadListResponse GetPaymentHistoryPayloadList(GetPaymentHistoryPayloadListRequest Request);
+
+        GetPaymentHistoryPayloadPeriodResponse GetPaymentHistoryPayloadPeriod(GetPaymentHistoryPayloadPeriodRequest Request);
     }
 
     public class DebtCollectionAccessProxy : IDebtCollectionAccessProxy
@@ -80,6 +88,14 @@ namespace DebtCollectionAccess.Client
         public IPersistPaymentHistoryListOperation PersistPaymentHistoryListOperation { get; set; }
 
         public IPersistPeriodListOperation PersistPeriodListOperation { get; set; }
+
+        public IPersistPaymentHistoryPayloadListOperation PersistPaymentHistoryPayloadListOperation { get; set; }
+
+        public IPersistPaymentHistoryPayloadPeriodOperation PersistPaymentHistoryPayloadPeriodOperation { get; set; }
+
+        public IGetPaymentHistoryPayloadListOperation GetPaymentHistoryPayloadListOperation { get; set; }
+
+        public IGetPaymentHistoryPayloadPeriodOperation GetPaymentHistoryPayloadPeriodOperation { get; set; }
 
         #endregion Declarations
 
@@ -182,6 +198,30 @@ namespace DebtCollectionAccess.Client
         public PersistPeriodListResponse PersistPeriodList(PersistPeriodListRequest Request)
         {
             var response = PersistPeriodListOperation.PersistPeriodList(Request);
+            return response;
+        }
+
+        public PersistPaymentHistoryPayloadListResponse PersistPaymentHistoryPayloadList(PersistPaymentHistoryPayloadListRequest Request)
+        {
+            var response = PersistPaymentHistoryPayloadListOperation.PersistPaymentHistoryPayloadList(Request);
+            return response;
+        }
+
+        public PersistPaymentHistoryPayloadPeriodResponse PersistPaymentHistoryPayloadPeriod(PersistPaymentHistoryPayloadPeriodRequest Request)
+        {
+            var response = PersistPaymentHistoryPayloadPeriodOperation.PersistPaymentHistoryPayloadPeriod(Request);
+            return response;
+        }
+
+        public GetPaymentHistoryPayloadListResponse GetPaymentHistoryPayloadList(GetPaymentHistoryPayloadListRequest Request)
+        {
+            var response = GetPaymentHistoryPayloadListOperation.GetPaymentHistoryPayloadList(Request);
+            return response;
+        }
+
+        public GetPaymentHistoryPayloadPeriodResponse GetPaymentHistoryPayloadPeriod(GetPaymentHistoryPayloadPeriodRequest Request)
+        {
+            var response = GetPaymentHistoryPayloadPeriodOperation.GetPaymentHistoryPayloadPeriod(Request);
             return response;
         }
     }

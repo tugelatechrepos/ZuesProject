@@ -6,6 +6,6 @@ namespace DebtCollectionAccess.Contracts
 {
     public class GetClientListRequest
     {
-        public int AgencyId { get; set; }
+        public int CompanyId { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using AccountBalanceManagerService.Processor;
+﻿using AccountBalanceManager.Operations;
+using AccountBalanceManagerService.Processor;
+using AccountBalanceManager.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +19,15 @@ namespace AccountBalanceManagerService.Controllers
             var response = processor.GetPeriodDetailList(Request);
             return response;
         }
+
+        [HttpGet]
+        [ActionName("list")]
+        public AccountBalanceManager.Contracts.GetPeriodListResponse GetPeriodList([FromBody]AccountBalanceManager.Contracts.GetPeriodListRequest Request)
+        {
+            var operation = IocManager.Resolve<IGetPeriodListOperation>();
+            var response = operation.GetPeriodList(Request);
+            return response;
+        }
+      
     }
 }
